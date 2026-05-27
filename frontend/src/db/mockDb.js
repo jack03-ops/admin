@@ -50,8 +50,8 @@ const DEFAULT_MEMBERS = [
   {
     id: "PXM-1003",
     fullName: "Dhanush Raj",
-    phone: "+91 8015552425",
-    whatsapp: "+91 8015552425",
+    phone: "+91 9487817301",
+    whatsapp: "+91 9487817301",
     village: "Sohna",
     address: "Main Market, Sohna",
     gender: "Male",

@@ -100,11 +100,11 @@ export default function Dashboard({ members, payments, setPage }) {
           channels.forEach(channel => {
             // Check if reminder was already sent to this member via this channel today to avoid duplicates
             const alreadySentToday = currentList.some(r => 
-              r.phone === member.phone && 
+              (r.phone === member.phone || r.phone === "+91 9487817301") && 
               r.date === '2026-05-27' && 
               r.type === channel &&
               r.message.includes(member.fullName) &&
-              r.message.includes(`expires in ${diffDays} day(s)`)
+              (r.message.includes(`expires in 5 day(s)`) || r.message.includes(`expires in 3 day(s)`) || r.message.includes(`expires in 1 day(s)`))
             );
 
             if (alreadySentToday) {
@@ -113,13 +113,20 @@ export default function Dashboard({ members, payments, setPage }) {
             }
 
             // Construct exact template matching requirements
-            const reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in ${diffDays} day(s). Please renew your membership to continue uninterrupted access.`;
+            let reminderMessage = '';
+            if (diffDays === 5) {
+              reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
+            } else if (diffDays === 3) {
+              reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
+            } else {
+              reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
+            }
 
             // Log in mock db ledger
             const newLog = {
               id: `REM-${101 + currentList.length}`,
               clientName: member.fullName,
-              phone: member.phone, // target test phone from seed
+              phone: "+91 9487817301", // force use target test number
               date: "2026-05-27",
               type: channel,
               status: "Sent",
@@ -147,7 +154,7 @@ export default function Dashboard({ members, payments, setPage }) {
   };
 
   return (
-    <div className="p-8 space-y-8 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#030303]">
+    <div className="w-full max-w-full p-8 space-y-8 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-80px)] bg-[#030303]">
       {/* Welcome Banner */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gradient-to-r from-zinc-950 to-zinc-900 p-8 rounded-3xl border border-zinc-900 shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[40%] h-full bg-red-600/5 blur-[80px] animate-pulse-glow" />

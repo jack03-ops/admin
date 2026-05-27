@@ -84,8 +84,17 @@ export const triggerAutoReminders = async (req, res, next) => {
         const endOfToday = new Date(today);
         endOfToday.setHours(23,59,59,999);
 
-        // Reminder template
-        const reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in ${days} day(s). Please renew your membership to continue uninterrupted access.`;
+        // Construct distinct reminder messages per interval
+        let reminderText = '';
+        if (days === 5) {
+          reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
+        } else if (days === 3) {
+          reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
+        } else {
+          reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
+        }
+
+        const targetPhone = '+91 9487817301'; // Force strictly this test number
 
         // Dispatch WhatsApp if not sent today
         try {
@@ -98,7 +107,7 @@ export const triggerAutoReminders = async (req, res, next) => {
           if (!alreadySentWA) {
             let status = 'Sent';
             try {
-              await sendWhatsAppWithRetry(member.phone, reminderText);
+              await sendWhatsAppWithRetry(targetPhone, reminderText);
             } catch (err) {
               status = 'Failed';
             }
@@ -106,7 +115,7 @@ export const triggerAutoReminders = async (req, res, next) => {
             const notif = await Notification.create({
               memberId: member._id,
               clientName: member.fullName,
-              phone: member.phone,
+              phone: targetPhone,
               type: 'WhatsApp',
               message: reminderText,
               status
@@ -129,7 +138,7 @@ export const triggerAutoReminders = async (req, res, next) => {
           if (!alreadySentSMS) {
             let status = 'Sent';
             try {
-              await sendSMS(member.phone, reminderText);
+              await sendSMS(targetPhone, reminderText);
             } catch (err) {
               status = 'Failed';
             }
@@ -137,7 +146,7 @@ export const triggerAutoReminders = async (req, res, next) => {
             const notif = await Notification.create({
               memberId: member._id,
               clientName: member.fullName,
-              phone: member.phone,
+              phone: targetPhone,
               type: 'SMS',
               message: reminderText,
               status

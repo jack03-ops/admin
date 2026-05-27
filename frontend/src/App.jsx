@@ -230,7 +230,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex bg-[#030303] min-h-screen text-slate-100 font-sans overflow-hidden">
+    <div className="flex bg-[#030303] min-h-screen w-full max-w-full text-slate-100 font-sans overflow-x-hidden">
       {/* Toast Notification Container */}
       {toast && (
         <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-zinc-900/95 border border-emerald-500/30 text-slate-100 px-5 py-4 rounded-2xl shadow-[0_0_25px_rgba(16,185,129,0.15)] backdrop-blur-md transition-all duration-300">
@@ -250,7 +250,7 @@ export default function App() {
       />
 
       {/* Main Container Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
         {/* Global header bar */}
         <Header 
           title={pageTitles[currentPage] || 'Phoenix System'} 
@@ -259,7 +259,7 @@ export default function App() {
         />
         
         {/* Page content window */}
-        <main className="flex-1 overflow-hidden">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto">
           {renderPage()}
         </main>
       </div>
