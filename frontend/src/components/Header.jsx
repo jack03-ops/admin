@@ -14,7 +14,7 @@ export default function Header({ title, user, setPage }) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
         {/* Notifications Indicator */}
         <button 
           onClick={() => setPage('notifications')}
