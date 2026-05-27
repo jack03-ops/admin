@@ -88,7 +88,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-orange-500" />
+            <Sparkles className="w-6 h-6 text-red-500" />
             {isEditMode ? `Edit Member Profile: ${formData.id}` : 'Enroll New Gym Member'}
           </h2>
           <p className="text-xs text-slate-400 mt-1">
@@ -97,7 +97,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
         </div>
         <button
           onClick={onCancel}
-          className="p-2 text-slate-400 hover:text-slate-200 bg-slate-900 border border-slate-800 rounded-xl transition-all cursor-pointer"
+          className="p-2 text-slate-400 hover:text-slate-200 bg-zinc-900 border border-zinc-900 rounded-xl transition-all cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -106,8 +106,8 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
       {/* Form Panel */}
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Core fields card */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-5 lg:col-span-2">
-          <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-800 pb-3">Personal Details</h3>
+        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-5 lg:col-span-2">
+          <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3">Personal Details</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Full Name */}
@@ -118,7 +118,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
                 placeholder="e.g. Rahul Sharma"
               />
               {errors.fullName && (
@@ -138,7 +138,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="age"
                   value={formData.age}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
                   placeholder="24"
                 />
                 {errors.age && (
@@ -153,7 +153,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className="w-full px-3 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-orange-500"
+                  className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-red-500"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -171,7 +171,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 value={formData.phone}
                 onChange={handleChange}
                 maxLength="10"
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
                 placeholder="e.g. 9876543210"
               />
               {errors.phone && (
@@ -191,7 +191,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 value={formData.whatsapp}
                 onChange={handleChange}
                 maxLength="10"
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
                 placeholder="Leave blank if same as phone"
               />
             </div>
@@ -204,7 +204,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="village"
                 value={formData.village}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
                 placeholder="Village / Town Name"
               />
               {errors.village && (
@@ -223,7 +223,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="joiningDate"
                 value={formData.joiningDate}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
               />
             </div>
           </div>
@@ -236,7 +236,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               value={formData.address}
               onChange={handleChange}
               rows="2"
-              className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all resize-none"
+              className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all resize-none"
               placeholder="House, landmark or street specifics..."
             />
           </div>
@@ -244,8 +244,8 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
         {/* Membership & Payment Plan side details */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-800 pb-3">Subscription details</h3>
+          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
+            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3">Subscription details</h3>
             
             {/* Membership Plan */}
             <div>
@@ -254,7 +254,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="plan"
                 value={formData.plan}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500"
+                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
               >
                 {settings.membershipPlans.map(p => (
                   <option key={p.name} value={p.name}>{p.name} (₹{p.price})</option>
@@ -270,7 +270,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
               />
             </div>
 
@@ -282,7 +282,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="endDate"
                 value={formData.endDate}
                 readOnly
-                className="w-full px-3.5 py-2.5 bg-slate-950/40 border border-slate-800/80 rounded-xl text-xs text-slate-400 focus:outline-none cursor-not-allowed"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/40 border border-zinc-900/80 rounded-xl text-xs text-slate-400 focus:outline-none cursor-not-allowed"
               />
             </div>
 
@@ -293,7 +293,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="paymentStatus"
                 value={formData.paymentStatus}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 font-bold"
+                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 font-bold"
               >
                 <option value="Paid">Paid</option>
                 <option value="Pending">Pending</option>
@@ -307,7 +307,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500"
+                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
               >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -316,7 +316,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
           </div>
 
           {/* Notes Card & Save */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
             <div>
               <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Personal Fitness Notes</label>
               <textarea
@@ -324,7 +324,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 value={formData.notes}
                 onChange={handleChange}
                 rows="3"
-                className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 transition-all resize-none"
+                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all resize-none"
                 placeholder="Injuries, bodybuilding goals, time restrictions..."
               />
             </div>
@@ -333,13 +333,13 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               <button
                 type="button"
                 onClick={onCancel}
-                className="w-1/2 py-2.5 bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-semibold rounded-xl transition-all cursor-pointer text-center"
+                className="w-1/2 py-2.5 bg-zinc-900 border border-zinc-900 text-slate-400 hover:text-slate-200 text-xs font-semibold rounded-xl transition-all cursor-pointer text-center"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="w-1/2 py-2.5 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-1/2 py-2.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 Save Member

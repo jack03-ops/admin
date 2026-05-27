@@ -86,7 +86,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
     <div className="p-8 space-y-8 overflow-y-auto max-h-[calc(100vh-80px)]">
       {/* Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-panel-glow-cyan p-6 rounded-2xl border border-slate-800">
+        <div className="glass-panel-glow-cyan p-6 rounded-2xl border border-zinc-900">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Fees Collected</p>
@@ -99,20 +99,20 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
           <p className="text-[10px] text-slate-500 font-bold mt-4 uppercase">Across all historical terms</p>
         </div>
 
-        <div className="glass-panel-glow-orange p-6 rounded-2xl border border-slate-800">
+        <div className="glass-panel-glow-red p-6 rounded-2xl border border-zinc-900">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Estimated Pending Dues</p>
               <h3 className="text-3xl font-extrabold text-white mt-2">₹{stats.pendingAmount.toLocaleString()}</h3>
             </div>
-            <div className="bg-orange-500/10 p-3 rounded-xl text-orange-400">
+            <div className="bg-red-500/10 p-3 rounded-xl text-red-400">
               <Clock className="w-6 h-6 animate-pulse" />
             </div>
           </div>
-          <p className="text-[10px] text-orange-400 font-bold mt-4 uppercase">{stats.pendingCount} members pending payment</p>
+          <p className="text-[10px] text-red-400 font-bold mt-4 uppercase">{stats.pendingCount} members pending payment</p>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-center">
+        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 flex flex-col justify-center">
           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Record Operations</h4>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
@@ -126,8 +126,8 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
 
       {/* Manual invoice form panel */}
       {showAddForm && (
-        <form onSubmit={handleAddPaymentSubmit} className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 max-w-xl">
-          <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-slate-800 pb-3">Bill Payment Receipt</h3>
+        <form onSubmit={handleAddPaymentSubmit} className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4 max-w-xl">
+          <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3">Bill Payment Receipt</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Select Gym Client</label>
@@ -144,7 +144,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                   }));
                 }}
                 required
-                className="w-full px-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
+                className="w-full px-3 py-2 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
               >
                 <option value="">-- Choose Member --</option>
                 {members.map(m => (
@@ -160,7 +160,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                 value={newPayment.amount}
                 onChange={(e) => setNewPayment(prev => ({ ...prev, amount: e.target.value }))}
                 required
-                className="w-full px-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
+                className="w-full px-3 py-2 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
                 placeholder="2700"
               />
             </div>
@@ -170,7 +170,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
               <select
                 value={newPayment.method}
                 onChange={(e) => setNewPayment(prev => ({ ...prev, method: e.target.value }))}
-                className="w-full px-3 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
+                className="w-full px-3 py-2 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
               >
                 <option value="UPI">UPI (PhonePe/GPay)</option>
                 <option value="Cash">Cash Handover</option>
@@ -183,7 +183,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                className="w-1/2 py-2 bg-slate-900 border border-slate-800 text-slate-400 text-xs font-semibold rounded-xl"
+                className="w-1/2 py-2 bg-zinc-900 border border-zinc-900 text-slate-400 text-xs font-semibold rounded-xl"
               >
                 Cancel
               </button>
@@ -201,9 +201,9 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
       {/* Grid of Pending payments & Transaction log */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Pending lists */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 h-fit">
-          <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-3 flex items-center gap-2">
-            <Clock className="w-4 h-4 text-orange-400" />
+        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 h-fit">
+          <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4 border-b border-zinc-900 pb-3 flex items-center gap-2">
+            <Clock className="w-4 h-4 text-red-400" />
             Pending Member Dues
           </h4>
           <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
@@ -211,11 +211,11 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
               pendingMembers.map((m) => {
                 const planPrice = settings.membershipPlans.find(p => p.name === m.plan)?.price || 1000;
                 return (
-                  <div key={m.id} className="p-3 bg-slate-950/50 border border-slate-900 rounded-xl flex items-center justify-between gap-3 text-xs">
+                  <div key={m.id} className="p-3 bg-zinc-950/50 border border-zinc-900 rounded-xl flex items-center justify-between gap-3 text-xs">
                     <div>
                       <p className="font-bold text-white">{m.fullName}</p>
                       <p className="text-[10px] text-slate-500 font-semibold">{m.id} • {m.plan} plan</p>
-                      <p className="text-[10px] text-amber-500 font-extrabold mt-1">Dues: ₹{planPrice}</p>
+                      <p className="text-[10px] text-rose-500 font-extrabold mt-1">Dues: ₹{planPrice}</p>
                     </div>
                     <button
                       onClick={() => onMarkAsPaid(m.id, planPrice, m.plan)}
@@ -233,7 +233,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
         </div>
 
         {/* Completed list */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 lg:col-span-2">
+        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 lg:col-span-2">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3.5 mb-6">
             <h4 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
               <Receipt className="w-4 h-4 text-cyan-400" />
@@ -248,7 +248,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                 placeholder="Search transactions..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 bg-slate-950 border border-slate-850 rounded-lg text-[11px] text-white focus:outline-none focus:border-cyan-500"
+                className="w-full pl-8 pr-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-[11px] text-white focus:outline-none focus:border-cyan-500"
               />
             </div>
           </div>
@@ -256,7 +256,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
           <div className="overflow-x-auto max-h-[350px]">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 bg-slate-950/45 text-slate-500 text-[9px] uppercase font-black tracking-wider">
+                <tr className="border-b border-zinc-900 bg-zinc-950/45 text-slate-500 text-[9px] uppercase font-black tracking-wider">
                   <th className="p-3 pl-4">Receipt ID</th>
                   <th className="p-3">Client</th>
                   <th className="p-3 text-center">Plan</th>
@@ -265,17 +265,17 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                   <th className="p-3 pr-4 text-right">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/40 text-[11px] text-slate-300">
+              <tbody className="divide-y divide-zinc-900/40 text-[11px] text-slate-300">
                 {filteredPayments.length > 0 ? (
                   filteredPayments.map((p) => (
-                    <tr key={p.id} className="hover:bg-slate-900/20">
+                    <tr key={p.id} className="hover:bg-zinc-900/20">
                       <td className="p-3 pl-4 font-bold text-slate-400">{p.id}</td>
                       <td className="p-3">
                         <div className="font-semibold text-white">{p.clientName}</div>
                         <div className="text-[9px] text-slate-500 font-semibold">{p.clientId}</div>
                       </td>
                       <td className="p-3 text-center">
-                        <span className="px-2 py-0.5 bg-slate-850 rounded font-semibold text-[9px] uppercase text-slate-400">
+                        <span className="px-2 py-0.5 bg-zinc-800 rounded font-semibold text-[9px] uppercase text-slate-400">
                           {p.plan}
                         </span>
                       </td>

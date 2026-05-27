@@ -75,13 +75,13 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
     <div className="p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
       <div>
         <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-          <Bell className="w-6 h-6 text-orange-500" />
+          <Bell className="w-6 h-6 text-red-500" />
           Alert Feed & Action Center
         </h2>
         <p className="text-xs text-slate-400 mt-1">Review critical pending balances, client expirations, and triggers.</p>
       </div>
 
-      <div className="glass-panel rounded-2xl border border-slate-800 divide-y divide-slate-800/80 shadow-2xl max-w-4xl">
+      <div className="glass-panel rounded-2xl border border-zinc-900 divide-y divide-zinc-900/80 shadow-2xl max-w-4xl">
         {alertsList.length > 0 ? (
           alertsList.map((alert) => {
             const Icon = 
@@ -91,11 +91,11 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
             
             const colorClass = 
               alert.severity === 'danger' ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' :
-              alert.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' :
+              alert.severity === 'warning' ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' :
               'bg-blue-500/10 border-blue-500/30 text-blue-400';
 
             return (
-              <div key={alert.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-900/10 transition-colors">
+              <div key={alert.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-zinc-900/10 transition-colors">
                 <div className="flex gap-4">
                   <div className={`p-3 rounded-xl border shrink-0 ${colorClass}`}>
                     <Icon className="w-5 h-5 animate-pulse" />
@@ -128,7 +128,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
                       onClick={() => {
                         setPage('payments');
                       }}
-                      className="px-3 py-1.5 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer"
+                      className="px-3 py-1.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer"
                     >
                       Receive Fee
                     </button>
