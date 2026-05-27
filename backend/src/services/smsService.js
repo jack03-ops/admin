@@ -21,10 +21,11 @@ export const sendSMS = async (to, body) => {
     const twilio = (await import('twilio')).default;
     const client = twilio(accountSid, authToken);
     
+    const cleanTo = to.replace(/\s+/g, '');
     const message = await client.messages.create({
       body,
       from,
-      to: to.startsWith('+') ? to : `+91${to}` // Default to Indian prefix if missing
+      to: cleanTo.startsWith('+') ? cleanTo : `+91${cleanTo}` // Default to Indian prefix if missing
     });
 
     console.log(`[Twilio Success] Message SID: ${message.sid}`);

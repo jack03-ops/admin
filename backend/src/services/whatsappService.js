@@ -19,10 +19,11 @@ export const sendWhatsAppMessage = async (to, body) => {
     const url = `https://graph.facebook.com/v18.0/${phoneId}/messages`;
     
     // We send a template message or dynamic text. WhatsApp Cloud API requires text object for custom messages
+    const cleanTo = to.replace(/\s+/g, '');
     const payload = {
       messaging_product: "whatsapp",
       recipient_type: "individual",
-      to: to.startsWith('+') ? to : `+91${to}`,
+      to: cleanTo.startsWith('+') ? cleanTo : `+91${cleanTo}`,
       type: "text",
       text: {
         preview_url: false,
