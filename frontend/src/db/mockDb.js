@@ -3,58 +3,66 @@
 const LOCAL_STORAGE_KEY = 'phoenix_gym_members';
 const SETTINGS_KEY = 'phoenix_gym_settings';
 const PAYMENTS_KEY = 'phoenix_gym_payments';
+const REMINDERS_KEY = 'phoenix_gym_reminders';
+
+// Calculate test dates relative to current date (2026-05-27)
+const getRelativeDateStr = (daysAhead) => {
+  const date = new Date('2026-05-27');
+  date.setDate(date.getDate() + daysAhead);
+  return date.toISOString().split('T')[0];
+};
 
 const DEFAULT_MEMBERS = [
   {
     id: "PXM-1001",
-    fullName: "Arjun Singh",
-    phone: "9876543210",
-    whatsapp: "9876543210",
+    fullName: "Karthik Kumar",
+    phone: "9487817301",
+    whatsapp: "9487817301",
     village: "Rampur",
     address: "Near Temple, Rampur",
     gender: "Male",
     age: 24,
-    joiningDate: "2026-01-10",
-    plan: "Quarterly",
-    startDate: "2026-04-10",
-    endDate: "2026-07-10",
+    joiningDate: "2026-04-28",
+    plan: "Monthly",
+    startDate: "2026-04-28",
+    endDate: getRelativeDateStr(1), // Expiring in 1 day!
     paymentStatus: "Paid",
     status: "Active",
-    notes: "Regular morning batch powerlifter."
+    notes: "Requires regular warnings for expiry."
   },
   {
     id: "PXM-1002",
-    fullName: "Priya Sharma",
-    phone: "8765432109",
-    whatsapp: "8765432109",
+    fullName: "Suresh Raina",
+    phone: "9487817301",
+    whatsapp: "9487817301",
     village: "Chandpur",
     address: "Gali No 3, Chandpur",
-    gender: "Female",
-    age: 22,
-    joiningDate: "2025-12-15",
-    plan: "Yearly",
-    startDate: "2025-12-15",
-    endDate: "2026-12-15",
+    gender: "Male",
+    age: 32,
+    joiningDate: "2026-04-30",
+    plan: "Monthly",
+    startDate: "2026-04-30",
+    endDate: getRelativeDateStr(3), // Expiring in 3 days!
     paymentStatus: "Paid",
     status: "Active",
     notes: "Prefers evening cardio sessions."
   },
   {
     id: "PXM-1003",
-    fullName: "Vikram Rathore",
-    phone: "7654321098",
-    whatsapp: "7654321098",
-    village: "Rampur",
-    address: "Farmhouse Road, Rampur",
+    fullName: "Dhanush Raj",
+    phone: "9487817301",
+    whatsapp: "9487817301",
+    village: "Sohna",
+    address: "Main Market, Sohna",
     gender: "Male",
-    age: 29,
-    joiningDate: "2026-03-01",
+    age: 21,
+    joiningDate: "2026-05-02",
     plan: "Monthly",
-    startDate: "2026-05-01",
-    endDate: "2026-06-01",
-    paymentStatus: "Pending",
+    startDate: "2026-05-02",
+    endDate: getRelativeDateStr(5), // Expiring in 5 days!
+    paymentStatus: "Paid",
     status: "Active",
-    notes: "Requires posture correction guidance."
+    notes: "Regular morning batch powerlifter."
   },
   {
     id: "PXM-1004",
@@ -105,24 +113,7 @@ const DEFAULT_MEMBERS = [
     endDate: "2026-06-01",
     paymentStatus: "Paid",
     status: "Active",
-    notes: "Joined with friend Priya."
-  },
-  {
-    id: "PXM-1007",
-    fullName: "Amit Patel",
-    phone: "9001122334",
-    whatsapp: "",
-    village: "Chandpur",
-    address: "Near Post Office, Chandpur",
-    gender: "Male",
-    age: 31,
-    joiningDate: "2026-02-10",
-    plan: "Quarterly",
-    startDate: "2026-02-10",
-    endDate: "2026-05-10",
-    paymentStatus: "Pending",
-    status: "Inactive",
-    notes: "Out of town, will renew in June."
+    notes: "Joined with friend Suresh."
   }
 ];
 
@@ -138,10 +129,14 @@ const DEFAULT_SETTINGS = {
 };
 
 const DEFAULT_PAYMENTS = [
-  { id: "TXN-101", clientId: "PXM-1001", clientName: "Arjun Singh", amount: 2700, date: "2026-04-10", plan: "Quarterly", method: "UPI" },
-  { id: "TXN-102", clientId: "PXM-1002", clientName: "Priya Sharma", amount: 9000, date: "2025-12-15", plan: "Yearly", method: "Cash" },
-  { id: "TXN-103", clientId: "PXM-1005", clientName: "Rajesh Kumar", amount: 5000, date: "2026-04-05", plan: "Half-Yearly", method: "UPI" },
-  { id: "TXN-104", clientId: "PXM-1006", clientName: "Simran Kaur", amount: 1000, date: "2026-05-01", plan: "Monthly", method: "Net Banking" }
+  { id: "TXN-101", clientId: "PXM-1001", clientName: "Karthik Kumar", amount: 1000, date: "2026-04-28", plan: "Monthly", method: "UPI" },
+  { id: "TXN-102", clientId: "PXM-1002", clientName: "Suresh Raina", amount: 1000, date: "2026-04-30", plan: "Monthly", method: "Cash" },
+  { id: "TXN-103", clientId: "PXM-1003", clientName: "Dhanush Raj", amount: 1000, date: "2026-05-02", plan: "Monthly", method: "UPI" },
+  { id: "TXN-104", clientId: "PXM-1005", clientName: "Rajesh Kumar", amount: 5000, date: "2026-04-05", plan: "Half-Yearly", method: "UPI" }
+];
+
+const DEFAULT_REMINDERS = [
+  { id: "REM-101", clientName: "Karthik Kumar", phone: "9487817301", date: "2026-05-26", type: "WhatsApp", status: "Sent", message: "Hello Karthik Kumar, your Phoenix Gym membership will expire on 2026-05-28. Please renew your membership to continue uninterrupted access. — Phoenix Admin" }
 ];
 
 export const getMembers = () => {
@@ -183,9 +178,23 @@ export const savePayments = (payments) => {
   localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments));
 };
 
+export const getReminders = () => {
+  const data = localStorage.getItem(REMINDERS_KEY);
+  if (!data) {
+    localStorage.setItem(REMINDERS_KEY, JSON.stringify(DEFAULT_REMINDERS));
+    return DEFAULT_REMINDERS;
+  }
+  return JSON.parse(data);
+};
+
+export const saveReminders = (reminders) => {
+  localStorage.setItem(REMINDERS_KEY, JSON.stringify(reminders));
+};
+
 // Seed utility to fully initialize all stores on application mount
 export const initializeDb = () => {
   getMembers();
   getSettings();
   getPayments();
+  getReminders();
 };
