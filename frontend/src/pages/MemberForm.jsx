@@ -124,7 +124,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
 
   return (
-    <div className="p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

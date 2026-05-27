@@ -83,54 +83,54 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
   };
 
   return (
-    <div className="p-8 space-y-8 overflow-y-auto max-h-[calc(100vh-80px)]">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-8 overflow-y-auto max-h-[calc(100vh-80px)]">
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass-panel-glow-cyan p-6 rounded-2xl border border-zinc-900">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+        <div className="glass-panel-glow-cyan p-4 md:p-6 rounded-2xl border border-zinc-900">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Fees Collected</p>
-              <h3 className="text-3xl font-extrabold text-white mt-2">₹{stats.collected.toLocaleString()}</h3>
+              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Total Fees</p>
+              <h3 className="text-xl md:text-3xl font-extrabold text-white mt-1.5">₹{stats.collected.toLocaleString()}</h3>
             </div>
-            <div className="bg-cyan-500/10 p-3 rounded-xl text-cyan-400">
-              <CheckCircle2 className="w-6 h-6" />
+            <div className="bg-cyan-500/10 p-2 md:p-3 rounded-xl text-cyan-400 shrink-0">
+              <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6" />
             </div>
           </div>
-          <p className="text-[10px] text-slate-500 font-bold mt-4 uppercase">Across all historical terms</p>
+          <p className="text-[9px] text-slate-555 font-bold mt-3.5 uppercase hidden sm:block">Across all history</p>
         </div>
 
-        <div className="glass-panel-glow-red p-6 rounded-2xl border border-zinc-900">
+        <div className="glass-panel-glow-red p-4 md:p-6 rounded-2xl border border-zinc-900">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Estimated Pending Dues</p>
-              <h3 className="text-3xl font-extrabold text-white mt-2">₹{stats.pendingAmount.toLocaleString()}</h3>
+              <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Pending Dues</p>
+              <h3 className="text-xl md:text-3xl font-extrabold text-white mt-1.5">₹{stats.pendingAmount.toLocaleString()}</h3>
             </div>
-            <div className="bg-red-500/10 p-3 rounded-xl text-red-400">
-              <Clock className="w-6 h-6 animate-pulse" />
+            <div className="bg-red-500/10 p-2 md:p-3 rounded-xl text-red-400 shrink-0">
+              <Clock className="w-5 h-5 md:w-6 md:h-6 animate-pulse" />
             </div>
           </div>
-          <p className="text-[10px] text-red-400 font-bold mt-4 uppercase">{stats.pendingCount} members pending payment</p>
+          <p className="text-[9px] text-red-400 font-bold mt-3.5 uppercase truncate">{stats.pendingCount} pending</p>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 flex flex-col justify-center">
-          <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Record Operations</h4>
+        <div className="glass-panel p-4 md:p-6 rounded-2xl border border-zinc-900 flex flex-col justify-center col-span-2 md:col-span-1">
+          <h4 className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 hidden md:block">Record Operations</h4>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            Manual Billing Receipt
+            Billing Receipt
           </button>
         </div>
       </div>
 
       {/* Manual invoice form panel */}
       {showAddForm && (
-        <form onSubmit={handleAddPaymentSubmit} className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4 max-w-xl">
-          <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3">Bill Payment Receipt</h3>
+        <form onSubmit={handleAddPaymentSubmit} className="glass-panel p-4 md:p-6 rounded-2xl border border-zinc-900 space-y-4 max-w-xl">
+          <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3">Bill Payment Receipt</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Select Gym Client</label>
+              <label className="block text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Select Gym Client</label>
               <select
                 value={newPayment.clientId}
                 onChange={(e) => {
@@ -148,13 +148,13 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
               >
                 <option value="">-- Choose Member --</option>
                 {members.map(m => (
-                  <option key={m.id} value={m.id}>{m.fullName} ({m.id}) - {m.plan}</option>
+                  <option key={m.id} value={m.id}>{m.fullName} ({m.id})</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Fees Amount (₹)</label>
+              <label className="block text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Fees Amount (₹)</label>
               <input
                 type="number"
                 value={newPayment.amount}
@@ -166,7 +166,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Payment Method</label>
+              <label className="block text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Payment Method</label>
               <select
                 value={newPayment.method}
                 onChange={(e) => setNewPayment(prev => ({ ...prev, method: e.target.value }))}
@@ -179,11 +179,11 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
               </select>
             </div>
 
-            <div className="flex items-end gap-2">
+            <div className="flex items-end gap-2 pt-2 md:pt-0">
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                className="w-1/2 py-2 bg-zinc-900 border border-zinc-900 text-slate-400 text-xs font-semibold rounded-xl"
+                className="w-1/2 py-2 bg-zinc-905 border border-zinc-900 text-slate-400 text-xs font-semibold rounded-xl"
               >
                 Cancel
               </button>
@@ -199,14 +199,14 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
       )}
 
       {/* Grid of Pending payments & Transaction log */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Pending lists */}
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 h-fit">
-          <h4 className="text-sm font-black text-white uppercase tracking-wider mb-4 border-b border-zinc-900 pb-3 flex items-center gap-2">
+        <div className="glass-panel p-4 md:p-6 rounded-2xl border border-zinc-900 h-fit">
+          <h4 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-4 border-b border-zinc-900 pb-3 flex items-center gap-2">
             <Clock className="w-4 h-4 text-red-400" />
             Pending Member Dues
           </h4>
-          <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
+          <div className="space-y-3 max-h-[350px] overflow-y-auto pr-1">
             {pendingMembers.length > 0 ? (
               pendingMembers.map((m) => {
                 const planPrice = settings.membershipPlans.find(p => p.name === m.plan)?.price || 1000;
@@ -214,28 +214,28 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                   <div key={m.id} className="p-3 bg-zinc-950/50 border border-zinc-900 rounded-xl flex items-center justify-between gap-3 text-xs">
                     <div>
                       <p className="font-bold text-white">{m.fullName}</p>
-                      <p className="text-[10px] text-slate-500 font-semibold">{m.id} • {m.plan} plan</p>
+                      <p className="text-[10px] text-slate-500 font-semibold">{m.id} • {m.plan}</p>
                       <p className="text-[10px] text-rose-500 font-extrabold mt-1">Dues: ₹{planPrice}</p>
                     </div>
                     <button
                       onClick={() => onMarkAsPaid(m.id, planPrice, m.plan)}
-                      className="px-2.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-white border border-emerald-500/25 rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer"
+                      className="px-2.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-555 text-emerald-450 hover:text-white border border-emerald-500/25 rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer shrink-0"
                     >
-                      Receive Fee
+                      Receive
                     </button>
                   </div>
                 );
               })
             ) : (
-              <p className="text-xs text-slate-500 text-center py-6">All gym memberships are fully paid!</p>
+              <p className="text-xs text-slate-500 text-center py-6">All gym memberships are paid!</p>
             )}
           </div>
         </div>
 
         {/* Completed list */}
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 lg:col-span-2">
+        <div className="glass-panel p-4 md:p-6 rounded-2xl border border-zinc-900 lg:col-span-2">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3.5 mb-6">
-            <h4 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+            <h4 className="text-xs md:text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
               <Receipt className="w-4 h-4 text-cyan-400" />
               Receipt Ledgers
             </h4>
@@ -248,12 +248,13 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                 placeholder="Search transactions..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-[11px] text-white focus:outline-none focus:border-cyan-500"
+                className="w-full pl-8 pr-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-[11px] text-white focus:outline-none focus:border-cyan-500"
               />
             </div>
           </div>
 
-          <div className="overflow-x-auto max-h-[350px]">
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto max-h-[350px]">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-zinc-900 bg-zinc-950/45 text-slate-500 text-[9px] uppercase font-black tracking-wider">
@@ -293,6 +294,35 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                 )}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card List (Mobile only) */}
+          <div className="grid grid-cols-1 gap-2.5 md:hidden max-h-[350px] overflow-y-auto pr-1">
+            {filteredPayments.length > 0 ? (
+              filteredPayments.map((p) => (
+                <div key={p.id} className="p-3 bg-zinc-950/60 border border-zinc-900 rounded-xl space-y-2 text-[11px]">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-[9px] font-bold text-slate-500 block mb-0.5">{p.id}</span>
+                      <h5 className="font-bold text-white">{p.clientName}</h5>
+                      <span className="text-[9px] text-zinc-500 font-semibold">{p.clientId}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-extrabold text-white text-[11px] block">₹{p.amount}</span>
+                      <span className="text-[9px] text-slate-500 font-semibold">{p.date}</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-zinc-900/60">
+                    <span className="px-2 py-0.2 bg-zinc-900 border border-zinc-850 rounded font-semibold text-[8px] uppercase text-slate-400">
+                      {p.plan}
+                    </span>
+                    <span className="font-bold text-cyan-400">{p.method}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="p-6 text-center text-slate-500">No payment receipts logged yet.</div>
+            )}
           </div>
         </div>
       </div>

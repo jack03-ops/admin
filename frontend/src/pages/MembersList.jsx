@@ -64,16 +64,16 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
   }, [members, searchTerm, searchField, statusFilter]);
 
   return (
-    <div className="p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
       {/* Header Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black text-white tracking-tight">Gym Members Directory</h2>
-          <p className="text-xs text-slate-400 mt-1">Manage physical files, subscriptions, active batches, and alerts.</p>
+          <h2 className="text-xl md:text-2xl font-black text-white tracking-tight">Gym Members Directory</h2>
+          <p className="text-[10px] sm:text-xs text-slate-400 mt-1">Manage physical files, subscriptions, active batches, and alerts.</p>
         </div>
         <button
           onClick={() => setPage('add-member')}
-          className="px-4 py-2.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer shrink-0 self-start md:self-auto"
+          className="px-4 py-2.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer shrink-0 w-full md:w-auto justify-center"
         >
           <Plus className="w-4 h-4" />
           Add Member
@@ -81,8 +81,8 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
       </div>
 
       {/* Filters Control Panel */}
-      <div className="glass-panel p-5 rounded-2xl border border-zinc-900 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+      <div className="glass-panel p-4 md:p-5 rounded-2xl border border-zinc-900 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
           {/* Search Inputs */}
           <div className="md:col-span-6 relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -91,7 +91,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
               placeholder="Search members database..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white placeholder:text-slate-650 focus:outline-none focus:border-red-500 transition-all"
             />
           </div>
 
@@ -100,7 +100,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
             <select
               value={searchField}
               onChange={(e) => setSearchField(e.target.value)}
-              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-red-500"
+              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-350 focus:outline-none focus:border-red-500"
             >
               <option value="all">Search In All Fields</option>
               <option value="name">Search By Full Name</option>
@@ -115,7 +115,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-red-500 font-semibold"
+              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-350 focus:outline-none focus:border-red-500 font-semibold"
             >
               <option value="all">All Registrations</option>
               <option value="active">Active Subscriptions</option>
@@ -127,8 +127,8 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
         </div>
       </div>
 
-      {/* Database Table Panel */}
-      <div className="glass-panel rounded-2xl border border-zinc-900 overflow-hidden shadow-2xl">
+      {/* Desktop Database Table Panel (Hidden on mobile) */}
+      <div className="hidden md:block glass-panel rounded-2xl border border-zinc-900 overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -267,6 +267,87 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Mobile Grid Layout (Shown on mobile viewports) */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {filteredMembers.length > 0 ? (
+          filteredMembers.map((member) => {
+            const today = new Date();
+            const isExpired = new Date(member.endDate) < today;
+
+            return (
+              <div key={member.id} className="glass-panel p-4 rounded-xl border border-zinc-900 space-y-3 shadow-lg">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-[10px] font-bold text-red-400 block mb-0.5">{member.id}</span>
+                    <h4 className="text-sm font-bold text-white">{member.fullName}</h4>
+                    <p className="text-[10px] text-zinc-500 font-semibold mt-0.5">Age: {member.age} • {member.gender}</p>
+                  </div>
+                  <div className="flex flex-col gap-1.5 items-end">
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase ${
+                      member.paymentStatus === 'Paid' 
+                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                        : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                    }`}>
+                      {member.paymentStatus}
+                    </span>
+                    <button
+                      onClick={() => onToggleStatus(member.id)}
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold border transition-all ${
+                        member.status === 'Active'
+                          ? 'bg-red-500/10 text-red-400 border-red-500/25'
+                          : 'bg-zinc-900 text-slate-500 border-slate-700'
+                      }`}
+                    >
+                      {member.status === 'Active' ? 'Active' : 'Inactive'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 py-2 border-y border-zinc-900 text-[11px] text-slate-300">
+                  <div>
+                    <span className="text-[9px] text-zinc-500 block uppercase font-bold mb-0.5">Active Plan</span>
+                    <span className="font-bold text-white text-[10px] bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800 uppercase">{member.plan}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] text-zinc-500 block uppercase font-bold mb-0.5">End Date</span>
+                    <span className={`font-semibold ${isExpired ? 'text-rose-400' : 'text-slate-300'}`}>{member.endDate}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1.5 text-[11px] text-slate-400 pt-1">
+                  <div className="flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                    <a href={`tel:${member.phone}`} className="hover:text-red-400 transition-colors text-slate-200 font-medium">{member.phone}</a>
+                    {member.whatsapp && <span className="text-[9px] text-emerald-400 font-bold bg-emerald-500/10 px-1 rounded">WhatsApp</span>}
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                    <span className="truncate text-slate-300">{member.village} • {member.address}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-3 border-t border-zinc-900">
+                  <button
+                    onClick={() => onEditMember(member)}
+                    className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-bold bg-zinc-900 border border-zinc-850 rounded-lg hover:border-red-500/40 text-slate-300 transition-all cursor-pointer"
+                  >
+                    <Edit3 className="w-3 h-3" /> Edit Profile
+                  </button>
+                  <button
+                    onClick={() => onDeleteMember(member.id)}
+                    className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-bold bg-rose-500/5 hover:bg-rose-500/10 border border-rose-500/15 text-rose-400 rounded-lg transition-all cursor-pointer"
+                  >
+                    <Trash2 className="w-3 h-3" /> Delete
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="glass-panel p-8 text-center text-slate-500 rounded-xl">No members match filters.</div>
+        )}
       </div>
     </div>
   );

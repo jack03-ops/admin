@@ -9,7 +9,19 @@ import Payments from './pages/Payments';
 import Reports from './pages/Reports';
 import Notifications from './pages/Notifications';
 import Settings from './pages/Settings';
-import { CheckCircle2 } from 'lucide-react';
+import { 
+  CheckCircle2,
+  LayoutDashboard,
+  Users,
+  CreditCard,
+  MoreHorizontal,
+  X,
+  BarChart3,
+  Bell,
+  Settings as SettingsIcon,
+  LogOut,
+  UserPlus
+} from 'lucide-react';
 import { 
   getMembers, 
   saveMembers, 
@@ -25,6 +37,7 @@ export default function App() {
   const [payments, setPayments] = useState([]);
   const [memberToEdit, setMemberToEdit] = useState(null);
   const [toast, setToast] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -54,6 +67,7 @@ export default function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('phoenix_gym_session');
+    setIsMobileMenuOpen(false);
   };
 
   // Add & Update Member Handler
@@ -230,7 +244,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex bg-[#030303] min-h-screen w-full max-w-full text-slate-100 font-sans overflow-x-hidden">
+    <div className="flex bg-[#030303] min-h-screen w-full max-w-full text-slate-100 font-sans overflow-x-hidden pb-20 md:pb-0">
       {/* Toast Notification Container */}
       {toast && (
         <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-zinc-900/95 border border-emerald-500/30 text-slate-100 px-5 py-4 rounded-2xl shadow-[0_0_25px_rgba(16,185,129,0.15)] backdrop-blur-md transition-all duration-300">
@@ -242,12 +256,14 @@ export default function App() {
         </div>
       )}
 
-      {/* Sidebar navigation */}
-      <Sidebar 
-        currentPage={currentPage === 'edit-member' ? 'members' : currentPage} 
-        setCurrentPage={setCurrentPage} 
-        onLogout={handleLogout} 
-      />
+      {/* Sidebar navigation (Desktop only) */}
+      <div className="hidden md:flex">
+        <Sidebar 
+          currentPage={currentPage === 'edit-member' ? 'members' : currentPage} 
+          setCurrentPage={setCurrentPage} 
+          onLogout={handleLogout} 
+        />
+      </div>
 
       {/* Main Container Content */}
       <div className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden">
@@ -263,6 +279,107 @@ export default function App() {
           {renderPage()}
         </main>
       </div>
+
+      {/* Bottom Mobile Navigation (Mobile only) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/90 border-t border-zinc-900 backdrop-blur-xl z-40 flex items-center justify-around px-4">
+        <button 
+          onClick={() => { setCurrentPage('dashboard'); setIsMobileMenuOpen(false); }}
+          className={`flex flex-col items-center justify-center gap-1 py-1 cursor-pointer transition-colors ${currentPage === 'dashboard' ? 'text-red-500 font-bold' : 'text-zinc-400'}`}
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          <span className="text-[9px]">Dashboard</span>
+        </button>
+
+        <button 
+          onClick={() => { setCurrentPage('members'); setIsMobileMenuOpen(false); }}
+          className={`flex flex-col items-center justify-center gap-1 py-1 cursor-pointer transition-colors ${(currentPage === 'members' || currentPage === 'add-member' || currentPage === 'edit-member') ? 'text-red-500 font-bold' : 'text-zinc-400'}`}
+        >
+          <Users className="w-5 h-5" />
+          <span className="text-[9px]">Members</span>
+        </button>
+
+        <button 
+          onClick={() => { setCurrentPage('payments'); setIsMobileMenuOpen(false); }}
+          className={`flex flex-col items-center justify-center gap-1 py-1 cursor-pointer transition-colors ${currentPage === 'payments' ? 'text-red-500 font-bold' : 'text-zinc-400'}`}
+        >
+          <CreditCard className="w-5 h-5" />
+          <span className="text-[9px]">Payments</span>
+        </button>
+
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className={`flex flex-col items-center justify-center gap-1 py-1 cursor-pointer transition-colors ${isMobileMenuOpen ? 'text-red-500 font-bold' : 'text-zinc-400'}`}
+        >
+          <MoreHorizontal className="w-5 h-5" />
+          <span className="text-[9px]">More</span>
+        </button>
+      </div>
+
+      {/* Mobile Menu Drawer Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden flex justify-end transition-opacity duration-300">
+          <div className="w-[80%] max-w-sm bg-zinc-950 h-full border-l border-zinc-900 flex flex-col justify-between p-6 shadow-2xl relative">
+            <button 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white bg-zinc-900/50 rounded-xl"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-8 mt-10">
+              <div>
+                <h3 className="text-sm font-black text-red-500 uppercase tracking-widest">Phoenix Gym</h3>
+                <p className="text-[10px] text-zinc-400">Gym Administration Console</p>
+              </div>
+
+              <nav className="space-y-2">
+                <button
+                  onClick={() => { setCurrentPage('add-member'); setIsMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentPage === 'add-member' ? 'bg-red-500/10 text-red-400 font-bold' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  <UserPlus className="w-5 h-5" />
+                  <span className="text-xs">Enroll Member</span>
+                </button>
+
+                <button
+                  onClick={() => { setCurrentPage('reports'); setIsMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentPage === 'reports' ? 'bg-red-500/10 text-red-400 font-bold' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  <BarChart3 className="w-5 h-5" />
+                  <span className="text-xs">Reports Stats</span>
+                </button>
+
+                <button
+                  onClick={() => { setCurrentPage('notifications'); setIsMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentPage === 'notifications' ? 'bg-red-500/10 text-red-400 font-bold' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  <Bell className="w-5 h-5" />
+                  <span className="text-xs">Alert Notifications</span>
+                </button>
+
+                <button
+                  onClick={() => { setCurrentPage('settings'); setIsMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentPage === 'settings' ? 'bg-red-500/10 text-red-400 font-bold' : 'text-zinc-400 hover:text-zinc-200'}`}
+                >
+                  <SettingsIcon className="w-5 h-5" />
+                  <span className="text-xs">Settings & Configuration</span>
+                </button>
+              </nav>
+            </div>
+
+            <div className="border-t border-zinc-900 pt-4">
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-rose-400 hover:bg-rose-500/10 transition-all font-semibold"
+              >
+                <LogOut className="w-5 h-5" />
+                <span className="text-xs">Log Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

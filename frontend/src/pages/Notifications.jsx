@@ -72,7 +72,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
   };
 
   return (
-    <div className="p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
       <div>
         <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
           <Bell className="w-6 h-6 text-red-500" />
