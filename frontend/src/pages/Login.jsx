@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Flame, Lock, Mail, Dumbbell, ShieldCheck } from 'lucide-react';
+import phoenixLogo from '../assets/phoenix_logo.png';
 
 export default function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('admin@phoenixgym.com');
@@ -31,12 +32,13 @@ export default function Login({ onLoginSuccess }) {
       <div className="w-full max-w-md">
         {/* Gym Logo / Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex bg-red-500/10 p-3 rounded-2xl border border-red-500/30 text-red-500 mb-4 shadow-lg shadow-red-950/20">
-            <Flame className="w-10 h-10 animate-bounce" />
+          <div className="inline-flex p-1.5 bg-zinc-950 border border-red-500/30 rounded-3xl mb-4 shadow-xl shadow-red-950/20">
+            <img src={phoenixLogo} alt="Phoenix Logo" className="w-16 h-16 object-contain animate-pulse" />
           </div>
           <h2 className="text-3xl font-extrabold text-white tracking-tight">Phoenix Fitness Gym</h2>
           <p className="text-zinc-400 text-sm mt-1">Management Portal & Admin Telemetry</p>
         </div>
+
 
         {/* Card Panel */}
         <div className="glass-panel p-8 rounded-3xl shadow-2xl relative overflow-hidden border border-zinc-900">

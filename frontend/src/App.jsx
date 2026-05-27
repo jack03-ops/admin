@@ -218,7 +218,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex bg-[#0b0f19] min-h-screen text-slate-100 font-sans overflow-hidden">
+    <div className="flex bg-[#030303] min-h-screen text-slate-100 font-sans overflow-hidden">
       {/* Sidebar navigation */}
       <Sidebar 
         currentPage={currentPage === 'edit-member' ? 'members' : currentPage} 

@@ -10,6 +10,7 @@ import {
   LogOut,
   Flame
 } from 'lucide-react';
+import phoenixLogo from '../assets/phoenix_logo.png';
 
 export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
   const menuItems = [
@@ -26,15 +27,16 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
     <aside className="w-64 min-h-screen bg-zinc-950/65 backdrop-blur-xl border-r border-zinc-900 flex flex-col justify-between shrink-0">
       <div>
         {/* Gym Logo / Brand */}
-        <div className="p-6 flex items-center gap-3 border-b border-zinc-900">
-          <div className="bg-red-500/10 p-2 rounded-lg border border-red-500/30 text-red-500 animate-pulse-glow">
-            <Flame className="w-6 h-6" />
+        <div className="p-5 flex items-center gap-3 border-b border-zinc-900">
+          <div className="p-1 rounded-xl border border-red-500/30 animate-pulse-glow bg-zinc-950 shrink-0">
+            <img src={phoenixLogo} alt="Phoenix Logo" className="w-8 h-8 object-contain" />
           </div>
           <div>
             <h1 className="text-lg font-bold tracking-tight text-white m-0">Phoenix Gym</h1>
             <span className="text-[10px] text-red-500 font-semibold uppercase tracking-wider">Admin System</span>
           </div>
         </div>
+
 
         {/* Navigation Menu */}
         <nav className="p-4 space-y-1">
