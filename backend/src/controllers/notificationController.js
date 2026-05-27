@@ -40,6 +40,20 @@ export const sendInstantNotification = async (req, res, next) => {
   }
 };
 
+// Helper for WhatsApp retry in controller
+const sendWhatsAppWithRetry = async (phone, message, maxRetries = 3) => {
+  let attempts = 0;
+  while (attempts < maxRetries) {
+    try {
+      return await sendWhatsAppMessage(phone, message);
+    } catch (error) {
+      attempts++;
+      if (attempts >= maxRetries) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+};
+
 // @desc    Cron trigger endpoint to auto scan expiring memberships and dispatch reminders
 // @route   POST /api/notifications/auto-reminders
 // @access  Private
@@ -53,9 +67,8 @@ export const triggerAutoReminders = async (req, res, next) => {
     const logs = [];
 
     for (const days of intervals) {
-      const targetDate = new Date();
+      const targetDate = new Date(today);
       targetDate.setDate(today.getDate() + days);
-      targetDate.setHours(0,0,0,0);
 
       const nextDay = new Date(targetDate);
       nextDay.setDate(targetDate.getDate() + 1);
@@ -67,27 +80,73 @@ export const triggerAutoReminders = async (req, res, next) => {
       });
 
       for (const member of membersExpiring) {
-        const dateString = new Date(member.endDate).toLocaleDateString();
-        const reminderText = `Hello ${member.fullName}, your gym membership will expire on ${dateString}. Please renew your membership. - Phoenix Gym`;
+        const startOfToday = new Date(today);
+        const endOfToday = new Date(today);
+        endOfToday.setHours(23,59,59,999);
 
-        // Send via WhatsApp and SMS
+        // Reminder template
+        const reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in ${days} day(s). Please renew your membership to continue uninterrupted access.`;
+
+        // Dispatch WhatsApp if not sent today
         try {
-          await sendWhatsAppMessage(member.phone, reminderText);
-          await sendSMS(member.phone, reminderText);
-
-          // Log both triggers
-          const notif = await Notification.create({
+          const alreadySentWA = await Notification.findOne({
             memberId: member._id,
-            clientName: member.fullName,
-            phone: member.phone,
             type: 'WhatsApp',
-            message: reminderText,
-            status: 'Sent'
+            createdAt: { $gte: startOfToday, $lte: endOfToday }
           });
-          logs.push(notif);
-          dispatchedCount++;
+
+          if (!alreadySentWA) {
+            let status = 'Sent';
+            try {
+              await sendWhatsAppWithRetry(member.phone, reminderText);
+            } catch (err) {
+              status = 'Failed';
+            }
+
+            const notif = await Notification.create({
+              memberId: member._id,
+              clientName: member.fullName,
+              phone: member.phone,
+              type: 'WhatsApp',
+              message: reminderText,
+              status
+            });
+            logs.push(notif);
+            dispatchedCount++;
+          }
         } catch (err) {
-          console.error(`[Auto-Reminder Failure] member ID ${member.clientId}: ${err.message}`);
+          console.error(`[Auto-Reminder Failure WA] member ID ${member.clientId}: ${err.message}`);
+        }
+
+        // Dispatch SMS if not sent today
+        try {
+          const alreadySentSMS = await Notification.findOne({
+            memberId: member._id,
+            type: 'SMS',
+            createdAt: { $gte: startOfToday, $lte: endOfToday }
+          });
+
+          if (!alreadySentSMS) {
+            let status = 'Sent';
+            try {
+              await sendSMS(member.phone, reminderText);
+            } catch (err) {
+              status = 'Failed';
+            }
+
+            const notif = await Notification.create({
+              memberId: member._id,
+              clientName: member.fullName,
+              phone: member.phone,
+              type: 'SMS',
+              message: reminderText,
+              status
+            });
+            logs.push(notif);
+            dispatchedCount++;
+          }
+        } catch (err) {
+          console.error(`[Auto-Reminder Failure SMS] member ID ${member.clientId}: ${err.message}`);
         }
       }
     }

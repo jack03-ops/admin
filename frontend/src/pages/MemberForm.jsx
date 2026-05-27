@@ -9,8 +9,8 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
   const [formData, setFormData] = useState({
     id: '',
     fullName: '',
-    phone: '',
-    whatsapp: '',
+    phone: '+91 ',
+    whatsapp: '+91 ',
     village: '',
     address: '',
     gender: 'Male',
@@ -46,9 +46,42 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
   // Load existing member details on editing trigger
   useEffect(() => {
     if (isEditMode && memberToEdit) {
-      setFormData(memberToEdit);
+      // Ensure phone and whatsapp loaded have +91 prefix formatted nicely
+      const formatPhone = (val) => {
+        if (!val) return '+91 ';
+        if (val.startsWith('+91 ')) return val;
+        const cleaned = val.replace(/^\+91\s*/, '').replace(/\D/g, '');
+        return '+91 ' + cleaned;
+      };
+
+      setFormData({
+        ...memberToEdit,
+        phone: formatPhone(memberToEdit.phone),
+        whatsapp: formatPhone(memberToEdit.whatsapp)
+      });
     }
   }, [isEditMode, memberToEdit]);
+
+  const handlePhoneChange = (e, name) => {
+    let val = e.target.value;
+    
+    // Auto enforce prefix "+91 "
+    if (!val.startsWith('+91 ')) {
+      const cleaned = val.replace(/^\+91\s*/, '').replace(/\D/g, '');
+      val = '+91 ' + cleaned;
+    } else {
+      const suffix = val.substring(4).replace(/\D/g, '');
+      val = '+91 ' + suffix;
+    }
+
+    // Limit length to +91 + 10 digits (total 14 characters)
+    if (val.length <= 14) {
+      setFormData(prev => ({
+        ...prev,
+        [name]: val
+      }));
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,11 +94,18 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
   const validate = () => {
     const tempErrors = {};
     if (!formData.fullName.trim()) tempErrors.fullName = 'Full Name is required';
-    if (!formData.phone.trim()) {
-      tempErrors.phone = 'Phone Number is required';
-    } else if (!/^\d{10}$/.test(formData.phone.trim())) {
-      tempErrors.phone = 'Enter valid 10-digit number';
+    
+    // Validate phone digits length post suffix "+91 "
+    const phoneDigits = formData.phone.substring(4).replace(/\D/g, '');
+    if (phoneDigits.length !== 10) {
+      tempErrors.phone = 'Valid 10-digit Indian mobile number is required after +91';
     }
+
+    const whatsappDigits = formData.whatsapp.substring(4).replace(/\D/g, '');
+    if (formData.whatsapp.trim() !== '+91' && formData.whatsapp.trim() !== '' && whatsappDigits.length > 0 && whatsappDigits.length !== 10) {
+      tempErrors.whatsapp = 'Valid 10-digit WhatsApp number is required or leave blank';
+    }
+
     if (!formData.village.trim()) tempErrors.village = 'Village name is required';
     if (!formData.age || formData.age < 12 || formData.age > 100) {
       tempErrors.age = 'Age must be between 12 and 100';
@@ -81,6 +121,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
     onSave(formData);
   };
+
 
   return (
     <div className="p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
@@ -169,10 +210,10 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 type="text"
                 name="phone"
                 value={formData.phone}
-                onChange={handleChange}
-                maxLength="10"
+                onChange={(e) => handlePhoneChange(e, 'phone')}
+                maxLength="14"
                 className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
-                placeholder="e.g. 9876543210"
+                placeholder="e.g. +91 9876543210"
               />
               {errors.phone && (
                 <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
@@ -189,11 +230,17 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 type="text"
                 name="whatsapp"
                 value={formData.whatsapp}
-                onChange={handleChange}
-                maxLength="10"
+                onChange={(e) => handlePhoneChange(e, 'whatsapp')}
+                maxLength="14"
                 className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
-                placeholder="Leave blank if same as phone"
+                placeholder="e.g. +91 9876543210"
               />
+              {errors.whatsapp && (
+                <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  {errors.whatsapp}
+                </div>
+              )}
             </div>
 
             {/* Village */}

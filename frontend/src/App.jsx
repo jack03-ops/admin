@@ -9,6 +9,7 @@ import Payments from './pages/Payments';
 import Reports from './pages/Reports';
 import Notifications from './pages/Notifications';
 import Settings from './pages/Settings';
+import { CheckCircle2 } from 'lucide-react';
 import { 
   getMembers, 
   saveMembers, 
@@ -23,6 +24,14 @@ export default function App() {
   const [members, setMembers] = useState([]);
   const [payments, setPayments] = useState([]);
   const [memberToEdit, setMemberToEdit] = useState(null);
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast(null);
+    }, 4000);
+  };
 
   // Initialize DB and load state
   useEffect(() => {
@@ -81,6 +90,7 @@ export default function App() {
     setMembers(updatedMembers);
     saveMembers(updatedMembers);
     setMemberToEdit(null);
+    showToast(formData.id ? 'Member profile successfully updated!' : 'Gym member successfully registered!', 'success');
     setCurrentPage('members');
   };
 
@@ -90,6 +100,7 @@ export default function App() {
       const updated = members.filter(m => m.id !== id);
       setMembers(updated);
       saveMembers(updated);
+      showToast('Member profile deleted successfully!', 'success');
     }
   };
 
@@ -103,6 +114,7 @@ export default function App() {
     });
     setMembers(updated);
     saveMembers(updated);
+    showToast('Member status updated successfully!', 'success');
   };
 
   const handleEditMemberTrigger = (member) => {
@@ -219,6 +231,17 @@ export default function App() {
 
   return (
     <div className="flex bg-[#030303] min-h-screen text-slate-100 font-sans overflow-hidden">
+      {/* Toast Notification Container */}
+      {toast && (
+        <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-zinc-900/95 border border-emerald-500/30 text-slate-100 px-5 py-4 rounded-2xl shadow-[0_0_25px_rgba(16,185,129,0.15)] backdrop-blur-md transition-all duration-300">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          <div>
+            <p className="text-xs font-bold text-white">Success Action Logged</p>
+            <p className="text-[10px] text-slate-400 mt-0.5">{toast.message}</p>
+          </div>
+        </div>
+      )}
+
       {/* Sidebar navigation */}
       <Sidebar 
         currentPage={currentPage === 'edit-member' ? 'members' : currentPage} 

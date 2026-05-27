@@ -16,8 +16,8 @@ const DEFAULT_MEMBERS = [
   {
     id: "PXM-1001",
     fullName: "Karthik Kumar",
-    phone: "9487817301",
-    whatsapp: "9487817301",
+    phone: "+91 9487817301",
+    whatsapp: "+91 9487817301",
     village: "Rampur",
     address: "Near Temple, Rampur",
     gender: "Male",
@@ -33,8 +33,8 @@ const DEFAULT_MEMBERS = [
   {
     id: "PXM-1002",
     fullName: "Suresh Raina",
-    phone: "9487817301",
-    whatsapp: "9487817301",
+    phone: "+91 9487817301",
+    whatsapp: "+91 9487817301",
     village: "Chandpur",
     address: "Gali No 3, Chandpur",
     gender: "Male",
@@ -50,8 +50,8 @@ const DEFAULT_MEMBERS = [
   {
     id: "PXM-1003",
     fullName: "Dhanush Raj",
-    phone: "9487817301",
-    whatsapp: "9487817301",
+    phone: "+91 8015552425",
+    whatsapp: "+91 8015552425",
     village: "Sohna",
     address: "Main Market, Sohna",
     gender: "Male",
@@ -136,7 +136,7 @@ const DEFAULT_PAYMENTS = [
 ];
 
 const DEFAULT_REMINDERS = [
-  { id: "REM-101", clientName: "Karthik Kumar", phone: "9487817301", date: "2026-05-26", type: "WhatsApp", status: "Sent", message: "Hello Karthik Kumar, your Phoenix Gym membership will expire on 2026-05-28. Please renew your membership to continue uninterrupted access. — Phoenix Admin" }
+  { id: "REM-101", clientName: "Karthik Kumar", phone: "+91 9487817301", date: "2026-05-26", type: "WhatsApp", status: "Sent", message: "Hello Karthik Kumar, your Phoenix Gym membership expires in 1 day(s). Please renew your membership to continue uninterrupted access." }
 ];
 
 export const getMembers = () => {

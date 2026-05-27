@@ -75,7 +75,7 @@ export default function Dashboard({ members, payments, setPage }) {
 
   // 3. Automated Expiry Reminders Scheduling Action (Scans 1, 3, and 5 days before expiry)
   const handleTriggerReminders = () => {
-    setTriggerStatus('Scanning database...');
+    setTriggerStatus('Scanning database for expiring memberships...');
     
     setTimeout(() => {
       const today = new Date('2026-05-27');
@@ -94,44 +94,50 @@ export default function Dashboard({ members, payments, setPage }) {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         if (targetIntervals.includes(diffDays)) {
-          // Check if reminder was already sent to this member today (2026-05-27) to avoid duplicates
-          const alreadySentToday = currentList.some(r => 
-            r.phone === '9487817301' && 
-            r.date === '2026-05-27' && 
-            r.message.includes(member.fullName) &&
-            r.message.includes(`expire on ${member.endDate}`)
-          );
+          // Send alerts via BOTH channels: WhatsApp and SMS
+          const channels = ['WhatsApp', 'SMS'];
+          
+          channels.forEach(channel => {
+            // Check if reminder was already sent to this member via this channel today to avoid duplicates
+            const alreadySentToday = currentList.some(r => 
+              r.phone === member.phone && 
+              r.date === '2026-05-27' && 
+              r.type === channel &&
+              r.message.includes(member.fullName) &&
+              r.message.includes(`expires in ${diffDays} day(s)`)
+            );
 
-          if (alreadySentToday) {
-            duplicatesSkipped++;
-            return;
-          }
+            if (alreadySentToday) {
+              duplicatesSkipped++;
+              return;
+            }
 
-          // Construct exact reminder format
-          const reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership will expire on ${member.endDate}. Please renew your membership to continue uninterrupted access. — Phoenix Admin`;
+            // Construct exact template matching requirements
+            const reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in ${diffDays} day(s). Please renew your membership to continue uninterrupted access.`;
 
-          // Log in mock db ledger
-          const newLog = {
-            id: `REM-${101 + currentList.length}`,
-            clientName: member.fullName,
-            phone: "9487817301", // test target number
-            date: "2026-05-27",
-            type: "WhatsApp",
-            status: "Sent",
-            message: reminderMessage
-          };
+            // Log in mock db ledger
+            const newLog = {
+              id: `REM-${101 + currentList.length}`,
+              clientName: member.fullName,
+              phone: member.phone, // target test phone from seed
+              date: "2026-05-27",
+              type: channel,
+              status: "Sent",
+              message: reminderMessage
+            };
 
-          currentList.unshift(newLog);
-          newDispatches++;
+            currentList.unshift(newLog);
+            newDispatches++;
+          });
         }
       });
 
       if (newDispatches > 0) {
         setReminders(currentList);
         saveReminders(currentList);
-        setTriggerStatus(`Dispatched ${newDispatches} WhatsApp reminders to 9487817301!`);
+        setTriggerStatus(`Dispatched ${newDispatches} alerts (WhatsApp & SMS) to registered test numbers successfully!`);
       } else if (duplicatesSkipped > 0) {
-        setTriggerStatus(`All reminders for today were already sent. (${duplicatesSkipped} skipped to prevent duplicates)`);
+        setTriggerStatus(`All reminders for today were already sent. (${duplicatesSkipped} checks skipped to prevent duplicates)`);
       } else {
         setTriggerStatus('No members found expiring in exactly 1, 3, or 5 days.');
       }

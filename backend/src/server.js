@@ -60,6 +60,10 @@ const seedDatabase = async () => {
 // Execute seeding on launch
 seedDatabase();
 
+// Initialize automated background scheduler
+import { initScheduler } from './services/scheduler.js';
+initScheduler();
+
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/members', memberRoutes);

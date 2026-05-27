@@ -24,24 +24,9 @@ export default function Header({ title, user, setPage }) {
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-ping" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
         </button>
-
-        {/* Vertical divider */}
-        <div className="h-6 w-px bg-zinc-900" />
-
-        {/* User Info & Profile */}
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col text-right">
-            <span className="text-sm font-semibold text-zinc-200">{user?.name || 'Gym Admin'}</span>
-            <span className="text-[10px] text-zinc-400 font-medium">Head Manager</span>
-          </div>
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-red-600 to-rose-500 p-0.5 shadow-md">
-            <div className="w-full h-full rounded-[10px] bg-zinc-900 flex items-center justify-center text-white font-bold">
-              GA
-            </div>
-          </div>
-        </div>
       </div>
     </header>
+
 
   );
 }

@@ -15,7 +15,7 @@ const MemberSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: [true, 'Please add a phone number'],
-    match: [/^\d{10}$/, 'Please add a valid 10-digit phone number']
+    match: [/^(\+91\s?)?\d{10}$/, 'Please add a valid 10-digit Indian phone number (optionally prefixed with +91)']
   },
   whatsapp: {
     type: String,
