@@ -17,7 +17,7 @@ export default function BottomNav({ currentPage, setCurrentPage }) {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/80 backdrop-blur-lg border-t border-zinc-900 flex items-center justify-around px-4 z-40 pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-zinc-950/80 backdrop-blur-lg border-t border-zinc-900/20 flex items-center justify-around px-4 z-40 pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
       {navItems.map((item) => {
         const Icon = item.icon;
         const isActive = currentPage === item.id || (item.id === 'members' && currentPage === 'edit-member') || (item.id === 'members' && currentPage === 'add-member');

@@ -43,25 +43,25 @@
 
 /* Glassmorphism Card Utilities */
 .glass-panel {
-  background: rgba(10, 10, 10, 0.6);
+  background: rgba(10, 10, 10, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .glass-panel-glow-red {
-  background: rgba(10, 10, 10, 0.65);
+  background: rgba(10, 10, 10, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.1);
 }
 
 .glass-panel-glow-cyan {
-  background: rgba(10, 10, 10, 0.6);
+  background: rgba(10, 10, 10, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.2);
   box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.1);
 }
 

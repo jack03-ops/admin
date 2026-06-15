@@ -27,7 +27,7 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
   ];
 
   return (
-    <aside className="hidden md:flex w-64 min-h-screen bg-zinc-950/65 backdrop-blur-xl border-r border-zinc-900 flex-col justify-between shrink-0">
+    <aside className="hidden md:flex w-64 min-h-screen bg-zinc-950/80 backdrop-blur-xl border-r border-zinc-900/20 flex-col justify-between shrink-0">
       <div>
         {/* Gym Logo / Brand */}
         <div className="p-5 flex items-center gap-3 border-b border-zinc-900">

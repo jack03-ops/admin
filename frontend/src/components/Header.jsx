@@ -3,7 +3,7 @@ import { Bell, User, Search, Dumbbell, QrCode } from 'lucide-react';
 
 export default function Header({ title, user, setPage }) {
   return (
-    <header className="h-20 border-b border-zinc-900 bg-zinc-950/40 backdrop-blur-md px-6 md:px-8 flex items-center justify-between sticky top-0 z-30">
+    <header className="h-20 border-b border-zinc-900/20 bg-zinc-950/80 backdrop-blur-md px-6 md:px-8 flex items-center justify-between sticky top-0 z-30">
       {/* Title / Greetings */}
       <div>
         <h2 className="text-base md:text-xl font-bold text-white tracking-tight flex items-center gap-2">
