@@ -7,6 +7,7 @@ import errorHandler from './middlewares/errorHandler.js';
 // Load model structures
 import Admin from './models/Admin.js';
 import Plan from './models/Plan.js';
+import Trainer from './models/Trainer.js';
 
 // Load route routers
 import authRoutes from './routes/authRoutes.js';
@@ -14,6 +15,9 @@ import memberRoutes from './routes/memberRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
+import attendanceRoutes from './routes/attendanceRoutes.js';
+import trainerRoutes from './routes/trainerRoutes.js';
+import workoutDietRoutes from './routes/workoutDietRoutes.js';
 
 // Init env setup
 dotenv.config();
@@ -52,6 +56,17 @@ const seedDatabase = async () => {
       ]);
       console.log('[Seeding] Standard gym membership plans configured.');
     }
+
+    // 3. Seed Default Trainers
+    const trainersCount = await Trainer.countDocuments();
+    if (trainersCount === 0) {
+      await Trainer.insertMany([
+        { name: 'Vikram Rathore', phone: '+91 9988776655', specialty: 'Strength & Conditioning', schedule: 'Morning Batch' },
+        { name: 'Priya Sharma', phone: '+91 8877665544', specialty: 'Cardio & Yoga', schedule: 'Evening Batch' },
+        { name: 'Amit Singh', phone: '+91 9122334455', specialty: 'Powerlifting & CrossFit', schedule: 'Full Time' }
+      ]);
+      console.log('[Seeding] Standard gym trainers configured.');
+    }
   } catch (error) {
     console.error(`[Seeding Error] ${error.message}`);
   }
@@ -70,6 +85,9 @@ app.use('/api/members', memberRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/trainers', trainerRoutes);
+app.use('/api', workoutDietRoutes);
 
 // Base Status Route
 app.get('/health', (req, res) => {

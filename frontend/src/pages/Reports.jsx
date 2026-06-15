@@ -7,7 +7,8 @@ import {
   Map, 
   Calendar,
   Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  Download
 } from 'lucide-react';
 import { 
   MembershipGrowthChart, 
@@ -17,6 +18,60 @@ import {
 
 export default function Reports({ members, payments }) {
   const [cycleTab, setCycleTab] = useState('monthly'); // daily, weekly, monthly
+
+  const handleExportMembersCSV = () => {
+    if (members.length === 0) return;
+    const headers = ['ID', 'Full Name', 'Phone', 'Age', 'Gender', 'Village', 'Plan', 'Status', 'Payment Status', 'Start Date', 'End Date'];
+    const rows = members.map(m => [
+      m.id || '',
+      m.fullName || '',
+      m.phone || '',
+      m.age || '',
+      m.gender || '',
+      m.village || '',
+      m.plan || '',
+      m.status || '',
+      m.paymentStatus || '',
+      m.startDate || '',
+      m.endDate || ''
+    ]);
+    
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + [headers.join(','), ...rows.map(e => e.map(val => `"${String(val).replace(/"/g, '""')}"`).join(","))].join("\n");
+      
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Phoenix_Gym_Members_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleExportPaymentsCSV = () => {
+    if (payments.length === 0) return;
+    const headers = ['Receipt ID', 'Client ID', 'Client Name', 'Amount', 'Date', 'Plan', 'Payment Method'];
+    const rows = payments.map(p => [
+      p.id || '',
+      p.clientId || '',
+      p.clientName || '',
+      p.amount || 0,
+      p.date || '',
+      p.plan || '',
+      p.method || ''
+    ]);
+    
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + [headers.join(','), ...rows.map(e => e.map(val => `"${String(val).replace(/"/g, '""')}"`).join(","))].join("\n");
+      
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Phoenix_Gym_Payments_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // Dynamically compute charts & statistics based on tab selection
   const stats = useMemo(() => {
@@ -118,6 +173,33 @@ export default function Reports({ members, payments }) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Data Export Console */}
+      <div className="glass-panel p-5 rounded-2xl border border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+            <Download className="w-4 h-4 text-red-500" />
+            System Database Export Utility
+          </h4>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Export members listing or financial ledger entries directly into spreadsheet format.</p>
+        </div>
+        <div className="flex gap-3 w-full sm:w-auto">
+          <button
+            onClick={handleExportMembersCSV}
+            className="flex-1 sm:flex-none px-4 py-2 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-300 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center justify-center gap-1.5 transition-all"
+            title="Download members roster in CSV format"
+          >
+            <Download className="w-3.5 h-3.5" /> Members Roster (.csv)
+          </button>
+          <button
+            onClick={handleExportPaymentsCSV}
+            className="flex-1 sm:flex-none px-4 py-2 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-300 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center justify-center gap-1.5 transition-all"
+            title="Download payment records in CSV format"
+          >
+            <Download className="w-3.5 h-3.5" /> Billing Ledger (.csv)
+          </button>
         </div>
       </div>
 

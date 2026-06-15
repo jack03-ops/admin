@@ -72,6 +72,11 @@ const MemberSchema = new mongoose.Schema({
   profilePhoto: {
     type: String,
     default: ''
+  },
+  trainerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Trainer',
+    default: null
   }
 }, { timestamps: true });
 

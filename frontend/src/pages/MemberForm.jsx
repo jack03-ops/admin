@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X, Sparkles, AlertCircle } from 'lucide-react';
 import { getSettings } from '../db/mockDb';
+import * as api from '../services/api';
 
 export default function MemberForm({ memberToEdit, onSave, onCancel }) {
   const isEditMode = !!memberToEdit;
   const settings = getSettings();
+  const [trainers, setTrainers] = useState([]);
 
   const [formData, setFormData] = useState({
     id: '',
@@ -21,8 +23,22 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
     endDate: '',
     paymentStatus: 'Paid',
     status: 'Active',
-    notes: ''
+    notes: '',
+    trainerId: ''
   });
+
+  // Fetch trainers for dropdown list
+  useEffect(() => {
+    const loadTrainers = async () => {
+      try {
+        const list = await api.getTrainers();
+        setTrainers(list);
+      } catch (err) {
+        console.error('[MemberForm] Failed to load trainers', err);
+      }
+    };
+    loadTrainers();
+  }, []);
 
   const [errors, setErrors] = useState({});
 
@@ -344,6 +360,22 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               >
                 <option value="Paid">Paid</option>
                 <option value="Pending">Pending</option>
+              </select>
+            </div>
+
+            {/* Trainer Assignment */}
+            <div>
+              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Assign Personal Trainer</label>
+              <select
+                name="trainerId"
+                value={formData.trainerId || ''}
+                onChange={handleChange}
+                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+              >
+                <option value="">No Trainer Assigned (General Admission)</option>
+                {trainers.map(t => (
+                  <option key={t.id} value={t.id}>{t.name} ({t.specialty})</option>
+                ))}
               </select>
             </div>
 

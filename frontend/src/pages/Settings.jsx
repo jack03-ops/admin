@@ -1,11 +1,59 @@
 import React, { useState } from 'react';
-import { Settings as SettingsIcon, Save, Plus, Trash2, Shield, Heart } from 'lucide-react';
+import { Settings as SettingsIcon, Save, Plus, Trash2, Shield, Heart, Database } from 'lucide-react';
 import { getSettings, saveSettings } from '../db/mockDb';
 
 export default function Settings({ onSettingsUpdate }) {
   const [settings, setSettings] = useState(getSettings());
   const [newPlan, setNewPlan] = useState({ name: '', durationMonths: 1, price: '' });
   const [successMsg, setSuccessMsg] = useState('');
+
+  const handleExportBackup = () => {
+    const backupData = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('phoenix_gym_')) {
+        backupData[key] = localStorage.getItem(key);
+      }
+    }
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `Phoenix_Gym_Backup_${new Date().toISOString().split('T')[0]}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    document.body.removeChild(downloadAnchor);
+  };
+
+  const handleImportBackup = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const backupData = JSON.parse(event.target.result);
+        let importedCount = 0;
+        Object.entries(backupData).forEach(([key, val]) => {
+          if (key.startsWith('phoenix_gym_')) {
+            localStorage.setItem(key, val);
+            importedCount++;
+          }
+        });
+        
+        if (importedCount > 0) {
+          setSuccessMsg(`Database state successfully restored! Loaded ${importedCount} datastores.`);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        } else {
+          setSuccessMsg('Invalid backup file. No Phoenix Gym data found.');
+        }
+      } catch (err) {
+        setSuccessMsg(`Failed to import backup: ${err.message}`);
+      }
+    };
+    reader.readAsText(file);
+  };
 
   const handleSettingsChange = (e) => {
     const { name, value } = e.target;
@@ -206,6 +254,36 @@ export default function Settings({ onSettingsUpdate }) {
             <div className="text-xs text-slate-400 space-y-2">
               <p className="font-semibold text-slate-200">Local Ledger Enabled</p>
               <p>All CRUD configurations reside directly inside browser sandbox via secure standard localStorage allocations. No active cloud connection needed.</p>
+            </div>
+          </div>
+
+          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
+            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3 flex items-center gap-1.5">
+              <Database className="w-4 h-4 text-emerald-400" />
+              Database Operations
+            </h3>
+            
+            <div className="text-xs text-slate-400 space-y-3">
+              <p>Create a backup snapshot of the system parameters, member registers, and logs to a local JSON file.</p>
+              <button
+                onClick={handleExportBackup}
+                className="w-full py-2 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-350 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer transition-all text-center"
+              >
+                Export JSON Backup
+              </button>
+
+              <div className="border-t border-zinc-900 my-2 pt-2">
+                <p className="mb-2">Restore state from a previously saved JSON snapshot backup file.</p>
+                <label className="block w-full py-2 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-350 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer transition-all text-center">
+                  Import Backup File
+                  <input
+                    type="file"
+                    accept=".json"
+                    onChange={handleImportBackup}
+                    className="hidden"
+                  />
+                </label>
+              </div>
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { 
   Users, 
   UserCheck, 
@@ -14,27 +14,42 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
-  Dumbbell
+  Dumbbell,
+  Flame
 } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { 
   MembershipGrowthChart, 
   MemberDistributionChart 
 } from '../components/Charts';
-import { getReminders, saveReminders } from '../db/mockDb';
+import * as api from '../services/api';
 
 export default function Dashboard({ members, payments, setPage }) {
-  const [reminders, setReminders] = useState(() => getReminders());
+  const [reminders, setReminders] = useState([]);
   const [triggerStatus, setTriggerStatus] = useState('');
 
-  // 1. Compute summary metrics dynamically
+  // Load reminders from API
+  useEffect(() => {
+    const loadReminders = async () => {
+      try {
+        const list = await api.getReminders();
+        setReminders(list);
+      } catch (err) {
+        console.error('[Dashboard] Error loading reminders:', err.message);
+      }
+    };
+    loadReminders();
+  }, []);
+
+  // Compute summary metrics dynamically
   const metrics = useMemo(() => {
     const total = members.length;
     const active = members.filter(m => m.status === 'Active').length;
     
     // Expiring soon: ending date is within the next 15 days, and member is active
-    const today = new Date('2026-05-27');
-    const fifteenDaysFromNow = new Date('2026-05-27');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const fifteenDaysFromNow = new Date();
     fifteenDaysFromNow.setDate(today.getDate() + 15);
     
     const expiringSoon = members.filter(m => {
@@ -46,9 +61,9 @@ export default function Dashboard({ members, payments, setPage }) {
     // Pending payments
     const pendingPayments = members.filter(m => m.paymentStatus === 'Pending').length;
 
-    // Today's Renewals: members whose membership ends today or has been renewed today
+    // Today's Renewals: members whose membership starts today or has been renewed today
     const todaysRenewals = members.filter(m => {
-      const todayStr = '2026-05-27';
+      const todayStr = new Date().toISOString().split('T')[0];
       return m.startDate === todayStr && m.paymentStatus === 'Paid';
     }).length;
 
@@ -65,7 +80,7 @@ export default function Dashboard({ members, payments, setPage }) {
     };
   }, [members, payments]);
 
-  // 2. Compute Reminder Statistics
+  // Compute Reminder Statistics
   const reminderStats = useMemo(() => {
     const sent = reminders.filter(r => r.status === 'Sent').length;
     const failed = reminders.filter(r => r.status === 'Failed').length;
@@ -73,84 +88,18 @@ export default function Dashboard({ members, payments, setPage }) {
     return { sent, failed, pending };
   }, [reminders]);
 
-  // 3. Automated Expiry Reminders Scheduling Action (Scans 1, 3, and 5 days before expiry)
-  const handleTriggerReminders = () => {
+  // Automated Expiry Reminders Scheduling Action (Delegated to API)
+  const handleTriggerReminders = async () => {
     setTriggerStatus('Scanning database for expiring memberships...');
-    
-    setTimeout(() => {
-      const today = new Date('2026-05-27');
-      const currentList = [...reminders];
-      let newDispatches = 0;
-      let duplicatesSkipped = 0;
-
-      // Scan day intervals: 1, 3, 5 days before expiry
-      const targetIntervals = [1, 3, 5];
-
-      members.forEach(member => {
-        if (member.status !== 'Active') return;
-
-        const endDate = new Date(member.endDate);
-        const diffTime = endDate - today;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (targetIntervals.includes(diffDays)) {
-          // Send alerts via BOTH channels: WhatsApp and SMS
-          const channels = ['WhatsApp', 'SMS'];
-          
-          channels.forEach(channel => {
-            // Check if reminder was already sent to this member via this channel today to avoid duplicates
-            const alreadySentToday = currentList.some(r => 
-              (r.phone === member.phone || r.phone === "+91 9487817301") && 
-              r.date === '2026-05-27' && 
-              r.type === channel &&
-              r.message.includes(member.fullName) &&
-              (r.message.includes(`expires in 5 day(s)`) || r.message.includes(`expires in 3 day(s)`) || r.message.includes(`expires in 1 day(s)`))
-            );
-
-            if (alreadySentToday) {
-              duplicatesSkipped++;
-              return;
-            }
-
-            // Construct exact template matching requirements
-            let reminderMessage = '';
-            if (diffDays === 5) {
-              reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
-            } else if (diffDays === 3) {
-              reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
-            } else {
-              reminderMessage = `Hello ${member.fullName}, your Phoenix Gym membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
-            }
-
-            // Log in mock db ledger
-            const newLog = {
-              id: `REM-${101 + currentList.length}`,
-              clientName: member.fullName,
-              phone: "+91 9487817301", // force use target test number
-              date: "2026-05-27",
-              type: channel,
-              status: "Sent",
-              message: reminderMessage
-            };
-
-            currentList.unshift(newLog);
-            newDispatches++;
-          });
-        }
-      });
-
-      if (newDispatches > 0) {
-        setReminders(currentList);
-        saveReminders(currentList);
-        setTriggerStatus(`Dispatched ${newDispatches} alerts (WhatsApp & SMS) to registered test numbers successfully!`);
-      } else if (duplicatesSkipped > 0) {
-        setTriggerStatus(`All reminders for today were already sent. (${duplicatesSkipped} checks skipped to prevent duplicates)`);
-      } else {
-        setTriggerStatus('No members found expiring in exactly 1, 3, or 5 days.');
-      }
-
-      setTimeout(() => setTriggerStatus(''), 4000);
-    }, 1000);
+    try {
+      const res = await api.triggerReminders();
+      const list = await api.getReminders();
+      setReminders(list);
+      setTriggerStatus(res.message || `Dispatched ${res.dispatched || 0} reminders successfully.`);
+    } catch (err) {
+      setTriggerStatus(`Error executing scan: ${err.message}`);
+    }
+    setTimeout(() => setTriggerStatus(''), 5000);
   };
 
   return (
@@ -215,7 +164,7 @@ export default function Dashboard({ members, payments, setPage }) {
       {/* Quick Action buttons panel */}
       <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
         <h3 className="text-xs font-black text-white uppercase tracking-wider">Quick Actions Console</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
           <button
             onClick={() => setPage('add-member')}
             className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
@@ -238,6 +187,22 @@ export default function Dashboard({ members, payments, setPage }) {
           >
             <Send className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
             <span className="text-xs font-semibold text-white">Send Reminders</span>
+          </button>
+
+          <button
+            onClick={() => setPage('trainers')}
+            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
+          >
+            <Dumbbell className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-xs font-semibold text-white">Manage Trainers</span>
+          </button>
+
+          <button
+            onClick={() => setPage('diet-workout')}
+            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
+          >
+            <Flame className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-xs font-semibold text-white">Diet & Workouts</span>
           </button>
 
           <button

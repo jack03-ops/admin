@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
+import BottomNav from './components/BottomNav';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import MembersList from './pages/MembersList';
-import MemberForm from './pages/MemberForm';
-import Payments from './pages/Payments';
-import Reports from './pages/Reports';
-import Notifications from './pages/Notifications';
-import Settings from './pages/Settings';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const MembersList = lazy(() => import('./pages/MembersList'));
+const MemberForm = lazy(() => import('./pages/MemberForm'));
+const Payments = lazy(() => import('./pages/Payments'));
+const Reports = lazy(() => import('./pages/Reports'));
+const Notifications = lazy(() => import('./pages/Notifications'));
+const Settings = lazy(() => import('./pages/Settings'));
+const CheckIn = lazy(() => import('./pages/CheckIn'));
+const Trainers = lazy(() => import('./pages/Trainers'));
+const DietWorkout = lazy(() => import('./pages/DietWorkout'));
+
 import { CheckCircle2 } from 'lucide-react';
-import { 
-  getMembers, 
-  saveMembers, 
-  getPayments, 
-  savePayments, 
-  initializeDb 
-} from './db/mockDb';
+import * as api from './services/api';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -25,6 +25,7 @@ export default function App() {
   const [payments, setPayments] = useState([]);
   const [memberToEdit, setMemberToEdit] = useState(null);
   const [toast, setToast] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -33,22 +34,41 @@ export default function App() {
     }, 4000);
   };
 
-  // Initialize DB and load state
+  // Load backend state
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      await api.checkBackendHealth();
+      const memberList = await api.getMembers();
+      setMembers(memberList);
+      const paymentList = await api.getPayments();
+      setPayments(paymentList);
+    } catch (err) {
+      console.error('[App] Failed to load data from API:', err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    initializeDb();
-    setMembers(getMembers());
-    setPayments(getPayments());
+    loadData();
 
     // Check if session exists in localStorage for convenience
     const session = localStorage.getItem('phoenix_gym_session');
     if (session) {
-      setUser(JSON.parse(session));
+      try {
+        const sessionObj = JSON.parse(session);
+        setUser(sessionObj.admin || sessionObj);
+      } catch (err) {
+        console.error('[App] Failed to parse stored session');
+      }
     }
   }, []);
 
   const handleLoginSuccess = (userData) => {
-    setUser(userData);
+    setUser(userData.admin || userData);
     localStorage.setItem('phoenix_gym_session', JSON.stringify(userData));
+    loadData();
   };
 
   const handleLogout = () => {
@@ -57,64 +77,48 @@ export default function App() {
   };
 
   // Add & Update Member Handler
-  const handleSaveMember = (formData) => {
-    let updatedMembers = [];
-    if (formData.id) {
-      // Editing
-      updatedMembers = members.map(m => m.id === formData.id ? formData : m);
-    } else {
-      // Create auto Client ID
-      const nextId = 1001 + members.length;
-      const newId = `PXM-${nextId}`;
-      const newMember = { ...formData, id: newId };
-      updatedMembers = [...members, newMember];
-      
-      // Also register initial payment log if Paid
-      if (formData.paymentStatus === 'Paid') {
-        const txnId = `TXN-${101 + payments.length}`;
-        const newTxn = {
-          id: txnId,
-          clientId: newId,
-          clientName: formData.fullName,
-          amount: 1000, // base default fallback
-          date: formData.startDate,
-          plan: formData.plan,
-          method: 'UPI'
-        };
-        const updatedPayments = [...payments, newTxn];
-        setPayments(updatedPayments);
-        savePayments(updatedPayments);
+  const handleSaveMember = async (formData) => {
+    try {
+      if (formData.id) {
+        // Editing
+        await api.updateMember(formData.id, formData);
+      } else {
+        // Enrolling
+        await api.createMember(formData);
       }
+      await loadData();
+      setMemberToEdit(null);
+      showToast(formData.id ? 'Member profile successfully updated!' : 'Gym member successfully registered!', 'success');
+      setCurrentPage('members');
+    } catch (err) {
+      showToast(`Error saving member: ${err.message}`, 'error');
     }
-    
-    setMembers(updatedMembers);
-    saveMembers(updatedMembers);
-    setMemberToEdit(null);
-    showToast(formData.id ? 'Member profile successfully updated!' : 'Gym member successfully registered!', 'success');
-    setCurrentPage('members');
   };
 
   // Delete member record
-  const handleDeleteMember = (id) => {
+  const handleDeleteMember = async (id) => {
     if (window.confirm(`Are you sure you want to delete member ${id}?`)) {
-      const updated = members.filter(m => m.id !== id);
-      setMembers(updated);
-      saveMembers(updated);
-      showToast('Member profile deleted successfully!', 'success');
+      try {
+        await api.deleteMember(id);
+        await loadData();
+        showToast('Member profile deleted successfully!', 'success');
+      } catch (err) {
+        showToast(`Error deleting member: ${err.message}`, 'error');
+      }
     }
   };
 
   // Toggle subscriber status quickly
-  const handleToggleStatus = (id) => {
-    const updated = members.map(m => {
-      if (m.id === id) {
-        return { ...m, status: m.status === 'Active' ? 'Inactive' : 'Active' };
-      }
-      return m;
-    });
-    setMembers(updated);
-    saveMembers(updated);
-    showToast('Member status updated successfully!', 'success');
+  const handleToggleStatus = async (id) => {
+    try {
+      const memberObj = members.find(m => m.id === id);
+      if (!memberObj) return;
+      await api.toggleStatus(id, memberObj.status);
+      await loadData();
+      showToast('Member status updated successfully!', 'success');
+    } catch (err) {
+      showToast(`Error updating status: ${err.message}`, 'error');
+    }
   };
 
   const handleEditMemberTrigger = (member) => {
@@ -123,34 +127,22 @@ export default function App() {
   };
 
   // Record Manual Payments
-  const handleAddPayment = (paymentData) => {
-    const txnId = `TXN-${101 + payments.length}`;
-    const newTxn = {
-      id: txnId,
-      ...paymentData,
-      date: new Date().toISOString().split('T')[0]
-    };
-    const updatedPayments = [...payments, newTxn];
-    setPayments(updatedPayments);
-    savePayments(updatedPayments);
-
-    // Update member payment status as Paid
-    const updatedMembers = members.map(m => {
-      if (m.id === paymentData.clientId) {
-        return { ...m, paymentStatus: 'Paid' };
-      }
-      return m;
-    });
-    setMembers(updatedMembers);
-    saveMembers(updatedMembers);
+  const handleAddPayment = async (paymentData) => {
+    try {
+      await api.createPayment(paymentData);
+      await loadData();
+      showToast('Payment recorded successfully!', 'success');
+    } catch (err) {
+      showToast(`Error recording payment: ${err.message}`, 'error');
+    }
   };
 
   // Quick mark outstanding balances as Paid
-  const handleMarkAsPaid = (clientId, amount, plan) => {
+  const handleMarkAsPaid = async (clientId, amount, plan) => {
     const memberObj = members.find(m => m.id === clientId);
     if (!memberObj) return;
 
-    handleAddPayment({
+    await handleAddPayment({
       clientId,
       clientName: memberObj.fullName,
       amount,
@@ -163,7 +155,7 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard':
-        return <Dashboard members={members} payments={payments} setPage={setCurrentPage} />;
+        return <Dashboard members={members} payments={payments} setPage={setCurrentPage} loading={loading} />;
       case 'members':
         return (
           <MembersList 
@@ -172,6 +164,7 @@ export default function App() {
             onToggleStatus={handleToggleStatus} 
             onEditMember={handleEditMemberTrigger}
             setPage={setCurrentPage} 
+            loading={loading}
           />
         );
       case 'add-member':
@@ -199,6 +192,7 @@ export default function App() {
             payments={payments} 
             onAddPayment={handleAddPayment} 
             onMarkAsPaid={handleMarkAsPaid} 
+            loading={loading}
           />
         );
       case 'reports':
@@ -206,9 +200,15 @@ export default function App() {
       case 'notifications':
         return <Notifications members={members} payments={payments} onMarkAsPaid={handleMarkAsPaid} setPage={setCurrentPage} />;
       case 'settings':
-        return <Settings onSettingsUpdate={() => setMembers(getMembers())} />;
+        return <Settings onSettingsUpdate={loadData} />;
+      case 'check-in':
+        return <CheckIn setPage={setCurrentPage} />;
+      case 'trainers':
+        return <Trainers />;
+      case 'diet-workout':
+        return <DietWorkout />;
       default:
-        return <Dashboard members={members} payments={payments} setPage={setCurrentPage} />;
+        return <Dashboard members={members} payments={payments} setPage={setCurrentPage} loading={loading} />;
     }
   };
 
@@ -227,6 +227,9 @@ export default function App() {
     reports: 'System Performance Reports',
     notifications: 'Alert Center Feed',
     settings: 'Gym configurations & custom pricing',
+    'check-in': 'Member QR Check-In Scanner',
+    trainers: 'Gym Trainers & Batches',
+    'diet-workout': 'Progression, Workout & Diet Plans',
   };
 
   return (
@@ -259,10 +262,19 @@ export default function App() {
         />
         
         {/* Page content window */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto">
-          {renderPage()}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto pb-16 md:pb-0">
+          <Suspense fallback={
+            <div className="p-8 text-center text-zinc-500 animate-pulse text-xs py-20 bg-[#030303] min-h-screen">
+              Loading component modules...
+            </div>
+          }>
+            {renderPage()}
+          </Suspense>
         </main>
       </div>
+
+      {/* Bottom navigation for mobile */}
+      <BottomNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 }

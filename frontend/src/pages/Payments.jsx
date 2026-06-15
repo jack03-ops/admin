@@ -7,7 +7,8 @@ import {
   AlertCircle, 
   CheckCircle2, 
   Clock, 
-  Receipt 
+  Receipt,
+  X
 } from 'lucide-react';
 import { getSettings } from '../db/mockDb';
 
@@ -15,6 +16,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
   const settings = getSettings();
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+  const [invoicePayment, setInvoicePayment] = useState(null);
   const [newPayment, setNewPayment] = useState({
     clientId: '',
     amount: '',
@@ -262,7 +264,8 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                   <th className="p-3 text-center">Plan</th>
                   <th className="p-3 text-center">Method</th>
                   <th className="p-3 text-center">Amount</th>
-                  <th className="p-3 pr-4 text-right">Date</th>
+                  <th className="p-3 text-center">Date</th>
+                  <th className="p-3 pr-4 text-right">Invoice</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-900/40 text-[11px] text-slate-300">
@@ -281,12 +284,22 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
                       </td>
                       <td className="p-3 text-center font-bold text-cyan-400">{p.method}</td>
                       <td className="p-3 text-center font-extrabold text-white">₹{p.amount}</td>
-                      <td className="p-3 pr-4 text-right text-slate-500 font-semibold">{p.date}</td>
+                      <td className="p-3 text-center text-slate-500 font-semibold">{p.date}</td>
+                      <td className="p-3 pr-4 text-right">
+                        <button
+                          onClick={() => setInvoicePayment(p)}
+                          className="p-1.5 text-zinc-400 hover:text-cyan-400 hover:bg-zinc-900 rounded-lg cursor-pointer flex items-center justify-center inline-flex"
+                          title="Generate Invoice Receipt"
+                          style={{ minWidth: '32px', minHeight: '32px' }}
+                        >
+                          <Receipt className="w-4 h-4" />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="p-8 text-center text-slate-500">
+                    <td colSpan="7" className="p-8 text-center text-slate-500">
                       No payment receipts logged yet.
                     </td>
                   </tr>
@@ -296,6 +309,85 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
           </div>
         </div>
       </div>
+
+      {/* Invoice Receipt PDF Modal */}
+      {invoicePayment && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in print:p-0 print:bg-white print:relative">
+          <div className="glass-panel p-8 rounded-3xl border border-zinc-900 w-full max-w-lg relative space-y-6 print:border-none print:bg-white print:text-black print:p-0 print:max-w-full">
+            {/* Modal actions (hidden during print) */}
+            <div className="absolute top-4 right-4 flex items-center gap-2 print:hidden">
+              <button 
+                onClick={() => window.print()}
+                className="px-3.5 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold uppercase rounded-xl transition-all cursor-pointer"
+              >
+                Print Invoice
+              </button>
+              <button 
+                onClick={() => setInvoicePayment(null)}
+                className="p-1.5 text-zinc-550 hover:text-white hover:bg-zinc-900 rounded-xl transition-all cursor-pointer"
+                style={{ minWidth: '44px', minHeight: '44px' }}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Invoice Header */}
+            <div className="text-center pb-4 border-b border-zinc-900/60 print:border-zinc-300">
+              <span className="text-[10px] text-cyan-400 font-extrabold uppercase tracking-widest print:text-cyan-600">Payment Confirmation Invoice</span>
+              <h3 className="text-xl font-black text-white mt-1 leading-snug print:text-black">PHOENIX FITNESS CENTER</h3>
+              <p className="text-[10px] text-zinc-500">Official Membership Fee Bill Receipt</p>
+            </div>
+
+            {/* Bill Meta Data */}
+            <div className="grid grid-cols-2 gap-4 text-[11px] text-zinc-300 print:text-black leading-relaxed">
+              <div>
+                <p className="font-bold text-zinc-500 print:text-zinc-600 uppercase text-[9px] tracking-wider">Invoice Details</p>
+                <p className="mt-1"><span className="text-zinc-500 font-medium">Receipt ID:</span> <span className="font-bold text-white print:text-black">{invoicePayment.id}</span></p>
+                <p><span className="text-zinc-500 font-medium">Payment Date:</span> {invoicePayment.date}</p>
+                <p><span className="text-zinc-500 font-medium">Method:</span> <span className="font-bold text-cyan-400 print:text-cyan-650">{invoicePayment.method}</span></p>
+              </div>
+              <div className="text-right">
+                <p className="font-bold text-zinc-500 print:text-zinc-600 uppercase text-[9px] tracking-wider">Member Details</p>
+                <p className="mt-1"><span className="text-zinc-500 font-medium">Client Name:</span> <span className="font-bold text-white print:text-black">{invoicePayment.clientName}</span></p>
+                <p><span className="text-zinc-500 font-medium">Client ID:</span> {invoicePayment.clientId}</p>
+              </div>
+            </div>
+
+            {/* Itemized Table */}
+            <div className="bg-zinc-950/80 border border-zinc-900 rounded-2xl overflow-hidden print:border-zinc-300 print:bg-transparent">
+              <table className="w-full text-left text-[11px]">
+                <thead>
+                  <tr className="border-b border-zinc-900 bg-zinc-900/40 text-zinc-500 text-[9px] uppercase font-black tracking-wider print:border-zinc-300 print:bg-zinc-100 print:text-zinc-700">
+                    <th className="p-3 pl-4">Description</th>
+                    <th className="p-3 text-center">Plan Term</th>
+                    <th className="p-3 pr-4 text-right">Amount (₹)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-900/40 text-slate-300 print:divide-zinc-200 print:text-black">
+                  <tr>
+                    <td className="p-3 pl-4">
+                      <p className="font-bold text-white print:text-black">Gym Membership Access Fee</p>
+                      <p className="text-[9px] text-zinc-500 leading-normal">Full facility usage & personal batches allocation</p>
+                    </td>
+                    <td className="p-3 text-center font-semibold">{invoicePayment.plan}</td>
+                    <td className="p-3 pr-4 text-right font-bold">₹{invoicePayment.amount}</td>
+                  </tr>
+                  <tr className="bg-zinc-900/10 font-extrabold print:bg-zinc-50">
+                    <td colSpan="2" className="p-3 pl-4 text-zinc-500 print:text-zinc-700">GRAND TOTAL COLLECTED</td>
+                    <td className="p-3 pr-4 text-right text-white print:text-black">₹{invoicePayment.amount}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Invoice Footer Seal */}
+            <div className="text-center pt-4 border-t border-zinc-900/60 text-[10px] text-zinc-500 print:border-zinc-300 print:text-zinc-700 leading-relaxed">
+              <p className="font-semibold text-zinc-400 print:text-black">Thank you for working out with us!</p>
+              <p className="mt-1">This is a system-generated electronic billing transaction receipt. No physical signature is required.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

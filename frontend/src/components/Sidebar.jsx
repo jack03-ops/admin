@@ -8,7 +8,8 @@ import {
   Bell, 
   Settings, 
   LogOut,
-  Flame
+  Flame,
+  Dumbbell
 } from 'lucide-react';
 import phoenixLogo from '../assets/phoenix_logo.png';
 
@@ -17,6 +18,8 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'members', label: 'Members List', icon: Users },
     { id: 'add-member', label: 'Add Member', icon: UserPlus },
+    { id: 'trainers', label: 'Trainers', icon: Dumbbell },
+    { id: 'diet-workout', label: 'Diet & Workouts', icon: Flame },
     { id: 'payments', label: 'Payments', icon: CreditCard },
     { id: 'reports', label: 'Reports', icon: BarChart3 },
     { id: 'notifications', label: 'Notifications', icon: Bell },
@@ -24,7 +27,7 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
   ];
 
   return (
-    <aside className="w-64 min-h-screen bg-zinc-950/65 backdrop-blur-xl border-r border-zinc-900 flex flex-col justify-between shrink-0">
+    <aside className="hidden md:flex w-64 min-h-screen bg-zinc-950/65 backdrop-blur-xl border-r border-zinc-900 flex-col justify-between shrink-0">
       <div>
         {/* Gym Logo / Brand */}
         <div className="p-5 flex items-center gap-3 border-b border-zinc-900">

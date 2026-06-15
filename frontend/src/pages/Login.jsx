@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Flame, Lock, Mail, Dumbbell, ShieldCheck } from 'lucide-react';
 import phoenixLogo from '../assets/phoenix_logo.png';
+import * as api from '../services/api';
 
 export default function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('admin@phoenixgym.com');
@@ -8,19 +9,19 @@ export default function Login({ onLoginSuccess }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    setTimeout(() => {
-      if (email === 'admin@phoenixgym.com' && password === 'admin123') {
-        onLoginSuccess({ email, name: 'Phoenix Gym Manager' });
-      } else {
-        setError('Invalid email or password. Please use standard demo credentials.');
-        setLoading(false);
-      }
-    }, 800);
+    try {
+      const result = await api.login(email, password);
+      onLoginSuccess(result);
+    } catch (err) {
+      setError(err.message || 'Invalid email or password. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
