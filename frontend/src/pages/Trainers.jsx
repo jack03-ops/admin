@@ -227,7 +227,7 @@ export default function Trainers() {
         </div>
         <button
           onClick={openAddModal}
-          className="px-4 py-2.5 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer self-start md:self-auto"
+          className="px-4 py-2.5 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
           Add Trainer
@@ -239,7 +239,7 @@ export default function Trainers() {
         <button
           onClick={() => setActiveTab('directory')}
           className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-            activeTab === 'directory' ? 'bg-gradient-to-r from-red-650 to-red-500 text-white' : 'text-zinc-400 hover:text-white'
+            activeTab === 'directory' ? 'bg-gradient-phoenix text-white' : 'text-zinc-400 hover:text-white'
           }`}
         >
           <Users className="w-4 h-4" />
@@ -248,7 +248,7 @@ export default function Trainers() {
         <button
           onClick={() => setActiveTab('calendar')}
           className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-            activeTab === 'calendar' ? 'bg-gradient-to-r from-red-650 to-red-500 text-white' : 'text-zinc-400 hover:text-white'
+            activeTab === 'calendar' ? 'bg-gradient-phoenix text-white' : 'text-zinc-400 hover:text-white'
           }`}
         >
           <Calendar className="w-4 h-4" />
@@ -431,7 +431,7 @@ export default function Trainers() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   Save Trainer Profile

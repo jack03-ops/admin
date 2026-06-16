@@ -76,7 +76,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
         </div>
         <button
           onClick={() => setPage('add-member')}
-          className="px-4 py-2.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer shrink-0 self-start md:self-auto"
+          className="px-4 py-2.5 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer shrink-0 self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
           Add Member
@@ -94,7 +94,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
               placeholder="Search members database..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-red-500 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500 transition-all"
             />
           </div>
 
@@ -103,7 +103,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
             <select
               value={searchField}
               onChange={(e) => setSearchField(e.target.value)}
-              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-red-500"
+              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-orange-500"
             >
               <option value="all">Search In All Fields</option>
               <option value="name">Search By Full Name</option>
@@ -118,7 +118,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-red-500 font-semibold"
+              className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-orange-500 font-semibold"
             >
               <option value="all">All Registrations</option>
               <option value="active">Active Subscriptions</option>
@@ -169,7 +169,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                   
                   return (
                     <tr key={member.id} className="hover:bg-zinc-900/30 transition-colors">
-                      <td className="p-4 pl-6 font-bold text-red-400">
+                      <td className="p-4 pl-6 font-bold text-orange-400">
                         {member.id}
                       </td>
                       <td className="p-4">
@@ -187,7 +187,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                       </td>
                       <td className="p-4">
                         <div className="flex items-center gap-1 text-white font-semibold">
-                          <MapPin className="w-3.5 h-3.5 text-red-500" />
+                          <MapPin className="w-3.5 h-3.5 text-orange-500" />
                           {member.village}
                         </div>
                         <div className="text-[10px] text-slate-500 truncate max-w-[150px] mt-0.5">{member.address}</div>
@@ -216,7 +216,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                           onClick={() => onToggleStatus(member.id)}
                           className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold cursor-pointer border transition-all ${
                             member.status === 'Active'
-                              ? 'bg-red-500/10 text-red-400 border-red-500/25 hover:bg-red-500/20'
+                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25 hover:bg-emerald-500/20'
                               : 'bg-zinc-900 text-slate-500 border-slate-700 hover:bg-slate-700'
                           }`}
                         >
@@ -237,14 +237,14 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                         <div className="inline-flex items-center gap-1.5">
                            <button
                              onClick={() => setQrMember(member)}
-                             className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-zinc-900 rounded-lg transition-all cursor-pointer"
+                             className="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-zinc-900 rounded-lg transition-all cursor-pointer"
                              title="Show Check-in QR Pass"
                            >
                              <QrCode className="w-4 h-4" />
                            </button>
                            <button
                              onClick={() => onEditMember(member)}
-                             className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-zinc-900 rounded-lg transition-all cursor-pointer"
+                             className="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-zinc-900 rounded-lg transition-all cursor-pointer"
                              title="Edit Profile"
                            >
                              <Edit3 className="w-4 h-4" />
@@ -318,7 +318,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                       onClick={() => onToggleStatus(member.id)}
                       className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-extrabold cursor-pointer border transition-all ${
                         member.status === 'Active'
-                          ? 'bg-red-500/10 text-red-400 border-red-500/25'
+                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
                           : 'bg-zinc-900 text-slate-500 border-slate-700'
                       }`}
                     >
@@ -332,8 +332,8 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                   <h3 className="font-bold text-white text-base leading-snug">{member.fullName}</h3>
                   <div className="text-[10px] text-slate-500 mt-0.5">Age: {member.age} • {member.gender}</div>
                   
-                  <div className="flex items-center gap-1 text-[11px] text-slate-350 font-semibold mt-2.5">
-                    <MapPin className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                  <div className="flex items-center gap-1 text-[11px] text-slate-355 font-semibold mt-2.5">
+                    <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                     <span>{member.village}</span>
                   </div>
                   {member.address && (
@@ -362,7 +362,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                   <div className="flex items-center gap-2">
                      <button
                        onClick={() => setQrMember(member)}
-                       className="p-2 bg-zinc-950 border border-zinc-900 rounded-xl text-slate-400 hover:text-red-400 cursor-pointer flex items-center justify-center"
+                       className="p-2 bg-zinc-950 border border-zinc-900 rounded-xl text-slate-400 hover:text-orange-400 cursor-pointer flex items-center justify-center"
                        style={{ minWidth: '44px', minHeight: '44px' }}
                        title="Show Check-in QR Pass"
                      >
@@ -370,7 +370,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
                      </button>
                      <button
                        onClick={() => onEditMember(member)}
-                       className="p-2 bg-zinc-950 border border-zinc-900 rounded-xl text-slate-400 hover:text-red-400 cursor-pointer flex items-center justify-center"
+                       className="p-2 bg-zinc-950 border border-zinc-900 rounded-xl text-slate-400 hover:text-orange-400 cursor-pointer flex items-center justify-center"
                        style={{ minWidth: '44px', minHeight: '44px' }}
                        title="Edit Profile"
                      >
@@ -399,7 +399,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
       {/* Floating Action Button (FAB) for mobile screen */}
       <button
         onClick={() => setPage('add-member')}
-        className="md:hidden fixed bottom-20 right-6 w-14 h-14 bg-gradient-to-r from-red-650 to-red-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-red-950/40 z-30 transition-transform active:scale-95 cursor-pointer"
+        className="md:hidden fixed bottom-20 right-6 w-14 h-14 bg-gradient-phoenix rounded-full flex items-center justify-center text-white shadow-xl shadow-red-950/40 z-30 transition-transform active:scale-95 cursor-pointer"
         style={{ minWidth: '44px', minHeight: '44px' }}
         aria-label="Add Member"
       >
@@ -419,7 +419,7 @@ export default function MembersList({ members, onDeleteMember, onToggleStatus, o
             </button>
 
             <div>
-              <span className="text-[10px] text-red-500 font-extrabold uppercase tracking-widest">Gym Member Pass</span>
+              <span className="text-[10px] text-orange-500 font-extrabold uppercase tracking-widest">Gym Member Pass</span>
               <h3 className="text-xl font-bold text-white mt-1 leading-snug">{qrMember.fullName}</h3>
               <p className="text-xs text-zinc-500 mt-0.5">ID: {qrMember.id}</p>
             </div>

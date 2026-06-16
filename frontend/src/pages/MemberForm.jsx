@@ -418,7 +418,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               </button>
               <button
                 type="submit"
-                className="w-1/2 py-2.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-1/2 py-2.5 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 Save Member

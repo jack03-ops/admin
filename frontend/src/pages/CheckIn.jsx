@@ -72,7 +72,7 @@ export default function CheckIn({ setPage }) {
       ).slice(0, 5);
 
   return (
-    <div className="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#030303] text-slate-100">
+    <div className="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#060814] text-slate-100">
       <div>
         <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
           <QrCode className="w-6 h-6 text-red-500" />
@@ -133,13 +133,13 @@ export default function CheckIn({ setPage }) {
                 value={clientId}
                 onChange={(e) => setClientId(e.target.value)}
                 placeholder="Enter Client ID (PXM-XXXX)"
-                className="flex-1 px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-500 uppercase font-bold"
+                className="flex-1 px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white placeholder:text-zinc-650 focus:outline-none focus:border-red-500 uppercase font-bold"
                 onKeyDown={(e) => e.key === 'Enter' && handleCheckIn(clientId)}
               />
               <button
                 onClick={() => handleCheckIn(clientId)}
                 disabled={loading || !clientId.trim()}
-                className="px-5 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50"
+                className="px-5 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50"
               >
                 {loading ? '...' : 'Check In'}
               </button>

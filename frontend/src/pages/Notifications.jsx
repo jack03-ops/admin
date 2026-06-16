@@ -128,7 +128,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
                       onClick={() => {
                         setPage('payments');
                       }}
-                      className="px-3 py-1.5 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer"
+                      className="px-3 py-1.5 bg-gradient-phoenix hover:opacity-90 text-white rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer"
                     >
                       Receive Fee
                     </button>

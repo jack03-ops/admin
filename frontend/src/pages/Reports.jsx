@@ -236,7 +236,7 @@ export default function Reports({ members, payments }) {
               onClick={() => setCycleTab(tab.id)}
               className={`px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
                 cycleTab === tab.id 
-                  ? 'bg-gradient-to-r from-orange-500 to-red-650 text-white shadow-md shadow-orange-950/20'
+                  ? 'bg-gradient-phoenix text-white shadow-md shadow-red-950/30'
                   : 'bg-zinc-950/40 text-slate-400 hover:text-slate-200 border border-zinc-900'
               }`}
             >
@@ -265,10 +265,10 @@ export default function Reports({ members, payments }) {
         <div className="glass-panel p-6 rounded-2xl border border-zinc-900">
           <div className="flex justify-between items-center mb-3">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Net Enrolled Members</span>
-            <span className="p-2 bg-orange-500/10 text-orange-400 rounded-lg"><Users className="w-4 h-4" /></span>
+            <span className="p-2 bg-red-500/10 text-red-400 rounded-lg"><Users className="w-4 h-4" /></span>
           </div>
           <h3 className="text-2xl font-extrabold text-white">{stats.newJoins} Registered</h3>
-          <div className="flex items-center gap-1.5 text-xs text-orange-400 font-bold mt-4">
+          <div className="flex items-center gap-1.5 text-xs text-red-400 font-bold mt-4">
             <ArrowUpRight className="w-3.5 h-3.5" />
             <span>Active growth coefficient</span>
           </div>

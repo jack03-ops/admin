@@ -296,7 +296,7 @@ export default function Settings({ onSettingsUpdate }) {
             
             <button
               onClick={handleSaveAll}
-              className="w-full py-3 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer mt-4"
+              className="w-full py-3 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer mt-4"
             >
               <Save className="w-4 h-4" />
               Save Settings

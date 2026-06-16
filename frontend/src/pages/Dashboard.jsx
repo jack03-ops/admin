@@ -118,7 +118,7 @@ export default function Dashboard({ members, payments, setPage }) {
         </div>
         <button 
           onClick={() => setPage('add-member')}
-          className="mt-4 md:mt-0 px-5 py-3 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+          className="mt-4 md:mt-0 px-5 py-3 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           Add Member
