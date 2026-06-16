@@ -205,8 +205,6 @@ export default function App() {
         return <CheckIn setPage={setCurrentPage} />;
       case 'trainers':
         return <Trainers />;
-      case 'diet-workout':
-        return <DietWorkout />;
       default:
         return <Dashboard members={members} payments={payments} setPage={setCurrentPage} loading={loading} />;
     }
@@ -229,7 +227,6 @@ export default function App() {
     settings: 'Gym configurations & custom pricing',
     'check-in': 'Member QR Check-In Scanner',
     trainers: 'Gym Trainers & Batches',
-    'diet-workout': 'Progression, Workout & Diet Plans',
   };
 
   return (

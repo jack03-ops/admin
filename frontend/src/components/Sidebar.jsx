@@ -19,7 +19,6 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
     { id: 'members', label: 'Members List', icon: Users },
     { id: 'add-member', label: 'Add Member', icon: UserPlus },
     { id: 'trainers', label: 'Trainers', icon: Dumbbell },
-    { id: 'diet-workout', label: 'Diet & Workouts', icon: Flame },
     { id: 'payments', label: 'Payments', icon: CreditCard },
     { id: 'reports', label: 'Reports', icon: BarChart3 },
     { id: 'notifications', label: 'Notifications', icon: Bell },

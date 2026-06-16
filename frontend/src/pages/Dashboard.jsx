@@ -198,14 +198,6 @@ export default function Dashboard({ members, payments, setPage }) {
           </button>
 
           <button
-            onClick={() => setPage('diet-workout')}
-            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
-          >
-            <Flame className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-semibold text-white">Diet & Workouts</span>
-          </button>
-
-          <button
             onClick={() => setPage('reports')}
             className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
           >
