@@ -289,7 +289,7 @@ export default function Settings({ onSettingsUpdate }) {
 
           <div className="glass-panel p-6 rounded-2xl border border-zinc-900 text-center space-y-4">
             <Heart className="w-8 h-8 text-rose-500 mx-auto animate-pulse" />
-            <h3 className="text-sm font-black text-white uppercase tracking-wider">Phoenix Fitness</h3>
+            <h3 className="text-sm font-black text-white uppercase tracking-wider">Phoenix Fitness Academy</h3>
             <p className="text-[11px] text-slate-400 leading-relaxed">
               Designed with robust responsive grid layout support and buttery smooth layouts using Framer Motion capabilities.
             </p>

@@ -334,7 +334,7 @@ export default function Payments({ members, payments, onAddPayment, onMarkAsPaid
             {/* Invoice Header */}
             <div className="text-center pb-4 border-b border-zinc-900/60 print:border-zinc-300">
               <span className="text-[10px] text-cyan-400 font-extrabold uppercase tracking-widest print:text-cyan-600">Payment Confirmation Invoice</span>
-              <h3 className="text-xl font-black text-white mt-1 leading-snug print:text-black">PHOENIX FITNESS CENTER</h3>
+              <h3 className="text-xl font-black text-white mt-1 leading-snug print:text-black">PHOENIX FITNESS ACADEMY</h3>
               <p className="text-[10px] text-zinc-500">Official Membership Fee Bill Receipt</p>
             </div>
 

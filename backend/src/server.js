@@ -91,7 +91,7 @@ app.use('/api', workoutDietRoutes);
 
 // Base Status Route
 app.get('/health', (req, res) => {
-  res.status(200).json({ success: true, message: 'Phoenix Gym Admin API Service is healthy.' });
+  res.status(200).json({ success: true, message: 'Phoenix Fitness Academy API Service is healthy.' });
 });
 
 // Centralized error handler

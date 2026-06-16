@@ -65,7 +65,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
   }, [members]);
 
   const handleWhatsAppAlert = (member) => {
-    const text = `Hello ${member.fullName}, this is a friendly reminder from Phoenix Gym that your membership plan (${member.plan}) ends on ${member.endDate}. Please renew on time to avoid interruption!`;
+    const text = `Hello ${member.fullName}, this is a friendly reminder from Phoenix Fitness Academy that your membership plan (${member.plan}) ends on ${member.endDate}. Please renew on time to avoid interruption!`;
     const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://api.whatsapp.com/send?phone=91${member.phone}&text=${encodedText}`;
     window.open(whatsappUrl, '_blank');

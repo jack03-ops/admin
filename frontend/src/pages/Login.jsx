@@ -36,7 +36,7 @@ export default function Login({ onLoginSuccess }) {
           <div className="inline-flex p-1.5 bg-zinc-950 border border-red-500/30 rounded-3xl mb-4 shadow-xl shadow-red-950/20">
             <img src={phoenixLogo} alt="Phoenix Logo" className="w-16 h-16 object-contain animate-pulse" />
           </div>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">Phoenix Fitness Gym</h2>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">Phoenix Fitness Academy</h2>
           <p className="text-zinc-400 text-sm mt-1">Management Portal & Admin Telemetry</p>
         </div>
 

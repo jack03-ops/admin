@@ -31,8 +31,8 @@ const runLiveTest = async () => {
     { clientId: 'PXM-TEST-5D' },
     {
       fullName: 'Aravind Swamy (5 Days Expiring Test)',
-      phone: '9487817301',
-      whatsapp: '9487817301',
+      phone: '+91 80155 52425',
+      whatsapp: '+91 80155 52425',
       village: 'Rampur',
       gender: 'Male',
       age: 28,
@@ -44,7 +44,7 @@ const runLiveTest = async () => {
     },
     { upsert: true, new: true }
   );
-  console.log('Registered live member expiring in 5 days (Phone: 9487817301)');
+  console.log('Registered live member expiring in 5 days (Phone: +91 80155 52425)');
 
   // Create/Update Member 2: Expiring in 3 days
   const date3 = new Date();
@@ -55,8 +55,8 @@ const runLiveTest = async () => {
     { clientId: 'PXM-TEST-3D' },
     {
       fullName: 'Prabhu Deva (3 Days Expiring Test)',
-      phone: '9487817301',
-      whatsapp: '9487817301',
+      phone: '+91 80155 52425',
+      whatsapp: '+91 80155 52425',
       village: 'Chandpur',
       gender: 'Male',
       age: 34,
@@ -68,7 +68,7 @@ const runLiveTest = async () => {
     },
     { upsert: true, new: true }
   );
-  console.log('Registered live member expiring in 3 days (Phone: 9487817301)');
+  console.log('Registered live member expiring in 3 days (Phone: +91 80155 52425)');
 
   console.log('\n--- STARTING AUTOMATED SCHEDULER DISPATCH ---');
   await runAutomatedReminders();

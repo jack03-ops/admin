@@ -15,7 +15,7 @@ export const sendInstantNotification = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Gym member record not found' });
     }
 
-    const payloadText = message || `Hello ${member.fullName}, your gym membership plan (${member.plan}) is scheduled to expire on ${new Date(member.endDate).toLocaleDateString()}. Please renew soon. - Phoenix Gym`;
+    const payloadText = message || `Hello ${member.fullName}, your gym membership plan (${member.plan}) is scheduled to expire on ${new Date(member.endDate).toLocaleDateString()}. Please renew soon. - Phoenix Fitness Academy`;
 
     let deliveryResult;
     if (type === 'WhatsApp') {
@@ -87,14 +87,14 @@ export const triggerAutoReminders = async (req, res, next) => {
         // Construct distinct reminder messages per interval
         let reminderText = '';
         if (days === 5) {
-          reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
+          reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
         } else if (days === 3) {
-          reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
+          reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
         } else {
-          reminderText = `Hello ${member.fullName}, your Phoenix Gym membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
+          reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
         }
 
-        const targetPhone = '+91 9487817301'; // Force strictly this test number
+        const targetPhone = '+91 80155 52425'; // Force strictly this test number
 
         // Dispatch WhatsApp if not sent today
         try {

@@ -110,7 +110,7 @@ export default function Dashboard({ members, payments, setPage }) {
         <div className="space-y-2">
           <h2 className="text-2xl font-black text-white m-0 tracking-tight flex items-center gap-2">
             <Dumbbell className="w-6 h-6 text-red-500" />
-            Phoenix Fitness Centre Core
+            Phoenix Fitness Academy Core
           </h2>
           <p className="text-xs text-zinc-400 max-w-lg">
             Monitor real-time subscription telemetry, outstanding dues alerts, and automate direct WhatsApp reminders.
@@ -250,7 +250,7 @@ export default function Dashboard({ members, payments, setPage }) {
           <div className="p-3 bg-red-500/5 border border-red-500/10 rounded-xl">
             <span className="text-[10px] font-bold text-red-400 block mb-1">Target Phone Testing Line</span>
             <p className="text-[10px] text-zinc-400 leading-normal">
-              Active test WhatsApp endpoint set to: <code className="text-white font-bold">9487817301</code>
+              Active test WhatsApp endpoint set to: <code className="text-white font-bold">+91 80155 52425</code>
             </p>
           </div>
         </div>
