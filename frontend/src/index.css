@@ -6,8 +6,8 @@
   }
 
   body {
-    background-color: #060814;
-    color: #f3f4f6;
+    background-color: #f4f4f5;
+    color: #1e293b;
     font-family: var(--font-sans);
     overflow-x: hidden !important;
     width: 100% !important;
@@ -30,39 +30,40 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #060814;
+    background: #f4f4f5;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(239, 68, 68, 0.3);
+    background: rgba(15, 23, 42, 0.15);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(239, 68, 68, 0.6);
+    background: rgba(15, 23, 42, 0.3);
   }
 }
 
-/* Glassmorphism Card Utilities */
+/* Glassmorphism Card Utilities for Light Mode */
 .glass-panel {
-  background: rgba(13, 17, 33, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03), 0 1px 2px rgba(15, 23, 42, 0.02);
 }
 
 .glass-panel-glow-red {
-  background: rgba(13, 17, 33, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.08);
 }
 
 .glass-panel-glow-cyan {
-  background: rgba(13, 17, 33, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.08);
 }
 
 /* Custom Text Gradient */
@@ -87,12 +88,12 @@
 /* Animations */
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.2;
+    opacity: 0.1;
     transform: scale(1);
   }
   50% {
-    opacity: 0.35;
-    transform: scale(1.05);
+    opacity: 0.2;
+    transform: scale(1.03);
   }
 }
 
@@ -109,12 +110,11 @@
 }
 
 .text-gradient-phoenix {
-  background: linear-gradient(135deg, #ef4444 0%, #7f1d1d 100%);
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .bg-gradient-phoenix {
-  background: linear-gradient(90deg, #1c0505 0%, #3a0808 50%, #ef4444 100%);
+  background: linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #06b6d4 100%);
 }
-

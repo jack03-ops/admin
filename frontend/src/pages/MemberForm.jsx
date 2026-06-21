@@ -240,17 +240,17 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-red-500" />
+          <h2 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+            <Sparkles className="w-6 h-6 text-cyan-500" />
             {isEditMode ? `Edit Member Profile: ${formData.id}` : 'Enroll New Gym Member'}
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             {isEditMode ? 'Modify active subscription parameters, phone records, or registration details.' : 'Create new member profile in local secure ledger.'}
           </p>
         </div>
         <button
           onClick={onCancel}
-          className="p-2 text-slate-400 hover:text-slate-200 bg-zinc-900 border border-zinc-900 rounded-xl transition-all cursor-pointer"
+          className="p-2 text-slate-500 hover:text-slate-800 bg-white border border-slate-200 rounded-xl transition-all cursor-pointer shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>
@@ -262,26 +262,26 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
         <div className="space-y-6 lg:col-span-2">
           
           {/* CARD 1: Personal & Physical Profile */}
-          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-5">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3 flex items-center gap-2">
-              <Dumbbell className="w-4 h-4 text-red-500" />
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 space-y-5">
+            <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center gap-2">
+              <Dumbbell className="w-4 h-4 text-slate-655" />
               Personal & Physical Details
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Full Name */}
               <div className="col-span-1 md:col-span-2">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Full Name *</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Full Name *</label>
                 <input
                   type="text"
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. Rahul Sharma"
                 />
                 {errors.fullName && (
-                  <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
+                  <div className="text-[10px] text-rose-500 mt-1.5 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
                     {errors.fullName}
                   </div>
@@ -290,12 +290,12 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
               {/* Gender */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Gender</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Gender</label>
                 <select
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-red-500"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 font-medium shadow-sm"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -305,29 +305,29 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
               {/* DOB */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Date of Birth</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Date of Birth</label>
                 <input
                   type="date"
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                 />
               </div>
 
               {/* Age */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Age *</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Age *</label>
                 <input
                   type="number"
                   name="age"
                   value={formData.age}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. 24"
                 />
                 {errors.age && (
-                  <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
+                  <div className="text-[10px] text-rose-500 mt-1.5 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
                     {errors.age}
                   </div>
@@ -337,29 +337,29 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               {/* Physical Parameters Row */}
               <div className="col-span-1 md:col-span-2 grid grid-cols-3 gap-3 pt-2">
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Height (cms)</label>
+                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Height (cms)</label>
                   <input
                     type="number"
                     name="height"
                     value={formData.height}
                     onChange={handleChange}
                     placeholder="e.g. 175"
-                    className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Weight (kgs)</label>
+                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Weight (kgs)</label>
                   <input
                     type="number"
                     name="weight"
                     value={formData.weight}
                     onChange={handleChange}
                     placeholder="e.g. 72"
-                    className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">BMI (Auto)</label>
+                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">BMI (Auto)</label>
                   <div className="relative">
                     <input
                       type="text"
@@ -367,10 +367,10 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                       value={formData.bmi}
                       readOnly
                       placeholder="Auto"
-                      className="w-full px-3.5 py-2.5 bg-zinc-950/40 border border-zinc-900/80 rounded-xl text-xs text-orange-400 font-bold focus:outline-none cursor-not-allowed"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-cyan-600 font-bold focus:outline-none cursor-not-allowed shadow-inner"
                     />
                     {formData.bmi && (
-                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[9px] font-bold px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-600 border border-cyan-500/20">
                         {formData.bmi < 18.5 ? 'Underweight' : formData.bmi < 25 ? 'Normal' : formData.bmi < 30 ? 'Overweight' : 'Obese'}
                       </span>
                     )}
@@ -381,27 +381,27 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
           </div>
 
           {/* CARD 2: Contact & Location Details */}
-          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-5">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3 flex items-center gap-2">
-              <Activity className="w-4 h-4 text-orange-500" />
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 space-y-5">
+            <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center gap-2">
+              <Activity className="w-4 h-4 text-cyan-500" />
               Contact & Location details
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Phone Number */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Phone Number *</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Phone Number *</label>
                 <input
                   type="text"
                   name="phone"
                   value={formData.phone}
                   onChange={(e) => handlePhoneChange(e, 'phone')}
                   maxLength="14"
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. +91 9876543210"
                 />
                 {errors.phone && (
-                  <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
+                  <div className="text-[10px] text-rose-500 mt-1.5 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
                     {errors.phone}
                   </div>
@@ -410,18 +410,18 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
               {/* WhatsApp Number */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">WhatsApp Number (Optional)</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">WhatsApp Number (Optional)</label>
                 <input
                   type="text"
                   name="whatsapp"
                   value={formData.whatsapp}
                   onChange={(e) => handlePhoneChange(e, 'whatsapp')}
                   maxLength="14"
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. +91 9876543210"
                 />
                 {errors.whatsapp && (
-                  <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
+                  <div className="text-[10px] text-rose-500 mt-1.5 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
                     {errors.whatsapp}
                   </div>
@@ -430,43 +430,43 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
               {/* Email Address */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">E-mail Address</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">E-mail Address</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. client@email.com"
                 />
               </div>
 
               {/* Emergency Contact No */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Emergency Contact No.</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Emergency Contact No.</label>
                 <input
                   type="text"
                   name="emergencyContact"
                   value={formData.emergencyContact}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. +91 98765 01234"
                 />
               </div>
 
               {/* Village */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Village *</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Village *</label>
                 <input
                   type="text"
                   name="village"
                   value={formData.village}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="Village / Town Name"
                 />
                 {errors.village && (
-                  <div className="text-[10px] text-rose-400 mt-1.5 flex items-center gap-1">
+                  <div className="text-[10px] text-rose-500 mt-1.5 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
                     {errors.village}
                   </div>
@@ -475,34 +475,34 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
               {/* Joining Date */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Joining Date</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Joining Date</label>
                 <input
                   type="date"
                   name="joiningDate"
                   value={formData.joiningDate}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                 />
               </div>
             </div>
 
             {/* Address */}
             <div className="pt-2">
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Address details</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Address details</label>
               <textarea
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
                 rows="2"
-                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all resize-none"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all resize-none shadow-sm"
                 placeholder="House, landmark or street specifics..."
               />
             </div>
           </div>
 
           {/* CARD 3: Fitness & Health Assessment */}
-          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-5">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3 flex items-center gap-2">
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 space-y-5">
+            <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center gap-2">
               <ShieldAlert className="w-4 h-4 text-rose-500" />
               Fitness & Health Profile
             </h3>
@@ -510,28 +510,28 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Profession */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Profession</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Profession</label>
                 <input
                   type="text"
                   name="profession"
                   value={formData.profession}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
                   placeholder="e.g. Student, Software Engineer"
                 />
               </div>
 
               {/* Gym Experience */}
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Prior Gym Experience?</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Prior Gym Experience?</label>
                 <div className="flex gap-3">
                   {['Yes', 'No'].map(exp => (
                     <label 
                       key={exp} 
-                      className={`flex items-center justify-center flex-1 py-2.5 border rounded-xl cursor-pointer text-xs font-bold transition-all ${
+                      className={`flex items-center justify-center flex-1 py-2.5 border rounded-xl cursor-pointer text-xs font-bold transition-all shadow-sm ${
                         formData.gymExperience === exp 
-                          ? 'border-red-500 bg-red-950/20 text-white' 
-                          : 'border-zinc-900 bg-zinc-950/40 text-slate-400 hover:text-slate-200'
+                          ? 'border-cyan-500 bg-cyan-50 text-cyan-600 font-extrabold' 
+                          : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:bg-slate-50'
                       }`}
                     >
                       <input
@@ -548,17 +548,17 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 </div>
               </div>
 
-              {/* Purpose of Joining */}
+              {/* Purpose of Joining (Cyan Accent styled custom radios) */}
               <div className="col-span-1 md:col-span-2">
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Purpose of Joining</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Purpose of Joining</label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   {['Gain Weight', 'Lose Weight', 'Fitness', 'Become Professional'].map(purpose => (
                     <label 
                       key={purpose} 
-                      className={`flex items-center justify-center py-2.5 px-2 border rounded-xl cursor-pointer text-[10px] font-bold text-center transition-all ${
+                      className={`flex items-center justify-center py-2.5 px-2 border rounded-xl cursor-pointer text-[10px] font-bold text-center transition-all shadow-sm ${
                         formData.purposeOfJoining === purpose 
-                          ? 'border-red-500 bg-red-950/20 text-white' 
-                          : 'border-zinc-900 bg-zinc-950/40 text-slate-400 hover:text-slate-200 hover:border-zinc-800'
+                          ? 'border-cyan-500 bg-cyan-50 text-cyan-600 font-extrabold' 
+                          : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:border-slate-350 hover:bg-slate-50'
                       }`}
                     >
                       <input
@@ -578,15 +578,15 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               {/* Medical Condition Question */}
               <div className="col-span-1 md:col-span-2 space-y-4 pt-2">
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Any Medical Condition / Allergies?</label>
+                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Any Medical Condition / Allergies?</label>
                   <div className="flex gap-3">
                     {['Yes', 'No'].map(choice => (
                       <label 
                         key={choice} 
-                        className={`flex items-center justify-center flex-1 py-2.5 border rounded-xl cursor-pointer text-xs font-bold transition-all ${
+                        className={`flex items-center justify-center flex-1 py-2.5 border rounded-xl cursor-pointer text-xs font-bold transition-all shadow-sm ${
                           formData.hasMedicalCondition === choice 
-                            ? 'border-red-500 bg-red-950/20 text-white' 
-                            : 'border-zinc-900 bg-zinc-950/40 text-slate-400 hover:text-slate-200'
+                            ? 'border-cyan-500 bg-cyan-50 text-cyan-600 font-extrabold' 
+                            : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:bg-slate-50'
                         }`}
                       >
                         <input
@@ -606,17 +606,17 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 {/* Conditional Explain Details */}
                 {formData.hasMedicalCondition === 'Yes' && (
                   <div className="animate-fade-in space-y-1">
-                    <label className="block text-[11px] font-bold text-rose-400 uppercase tracking-wider mb-2">Explain Medical details *</label>
+                    <label className="block text-[11px] font-bold text-rose-500 uppercase tracking-wider mb-2">Explain Medical details *</label>
                     <textarea
                       name="medicalConditionDetails"
                       value={formData.medicalConditionDetails}
                       onChange={handleChange}
                       rows="3"
-                      className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all resize-none"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all resize-none shadow-sm"
                       placeholder="List medical conditions, surgery histories, or food/drug allergies..."
                     />
                     {errors.medicalConditionDetails && (
-                      <div className="text-[10px] text-rose-400 mt-1 flex items-center gap-1">
+                      <div className="text-[10px] text-rose-500 mt-1 flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" />
                         {errors.medicalConditionDetails}
                       </div>
@@ -631,17 +631,17 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
         {/* Membership & Payment Plan side details */}
         <div className="space-y-6">
           {/* CARD 4: Subscription & Billing */}
-          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-zinc-900 pb-3">Subscription details</h3>
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 space-y-4">
+            <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">Subscription details</h3>
             
             {/* Membership Plan */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Membership Plan</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Membership Plan</label>
               <select
                 name="plan"
                 value={formData.plan}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 font-semibold shadow-sm"
               >
                 {settings.membershipPlans.map(p => (
                   <option key={p.name} value={p.name}>{p.name} (₹{p.price})</option>
@@ -651,36 +651,36 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
             {/* Start Date */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Start Date</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Start Date</label>
               <input
                 type="date"
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
               />
             </div>
 
             {/* Auto End Date display */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Expiry Date (Auto-calculated)</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Expiry Date (Auto-calculated)</label>
               <input
                 type="date"
                 name="endDate"
                 value={formData.endDate}
                 readOnly
-                className="w-full px-3.5 py-2.5 bg-zinc-950/40 border border-zinc-900/80 rounded-xl text-xs text-slate-400 focus:outline-none cursor-not-allowed"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-400 focus:outline-none cursor-not-allowed shadow-inner"
               />
             </div>
 
             {/* Trainer Assignment */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Assign Personal Trainer</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Assign Personal Trainer</label>
               <select
                 name="trainerId"
                 value={formData.trainerId || ''}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 shadow-sm"
               >
                 <option value="">No Trainer Assigned (General Admission)</option>
                 {trainers.map(t => (
@@ -691,42 +691,42 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
             {/* Include Personal Trainer Checkbox Toggle */}
             <div className="pt-1 pb-1">
-              <label className="flex items-center gap-3 p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl cursor-pointer hover:border-zinc-800 transition-all select-none">
+              <label className="flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-slate-350 transition-all select-none shadow-sm">
                 <input
                   type="checkbox"
                   name="personalTrainerOption"
                   checked={formData.personalTrainerOption}
                   onChange={(e) => setFormData(prev => ({ ...prev, personalTrainerOption: e.target.checked }))}
-                  className="w-4 h-4 rounded border-zinc-800 bg-zinc-950 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 rounded border-slate-300 bg-white text-cyan-500 focus:ring-cyan-500 focus:ring-offset-0 cursor-pointer"
                 />
                 <div>
-                  <span className="block text-[11px] font-bold text-white uppercase tracking-wider">Include Personal Trainer</span>
-                  <span className="block text-[9px] text-slate-400 mt-0.5">+₹1,000 / month additional charge</span>
+                  <span className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider">Include Personal Trainer</span>
+                  <span className="block text-[9px] text-slate-500 mt-0.5">+₹1,000 / month additional charge</span>
                 </div>
               </label>
             </div>
 
             {/* Amount Paid input */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Amount Paid (₹)</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Amount Paid (₹)</label>
               <input
                 type="number"
                 name="amountPaid"
                 value={formData.amountPaid}
                 onChange={handleChange}
                 placeholder="Plan Price"
-                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all font-bold text-emerald-400 placeholder:text-slate-700"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all font-bold text-emerald-600 placeholder:text-slate-400 shadow-sm"
               />
             </div>
 
             {/* Payment Status */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Payment Status</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Payment Status</label>
               <select
                 name="paymentStatus"
                 value={formData.paymentStatus}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 font-bold"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 font-bold shadow-sm"
               >
                 <option value="Paid">Paid</option>
                 <option value="Pending">Pending</option>
@@ -735,12 +735,12 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
 
             {/* Status */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Member Status</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Member Status</label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-750 focus:outline-none focus:border-cyan-500 shadow-sm"
               >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -749,15 +749,15 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
           </div>
 
           {/* CARD 5: Notes & Actions */}
-          <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 space-y-4">
             <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Personal Fitness Notes</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Personal Fitness Notes</label>
               <textarea
                 name="notes"
                 value={formData.notes}
                 onChange={handleChange}
                 rows="3"
-                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 transition-all resize-none"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all resize-none shadow-sm"
                 placeholder="Injuries, bodybuilding goals, time restrictions..."
               />
             </div>
@@ -766,15 +766,16 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               <button
                 type="button"
                 onClick={onCancel}
-                className="w-1/2 py-2.5 bg-zinc-900 border border-zinc-900 text-slate-400 hover:text-slate-200 text-xs font-semibold rounded-xl transition-all cursor-pointer text-center"
+                className="w-1/2 py-2.5 bg-slate-100 border border-slate-200 text-slate-650 hover:bg-slate-200 hover:text-slate-800 text-xs font-bold rounded-xl transition-all cursor-pointer text-center shadow-sm"
               >
                 Cancel
               </button>
+              {/* Neon Accent Save Button */}
               <button
                 type="submit"
-                className="w-1/2 py-2.5 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-1/2 py-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <Save className="w-4 h-4" />
+                <Save className="w-4 h-4 stroke-[2.5]" />
                 Save Member
               </button>
             </div>
