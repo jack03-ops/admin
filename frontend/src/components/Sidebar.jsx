@@ -26,16 +26,16 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
   ];
 
   return (
-    <aside className="hidden md:flex w-64 min-h-screen bg-[#0f172a] border-r border-slate-800 flex-col justify-between shrink-0">
+    <aside className="hidden md:flex w-64 min-h-screen bg-[#1E3A8A] border-r border-blue-900/30 flex-col justify-between shrink-0">
       <div>
         {/* Gym Logo / Brand */}
-        <div className="p-5 flex items-center gap-3 border-b border-slate-800">
-          <div className="p-1 rounded-xl border border-cyan-500/30 bg-slate-950 shrink-0">
+        <div className="p-5 flex items-center gap-3 border-b border-blue-900/30">
+          <div className="p-1 rounded-xl border border-green-500/30 bg-blue-950 shrink-0">
             <img src={phoenixLogo} alt="Phoenix Logo" className="w-8 h-8 object-contain" />
           </div>
           <div>
             <h1 className="text-sm font-bold tracking-tight text-white m-0">Phoenix Fitness Academy</h1>
-            <span className="text-[10px] text-cyan-400 font-semibold uppercase tracking-wider">Admin System</span>
+            <span className="text-[10px] text-green-400 font-bold uppercase tracking-wider">Admin System</span>
           </div>
         </div>
 
@@ -51,14 +51,14 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
                 onClick={() => setCurrentPage(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer ${
                   isActive 
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/10'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                    ? 'bg-[#22C55E] text-white font-bold shadow-lg shadow-green-950/20'
+                    : 'text-blue-100 hover:text-white hover:bg-blue-800/40'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
+                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-blue-200'}`} />
                 <span className="text-sm">{item.label}</span>
                 {item.id === 'notifications' && (
-                  <span className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-slate-950 text-cyan-400' : 'bg-cyan-500 text-slate-950'}`}>
+                  <span className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-blue-950 text-green-400' : 'bg-[#22C55E] text-white'}`}>
                     3
                   </span>
                 )}
@@ -69,10 +69,10 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
       </div>
 
       {/* Logout button */}
-      <div className="p-4 border-t border-slate-800">
+      <div className="p-4 border-t border-blue-900/30">
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 cursor-pointer"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-300 hover:bg-red-500/10 hover:text-red-200 transition-all duration-200 cursor-pointer"
         >
           <LogOut className="w-5 h-5" />
           <span className="text-sm font-medium">Log Out</span>

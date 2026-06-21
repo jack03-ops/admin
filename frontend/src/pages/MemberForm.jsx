@@ -241,7 +241,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-cyan-500" />
+            <Sparkles className="w-6 h-6 text-[#22C55E]" />
             {isEditMode ? `Edit Member Profile: ${formData.id}` : 'Enroll New Gym Member'}
           </h2>
           <p className="text-xs text-slate-500 mt-1">
@@ -277,7 +277,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. Rahul Sharma"
                 />
                 {errors.fullName && (
@@ -295,7 +295,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 font-medium shadow-sm"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-green-500 font-medium shadow-sm"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -311,7 +311,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                 />
               </div>
 
@@ -323,7 +323,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="age"
                   value={formData.age}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. 24"
                 />
                 {errors.age && (
@@ -344,7 +344,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                     value={formData.height}
                     onChange={handleChange}
                     placeholder="e.g. 175"
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   />
                 </div>
                 <div>
@@ -355,7 +355,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                     value={formData.weight}
                     onChange={handleChange}
                     placeholder="e.g. 72"
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   />
                 </div>
                 <div>
@@ -367,10 +367,10 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                       value={formData.bmi}
                       readOnly
                       placeholder="Auto"
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-cyan-600 font-bold focus:outline-none cursor-not-allowed shadow-inner"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-green-600 font-bold focus:outline-none cursor-not-allowed shadow-inner"
                     />
                     {formData.bmi && (
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-600 border border-cyan-500/20">
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-bold px-1.5 py-0.5 rounded bg-green-500/10 text-green-600 border border-green-500/20">
                         {formData.bmi < 18.5 ? 'Underweight' : formData.bmi < 25 ? 'Normal' : formData.bmi < 30 ? 'Overweight' : 'Obese'}
                       </span>
                     )}
@@ -383,7 +383,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
           {/* CARD 2: Contact & Location Details */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 space-y-5">
             <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center gap-2">
-              <Activity className="w-4 h-4 text-cyan-500" />
+              <Activity className="w-4 h-4 text-[#22C55E]" />
               Contact & Location details
             </h3>
 
@@ -397,7 +397,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   value={formData.phone}
                   onChange={(e) => handlePhoneChange(e, 'phone')}
                   maxLength="14"
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. +91 9876543210"
                 />
                 {errors.phone && (
@@ -417,7 +417,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   value={formData.whatsapp}
                   onChange={(e) => handlePhoneChange(e, 'whatsapp')}
                   maxLength="14"
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. +91 9876543210"
                 />
                 {errors.whatsapp && (
@@ -436,7 +436,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. client@email.com"
                 />
               </div>
@@ -449,7 +449,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="emergencyContact"
                   value={formData.emergencyContact}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. +91 98765 01234"
                 />
               </div>
@@ -462,7 +462,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="village"
                   value={formData.village}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="Village / Town Name"
                 />
                 {errors.village && (
@@ -481,7 +481,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="joiningDate"
                   value={formData.joiningDate}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                 />
               </div>
             </div>
@@ -494,7 +494,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 value={formData.address}
                 onChange={handleChange}
                 rows="2"
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all resize-none shadow-sm"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all resize-none shadow-sm"
                 placeholder="House, landmark or street specifics..."
               />
             </div>
@@ -516,7 +516,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="profession"
                   value={formData.profession}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
                   placeholder="e.g. Student, Software Engineer"
                 />
               </div>
@@ -530,8 +530,8 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                       key={exp} 
                       className={`flex items-center justify-center flex-1 py-2.5 border rounded-xl cursor-pointer text-xs font-bold transition-all shadow-sm ${
                         formData.gymExperience === exp 
-                          ? 'border-cyan-500 bg-cyan-50 text-cyan-600 font-extrabold' 
-                          : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                          ? 'border-[#22C55E] bg-green-50 text-green-700 font-extrabold' 
+                          : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:bg-slate-55 hover:border-slate-300'
                       }`}
                     >
                       <input
@@ -548,7 +548,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 </div>
               </div>
 
-              {/* Purpose of Joining (Cyan Accent styled custom radios) */}
+              {/* Purpose of Joining */}
               <div className="col-span-1 md:col-span-2">
                 <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Purpose of Joining</label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -557,7 +557,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                       key={purpose} 
                       className={`flex items-center justify-center py-2.5 px-2 border rounded-xl cursor-pointer text-[10px] font-bold text-center transition-all shadow-sm ${
                         formData.purposeOfJoining === purpose 
-                          ? 'border-cyan-500 bg-cyan-50 text-cyan-600 font-extrabold' 
+                          ? 'border-[#22C55E] bg-green-50 text-green-700 font-extrabold' 
                           : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:border-slate-350 hover:bg-slate-50'
                       }`}
                     >
@@ -585,7 +585,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                         key={choice} 
                         className={`flex items-center justify-center flex-1 py-2.5 border rounded-xl cursor-pointer text-xs font-bold transition-all shadow-sm ${
                           formData.hasMedicalCondition === choice 
-                            ? 'border-cyan-500 bg-cyan-50 text-cyan-600 font-extrabold' 
+                            ? 'border-[#22C55E] bg-green-50 text-green-700 font-extrabold' 
                             : 'border-slate-200 bg-slate-50/50 text-slate-500 hover:text-slate-700 hover:bg-slate-50'
                         }`}
                       >
@@ -612,7 +612,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                       value={formData.medicalConditionDetails}
                       onChange={handleChange}
                       rows="3"
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all resize-none shadow-sm"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all resize-none shadow-sm"
                       placeholder="List medical conditions, surgery histories, or food/drug allergies..."
                     />
                     {errors.medicalConditionDetails && (
@@ -641,7 +641,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="plan"
                 value={formData.plan}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 font-semibold shadow-sm"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-green-500 font-semibold shadow-sm"
               >
                 {settings.membershipPlans.map(p => (
                   <option key={p.name} value={p.name}>{p.name} (₹{p.price})</option>
@@ -657,7 +657,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all shadow-sm"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all shadow-sm"
               />
             </div>
 
@@ -680,7 +680,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="trainerId"
                 value={formData.trainerId || ''}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 shadow-sm"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-green-500 shadow-sm"
               >
                 <option value="">No Trainer Assigned (General Admission)</option>
                 {trainers.map(t => (
@@ -697,7 +697,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                   name="personalTrainerOption"
                   checked={formData.personalTrainerOption}
                   onChange={(e) => setFormData(prev => ({ ...prev, personalTrainerOption: e.target.checked }))}
-                  className="w-4 h-4 rounded border-slate-300 bg-white text-cyan-500 focus:ring-cyan-500 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 rounded border-slate-300 bg-white text-[#22C55E] focus:ring-[#22C55E] focus:ring-offset-0 cursor-pointer"
                 />
                 <div>
                   <span className="block text-[11px] font-bold text-slate-800 uppercase tracking-wider">Include Personal Trainer</span>
@@ -715,7 +715,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 value={formData.amountPaid}
                 onChange={handleChange}
                 placeholder="Plan Price"
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all font-bold text-emerald-600 placeholder:text-slate-400 shadow-sm"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all font-bold text-emerald-605 placeholder:text-slate-400 shadow-sm"
               />
             </div>
 
@@ -726,7 +726,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="paymentStatus"
                 value={formData.paymentStatus}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-cyan-500 font-bold shadow-sm"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-green-500 font-bold shadow-sm"
               >
                 <option value="Paid">Paid</option>
                 <option value="Pending">Pending</option>
@@ -740,7 +740,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-750 focus:outline-none focus:border-cyan-500 shadow-sm"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-750 focus:outline-none focus:border-green-500 shadow-sm"
               >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -757,7 +757,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 value={formData.notes}
                 onChange={handleChange}
                 rows="3"
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-cyan-500 transition-all resize-none shadow-sm"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-green-500 transition-all resize-none shadow-sm"
                 placeholder="Injuries, bodybuilding goals, time restrictions..."
               />
             </div>
@@ -770,10 +770,10 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               >
                 Cancel
               </button>
-              {/* Neon Accent Save Button */}
+              {/* Green #22C55E CTA Button */}
               <button
                 type="submit"
-                className="w-1/2 py-2.5 bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-1/2 py-2.5 bg-[#22C55E] hover:bg-[#16a34a] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(34,197,94,0.2)] hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] flex items-center justify-center gap-1.5 cursor-pointer border-none"
               >
                 <Save className="w-4 h-4 stroke-[2.5]" />
                 Save Member
