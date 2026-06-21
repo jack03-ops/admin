@@ -77,6 +77,57 @@ const MemberSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Trainer',
     default: null
+  },
+  dob: {
+    type: Date,
+    default: null
+  },
+  height: {
+    type: Number,
+    default: null
+  },
+  weight: {
+    type: Number,
+    default: null
+  },
+  bmi: {
+    type: Number,
+    default: null
+  },
+  emergencyContact: {
+    type: String,
+    default: ''
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  purposeOfJoining: {
+    type: String,
+    enum: ['Gain Weight', 'Lose Weight', 'Fitness', 'Become Professional', ''],
+    default: ''
+  },
+  gymExperience: {
+    type: String,
+    enum: ['Yes', 'No', ''],
+    default: ''
+  },
+  profession: {
+    type: String,
+    default: ''
+  },
+  amountPaid: {
+    type: Number,
+    default: 0
+  },
+  hasMedicalCondition: {
+    type: String,
+    enum: ['Yes', 'No', ''],
+    default: ''
+  },
+  medicalConditionDetails: {
+    type: String,
+    default: ''
   }
 }, { timestamps: true });
 

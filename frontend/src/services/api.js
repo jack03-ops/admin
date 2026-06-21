@@ -105,7 +105,8 @@ export const getMembers = async (params = {}) => {
     status: m.activeStatus ? 'Active' : 'Inactive',
     startDate: m.startDate ? m.startDate.split('T')[0] : '',
     endDate: m.endDate ? m.endDate.split('T')[0] : '',
-    joiningDate: m.joiningDate ? m.joiningDate.split('T')[0] : ''
+    joiningDate: m.joiningDate ? m.joiningDate.split('T')[0] : '',
+    dob: m.dob ? m.dob.split('T')[0] : ''
   }));
 };
 
@@ -126,11 +127,13 @@ export const createMember = async (memberData) => {
     // Auto-record initial payment if Paid
     if (memberData.paymentStatus === 'Paid') {
       const txns = mockDb.getPayments();
+      const selectedPlan = mockDb.getSettings().membershipPlans.find(p => p.name === memberData.plan);
+      const price = Number(memberData.amountPaid) || (selectedPlan ? selectedPlan.price : 1000);
       const newTx = {
         id: `TXN-${101 + txns.length}`,
         clientId: nextId,
         clientName: memberData.fullName,
-        amount: 1000,
+        amount: price,
         date: memberData.startDate || new Date().toISOString().split('T')[0],
         plan: memberData.plan,
         method: 'UPI'

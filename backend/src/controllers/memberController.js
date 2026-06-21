@@ -86,7 +86,10 @@ export const createMember = async (req, res, next) => {
   try {
     const { 
       fullName, phone, whatsapp, village, address, gender, age, 
-      plan, startDate, paymentStatus, notes, profilePhoto 
+      plan, startDate, paymentStatus, notes, profilePhoto,
+      dob, height, weight, bmi, emergencyContact, email,
+      purposeOfJoining, gymExperience, profession, amountPaid,
+      hasMedicalCondition, medicalConditionDetails
     } = req.body;
 
     // 1. Generate unique sequential Client ID
@@ -114,12 +117,24 @@ export const createMember = async (req, res, next) => {
       endDate: computedEndDate,
       paymentStatus,
       notes: notes || '',
-      profilePhoto: profilePhoto || ''
+      profilePhoto: profilePhoto || '',
+      dob: dob || null,
+      height: height || null,
+      weight: weight || null,
+      bmi: bmi || null,
+      emergencyContact: emergencyContact || '',
+      email: email || '',
+      purposeOfJoining: purposeOfJoining || '',
+      gymExperience: gymExperience || '',
+      profession: profession || '',
+      amountPaid: amountPaid || 0,
+      hasMedicalCondition: hasMedicalCondition || '',
+      medicalConditionDetails: medicalConditionDetails || ''
     });
 
     // 4. Create auto invoice transaction ledger log if Paid
     if (paymentStatus === 'Paid') {
-      const price = planObj ? planObj.price : 1000;
+      const price = amountPaid || (planObj ? planObj.price : 1000);
       const countTx = await Payment.countDocuments();
       const receiptId = `TXN-${101 + countTx}`;
       
