@@ -89,7 +89,7 @@ export const createMember = async (req, res, next) => {
       plan, startDate, paymentStatus, notes, profilePhoto,
       dob, height, weight, bmi, emergencyContact, email,
       purposeOfJoining, gymExperience, profession, amountPaid,
-      hasMedicalCondition, medicalConditionDetails
+      hasMedicalCondition, medicalConditionDetails, personalTrainerOption
     } = req.body;
 
     // 1. Generate unique sequential Client ID
@@ -129,7 +129,8 @@ export const createMember = async (req, res, next) => {
       profession: profession || '',
       amountPaid: amountPaid || 0,
       hasMedicalCondition: hasMedicalCondition || '',
-      medicalConditionDetails: medicalConditionDetails || ''
+      medicalConditionDetails: medicalConditionDetails || '',
+      personalTrainerOption: !!personalTrainerOption
     });
 
     // 4. Create auto invoice transaction ledger log if Paid

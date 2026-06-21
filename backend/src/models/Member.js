@@ -128,6 +128,10 @@ const MemberSchema = new mongoose.Schema({
   medicalConditionDetails: {
     type: String,
     default: ''
+  },
+  personalTrainerOption: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true });
 

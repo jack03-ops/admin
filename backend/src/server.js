@@ -46,16 +46,18 @@ const seedDatabase = async () => {
     }
 
     // 2. Seed Default Membership Plans
-    const plansCount = await Plan.countDocuments();
-    if (plansCount === 0) {
-      await Plan.insertMany([
-        { name: 'Monthly', durationMonths: 1, price: 1000 },
-        { name: 'Quarterly', durationMonths: 3, price: 2700 },
-        { name: 'Half-Yearly', durationMonths: 6, price: 5000 },
-        { name: 'Yearly', durationMonths: 12, price: 9000 }
-      ]);
-      console.log('[Seeding] Standard gym membership plans configured.');
-    }
+    await Plan.deleteMany({});
+    await Plan.insertMany([
+      { name: 'Monthly (Without Cardio)', durationMonths: 1, price: 1000 },
+      { name: 'Quarterly (Without Cardio)', durationMonths: 3, price: 2800 },
+      { name: 'Half-Yearly (Without Cardio)', durationMonths: 6, price: 4500 },
+      { name: 'Yearly (Without Cardio)', durationMonths: 12, price: 7999 },
+      { name: 'Monthly (With Cardio)', durationMonths: 1, price: 1200 },
+      { name: 'Quarterly (With Cardio)', durationMonths: 3, price: 3200 },
+      { name: 'Half-Yearly (With Cardio)', durationMonths: 6, price: 5000 },
+      { name: 'Yearly (With Cardio)', durationMonths: 12, price: 8999 }
+    ]);
+    console.log('[Seeding] Standard gym membership plans updated (Plan 1 & Plan 2).');
 
     // 3. Seed Default Trainers
     const trainersCount = await Trainer.countDocuments();

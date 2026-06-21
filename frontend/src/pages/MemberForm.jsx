@@ -19,14 +19,14 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
     gender: 'Male',
     age: '',
     joiningDate: new Date().toISOString().split('T')[0],
-    plan: 'Monthly',
+    plan: 'Monthly (Without Cardio)',
     startDate: new Date().toISOString().split('T')[0],
     endDate: '',
     paymentStatus: 'Paid',
     status: 'Active',
     notes: '',
     trainerId: '',
-    // New Fields
+    // Previous custom fields
     dob: '',
     height: '',
     weight: '',
@@ -38,7 +38,9 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
     profession: '',
     amountPaid: '',
     hasMedicalCondition: 'No',
-    medicalConditionDetails: ''
+    medicalConditionDetails: '',
+    // New checkbox option
+    personalTrainerOption: false
   });
 
   const [errors, setErrors] = useState({});
@@ -76,7 +78,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
         gender: memberToEdit.gender || 'Male',
         age: memberToEdit.age || '',
         joiningDate: memberToEdit.joiningDate ? memberToEdit.joiningDate.split('T')[0] : new Date().toISOString().split('T')[0],
-        plan: memberToEdit.plan || 'Monthly',
+        plan: memberToEdit.plan || 'Monthly (Without Cardio)',
         startDate: memberToEdit.startDate ? memberToEdit.startDate.split('T')[0] : new Date().toISOString().split('T')[0],
         endDate: memberToEdit.endDate ? memberToEdit.endDate.split('T')[0] : '',
         paymentStatus: memberToEdit.paymentStatus || 'Paid',
@@ -94,7 +96,8 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
         profession: memberToEdit.profession || '',
         amountPaid: memberToEdit.amountPaid !== undefined ? memberToEdit.amountPaid : '',
         hasMedicalCondition: memberToEdit.hasMedicalCondition || 'No',
-        medicalConditionDetails: memberToEdit.medicalConditionDetails || ''
+        medicalConditionDetails: memberToEdit.medicalConditionDetails || '',
+        personalTrainerOption: !!memberToEdit.personalTrainerOption
       });
       setIsInitialized(true);
     } else {
@@ -102,13 +105,16 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
     }
   }, [isEditMode, memberToEdit]);
 
-  // Trigger effect to auto-calculate membership duration end date based on Plan selection
+  // Trigger effect to auto-calculate membership duration end date and price based on Plan selection & Personal Trainer option
   useEffect(() => {
     if (!isInitialized) return;
     if (formData.plan && formData.startDate) {
       const selectedPlan = settings.membershipPlans.find(p => p.name === formData.plan);
       const months = selectedPlan ? selectedPlan.durationMonths : 1;
-      const price = selectedPlan ? selectedPlan.price : 1000;
+      const basePrice = selectedPlan ? selectedPlan.price : 1000;
+      
+      const trainerCost = formData.personalTrainerOption ? (1000 * months) : 0;
+      const totalPrice = basePrice + trainerCost;
       
       const start = new Date(formData.startDate);
       if (!isNaN(start)) {
@@ -116,11 +122,14 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
         setFormData(prev => ({
           ...prev,
           endDate: start.toISOString().split('T')[0],
-          amountPaid: prev.amountPaid === '' || prev.plan !== formData.plan ? price : prev.amountPaid
+          // Reset/recalculate amountPaid when plan or trainer changes, or if it is empty
+          amountPaid: prev.plan !== formData.plan || prev.personalTrainerOption !== formData.personalTrainerOption || prev.amountPaid === ''
+            ? totalPrice
+            : prev.amountPaid
         }));
       }
     }
-  }, [formData.plan, formData.startDate, isInitialized]);
+  }, [formData.plan, formData.startDate, formData.personalTrainerOption, isInitialized]);
 
   // Auto-calculate BMI based on height & weight
   useEffect(() => {
@@ -464,7 +473,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 )}
               </div>
 
-              {/* Joining Date (formerly in main list) */}
+              {/* Joining Date */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Joining Date</label>
                 <input
@@ -512,7 +521,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 />
               </div>
 
-              {/* Gym Experience (Yes/No custom cards) */}
+              {/* Gym Experience */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Prior Gym Experience?</label>
                 <div className="flex gap-3">
@@ -539,7 +548,7 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
                 </div>
               </div>
 
-              {/* Purpose of Joining (Custom Radio Cards Grid) */}
+              {/* Purpose of Joining */}
               <div className="col-span-1 md:col-span-2">
                 <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Purpose of Joining</label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -664,6 +673,39 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               />
             </div>
 
+            {/* Trainer Assignment */}
+            <div>
+              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Assign Personal Trainer</label>
+              <select
+                name="trainerId"
+                value={formData.trainerId || ''}
+                onChange={handleChange}
+                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+              >
+                <option value="">No Trainer Assigned (General Admission)</option>
+                {trainers.map(t => (
+                  <option key={t.id} value={t.id}>{t.name} ({t.specialty})</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Include Personal Trainer Checkbox Toggle */}
+            <div className="pt-1 pb-1">
+              <label className="flex items-center gap-3 p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl cursor-pointer hover:border-zinc-800 transition-all select-none">
+                <input
+                  type="checkbox"
+                  name="personalTrainerOption"
+                  checked={formData.personalTrainerOption}
+                  onChange={(e) => setFormData(prev => ({ ...prev, personalTrainerOption: e.target.checked }))}
+                  className="w-4 h-4 rounded border-zinc-800 bg-zinc-950 text-red-500 focus:ring-red-500 focus:ring-offset-0 cursor-pointer"
+                />
+                <div>
+                  <span className="block text-[11px] font-bold text-white uppercase tracking-wider">Include Personal Trainer</span>
+                  <span className="block text-[9px] text-slate-400 mt-0.5">+₹1,000 / month additional charge</span>
+                </div>
+              </label>
+            </div>
+
             {/* Amount Paid input */}
             <div>
               <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Amount Paid (₹)</label>
@@ -688,22 +730,6 @@ export default function MemberForm({ memberToEdit, onSave, onCancel }) {
               >
                 <option value="Paid">Paid</option>
                 <option value="Pending">Pending</option>
-              </select>
-            </div>
-
-            {/* Trainer Assignment */}
-            <div>
-              <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Assign Personal Trainer</label>
-              <select
-                name="trainerId"
-                value={formData.trainerId || ''}
-                onChange={handleChange}
-                className="w-full px-3 py-2.5 bg-zinc-950/80 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
-              >
-                <option value="">No Trainer Assigned (General Admission)</option>
-                {trainers.map(t => (
-                  <option key={t.id} value={t.id}>{t.name} ({t.specialty})</option>
-                ))}
               </select>
             </div>
 

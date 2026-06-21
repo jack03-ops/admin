@@ -121,10 +121,14 @@ const DEFAULT_SETTINGS = {
   gymName: "Phoenix Fitness Academy",
   currency: "INR",
   membershipPlans: [
-    { name: "Monthly", durationMonths: 1, price: 1000 },
-    { name: "Quarterly", durationMonths: 3, price: 2700 },
-    { name: "Half-Yearly", durationMonths: 6, price: 5000 },
-    { name: "Yearly", durationMonths: 12, price: 9000 }
+    { name: "Monthly (Without Cardio)", durationMonths: 1, price: 1000 },
+    { name: "Quarterly (Without Cardio)", durationMonths: 3, price: 2800 },
+    { name: "Half-Yearly (Without Cardio)", durationMonths: 6, price: 4500 },
+    { name: "Yearly (Without Cardio)", durationMonths: 12, price: 7999 },
+    { name: "Monthly (With Cardio)", durationMonths: 1, price: 1200 },
+    { name: "Quarterly (With Cardio)", durationMonths: 3, price: 3200 },
+    { name: "Half-Yearly (With Cardio)", durationMonths: 6, price: 5000 },
+    { name: "Yearly (With Cardio)", durationMonths: 12, price: 8999 }
   ]
 };
 
@@ -158,7 +162,13 @@ export const getSettings = () => {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(DEFAULT_SETTINGS));
     return DEFAULT_SETTINGS;
   }
-  return JSON.parse(data);
+  const parsed = JSON.parse(data);
+  // Migrate old plans to new 8-plan structure automatically
+  if (!parsed.membershipPlans || parsed.membershipPlans.length === 4 || !parsed.membershipPlans[0].name.includes('Cardio')) {
+    parsed.membershipPlans = DEFAULT_SETTINGS.membershipPlans;
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(parsed));
+  }
+  return parsed;
 };
 
 export const saveSettings = (settings) => {
