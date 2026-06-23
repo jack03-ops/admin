@@ -35,10 +35,10 @@ export function MembershipGrowthChart({ dataValues, labels }) {
         fill: true,
         label: 'New Registrations',
         data: dataValues || [12, 19, 32, 25, 45, 52],
-        borderColor: '#f97316',
-        backgroundColor: 'rgba(249, 115, 22, 0.1)',
+        borderColor: '#FF5F1F',
+        backgroundColor: 'rgba(255, 95, 31, 0.05)',
         tension: 0.4,
-        pointBackgroundColor: '#f97316',
+        pointBackgroundColor: '#FF5F1F',
         pointBorderColor: '#fff',
         pointBorderWidth: 1.5,
       },
@@ -53,10 +53,10 @@ export function MembershipGrowthChart({ dataValues, labels }) {
         display: false,
       },
       tooltip: {
-        backgroundColor: '#0f172a',
+        backgroundColor: '#111111',
         titleColor: '#fff',
-        bodyColor: '#cbd5e1',
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        bodyColor: '#e4e4e7',
+        borderColor: '#27272a',
         borderWidth: 1,
         padding: 10,
         cornerRadius: 8,
@@ -68,7 +68,7 @@ export function MembershipGrowthChart({ dataValues, labels }) {
           display: false,
         },
         ticks: {
-          color: '#94a3b8',
+          color: '#6b7280',
           font: {
             family: 'Inter',
             size: 11,
@@ -77,10 +77,10 @@ export function MembershipGrowthChart({ dataValues, labels }) {
       },
       y: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.05)',
+          color: 'rgba(15, 23, 42, 0.05)',
         },
         ticks: {
-          color: '#94a3b8',
+          color: '#6b7280',
           font: {
             family: 'Inter',
             size: 11,
@@ -104,9 +104,9 @@ export function RevenueChart({ dataValues, labels }) {
       {
         label: 'Revenue (₹)',
         data: dataValues || [5000, 7500, 10000, 6000, 12000, 15000, 9000],
-        backgroundColor: 'rgba(6, 182, 212, 0.85)',
+        backgroundColor: 'rgba(255, 95, 31, 0.85)',
         borderRadius: 6,
-        hoverBackgroundColor: '#06b6d4',
+        hoverBackgroundColor: '#FF5F1F',
       },
     ],
   };
@@ -119,10 +119,10 @@ export function RevenueChart({ dataValues, labels }) {
         display: false,
       },
       tooltip: {
-        backgroundColor: '#0f172a',
+        backgroundColor: '#111111',
         titleColor: '#fff',
-        bodyColor: '#cbd5e1',
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        bodyColor: '#e4e4e7',
+        borderColor: '#27272a',
         borderWidth: 1,
       },
     },
@@ -132,16 +132,16 @@ export function RevenueChart({ dataValues, labels }) {
           display: false,
         },
         ticks: {
-          color: '#94a3b8',
+          color: '#6b7280',
           font: { family: 'Inter', size: 11 },
         },
       },
       y: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.05)',
+          color: 'rgba(15, 23, 42, 0.05)',
         },
         ticks: {
-          color: '#94a3b8',
+          color: '#6b7280',
           font: { family: 'Inter', size: 11 },
         },
       },
@@ -161,8 +161,8 @@ export function MemberDistributionChart({ activeCount, inactiveCount }) {
     datasets: [
       {
         data: [activeCount || 75, inactiveCount || 25],
-        backgroundColor: ['#f97316', '#334155'],
-        borderColor: '#0f172a',
+        backgroundColor: ['#FF5F1F', '#e4e4e7'],
+        borderColor: '#ffffff',
         borderWidth: 2,
         hoverOffset: 4,
       },
@@ -176,8 +176,8 @@ export function MemberDistributionChart({ activeCount, inactiveCount }) {
       legend: {
         position: 'bottom',
         labels: {
-          color: '#cbd5e1',
-          font: { family: 'Inter', size: 11 },
+          color: '#4b5563',
+          font: { family: 'Inter', size: 11, weight: 'bold' },
           padding: 20,
         },
       },

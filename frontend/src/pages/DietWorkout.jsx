@@ -216,22 +216,22 @@ export default function DietWorkout() {
   };
 
   return (
-    <div className="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#030303] text-slate-100 pb-20 md:pb-8">
+    <div className="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#030303] text-zinc-800 pb-20 md:pb-8">
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed top-6 right-6 z-50 bg-zinc-900 border border-red-500/35 text-white px-5 py-3.5 rounded-2xl shadow-xl backdrop-blur-md text-xs font-semibold">
+        <div className="fixed top-6 right-6 z-50 bg-zinc-900 border border-[#FF5F1F]/35 text-zinc-900 px-5 py-3.5 rounded-2xl shadow-xl backdrop-blur-md text-xs font-semibold">
           {toast}
         </div>
       )}
 
       {/* Header controls & Member Selector */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-900 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-200 pb-4">
         <div>
-          <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-red-500 animate-pulse" />
+          <h2 className="text-2xl font-black text-zinc-900 tracking-tight flex items-center gap-2">
+            <Sparkles className="w-6 h-6 text-[#FF5F1F] animate-pulse" />
             Member Progression Center
           </h2>
-          <p className="text-xs text-slate-400 mt-1">Configure workouts, meals, track weight milestones and photos.</p>
+          <p className="text-xs text-zinc-550 mt-1">Configure workouts, meals, track weight milestones and photos.</p>
         </div>
 
         {/* Member Dropdown Selector */}
@@ -240,7 +240,7 @@ export default function DietWorkout() {
           <select
             value={selectedClientId}
             onChange={(e) => setSelectedClientId(e.target.value)}
-            className="w-full px-3 py-2.5 bg-zinc-950 border border-zinc-900 rounded-xl text-xs text-white focus:outline-none focus:border-red-500 font-bold"
+            className="w-full px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F] font-bold"
           >
             {members.map(m => (
               <option key={m.id} value={m.id}>{m.fullName} ({m.id})</option>
@@ -252,11 +252,11 @@ export default function DietWorkout() {
       {selectedMember && (
         <div className="space-y-6">
           {/* Tab Selection Switcher */}
-          <div className="flex bg-zinc-950 p-1 border border-zinc-900 rounded-2xl max-w-md w-full">
+          <div className="flex bg-zinc-50 p-1 border border-zinc-200 rounded-2xl max-w-md w-full">
             <button
               onClick={() => setActiveTab('workout')}
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                activeTab === 'workout' ? 'bg-gradient-to-r from-red-650 to-red-500 text-white' : 'text-zinc-400 hover:text-white'
+                activeTab === 'workout' ? 'bg-gradient-to-r from-red-650 to-red-500 text-zinc-900' : 'text-zinc-550 hover:text-zinc-900'
               }`}
             >
               <Dumbbell className="w-4 h-4" />
@@ -265,7 +265,7 @@ export default function DietWorkout() {
             <button
               onClick={() => setActiveTab('diet')}
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                activeTab === 'diet' ? 'bg-gradient-to-r from-red-650 to-red-500 text-white' : 'text-zinc-400 hover:text-white'
+                activeTab === 'diet' ? 'bg-gradient-to-r from-red-650 to-red-500 text-zinc-900' : 'text-zinc-550 hover:text-zinc-900'
               }`}
             >
               <Apple className="w-4 h-4" />
@@ -274,7 +274,7 @@ export default function DietWorkout() {
             <button
               onClick={() => setActiveTab('progress')}
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                activeTab === 'progress' ? 'bg-gradient-to-r from-red-650 to-red-500 text-white' : 'text-zinc-400 hover:text-white'
+                activeTab === 'progress' ? 'bg-gradient-to-r from-red-650 to-red-500 text-zinc-900' : 'text-zinc-550 hover:text-zinc-900'
               }`}
             >
               <Camera className="w-4 h-4" />
@@ -283,22 +283,22 @@ export default function DietWorkout() {
           </div>
 
           {loading ? (
-            <div className="glass-panel p-8 rounded-3xl border border-zinc-900 animate-pulse text-center py-20 text-zinc-500 text-xs">
+            <div className="glass-panel p-8 rounded-3xl border border-zinc-200 animate-pulse text-center py-20 text-zinc-500 text-xs">
               Loading member data parameters...
             </div>
           ) : (
             <div>
               {/* 1. Workout Tab */}
               {activeTab === 'workout' && (
-                <div className="glass-panel p-6 rounded-3xl border border-zinc-900 space-y-6">
-                  <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                    <h3 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
-                      <Dumbbell className="w-4 h-4 text-red-500" />
+                <div className="glass-panel p-6 rounded-3xl border border-zinc-200 space-y-6">
+                  <div className="flex justify-between items-center border-b border-zinc-200 pb-3">
+                    <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <Dumbbell className="w-4 h-4 text-[#FF5F1F]" />
                       Active Workout Assignment
                     </h3>
                     <button
                       onClick={addExercise}
-                      className="px-3.5 py-1.5 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-300 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1"
+                      className="px-3.5 py-1.5 bg-zinc-50 border border-zinc-200 hover:bg-zinc-900 text-zinc-500 hover:text-zinc-900 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1"
                     >
                       <Plus className="w-3.5 h-3.5" /> Add Exercise
                     </button>
@@ -307,7 +307,7 @@ export default function DietWorkout() {
                   <div className="space-y-4">
                     {exercises.length > 0 ? (
                       exercises.map((ex, idx) => (
-                        <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-3 bg-zinc-950/70 p-4 border border-zinc-900 rounded-2xl items-center relative pr-12 md:pr-4">
+                        <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-3 bg-zinc-50/70 p-4 border border-zinc-200 rounded-2xl items-center relative pr-12 md:pr-4">
                           <div className="md:col-span-4">
                             <label className="block text-[9px] font-bold text-zinc-500 uppercase mb-1">Exercise Name</label>
                             <input
@@ -315,7 +315,7 @@ export default function DietWorkout() {
                               value={ex.name}
                               onChange={(e) => handleExerciseChange(idx, 'name', e.target.value)}
                               placeholder="e.g. Incline DB Press"
-                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F]"
                             />
                           </div>
                           <div className="md:col-span-2">
@@ -325,7 +325,7 @@ export default function DietWorkout() {
                               value={ex.sets}
                               onChange={(e) => handleExerciseChange(idx, 'sets', e.target.value)}
                               placeholder="3"
-                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F]"
                             />
                           </div>
                           <div className="md:col-span-2">
@@ -335,7 +335,7 @@ export default function DietWorkout() {
                               value={ex.reps}
                               onChange={(e) => handleExerciseChange(idx, 'reps', e.target.value)}
                               placeholder="12"
-                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F]"
                             />
                           </div>
                           <div className="md:col-span-2">
@@ -345,7 +345,7 @@ export default function DietWorkout() {
                               value={ex.weight}
                               onChange={(e) => handleExerciseChange(idx, 'weight', e.target.value)}
                               placeholder="e.g. 20kg"
-                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F]"
                             />
                           </div>
                           <div className="md:col-span-2">
@@ -353,7 +353,7 @@ export default function DietWorkout() {
                             <select
                               value={ex.dayOfWeek}
                               onChange={(e) => handleExerciseChange(idx, 'dayOfWeek', e.target.value)}
-                              className="w-full px-2 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-[11px] text-zinc-300 focus:outline-none focus:border-red-500"
+                              className="w-full px-2 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-[11px] text-zinc-500 focus:outline-none focus:border-[#FF5F1F]"
                             >
                               <option value="All Days">All Days</option>
                               <option value="Monday">Monday</option>
@@ -369,7 +369,7 @@ export default function DietWorkout() {
                           {/* Remove button */}
                           <button
                             onClick={() => removeExercise(idx)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 md:translate-y-0 md:static p-2 text-zinc-600 hover:text-red-500 cursor-pointer"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 md:translate-y-0 md:static p-2 text-zinc-600 hover:text-[#FF5F1F] cursor-pointer"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -380,10 +380,10 @@ export default function DietWorkout() {
                     )}
                   </div>
 
-                  <div className="pt-4 border-t border-zinc-900 flex justify-end">
+                  <div className="pt-4 border-t border-zinc-200 flex justify-end">
                     <button
                       onClick={handleSaveWorkout}
-                      className="px-6 py-2.5 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                      className="px-6 py-2.5 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-zinc-900 text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                     >
                       <Save className="w-4 h-4" /> Save Workout Plan
                     </button>
@@ -393,28 +393,28 @@ export default function DietWorkout() {
 
               {/* 2. Diet Tab */}
               {activeTab === 'diet' && (
-                <div className="glass-panel p-6 rounded-3xl border border-zinc-900 space-y-6">
-                  <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                    <h3 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
-                      <Apple className="w-4 h-4 text-red-500" />
+                <div className="glass-panel p-6 rounded-3xl border border-zinc-200 space-y-6">
+                  <div className="flex justify-between items-center border-b border-zinc-200 pb-3">
+                    <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <Apple className="w-4 h-4 text-[#FF5F1F]" />
                       Nutrition Diet & Meal Plan
                     </h3>
                     <button
                       onClick={addMeal}
-                      className="px-3.5 py-1.5 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-300 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1"
+                      className="px-3.5 py-1.5 bg-zinc-50 border border-zinc-200 hover:bg-zinc-900 text-zinc-500 hover:text-zinc-900 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1"
                     >
                       <Plus className="w-3.5 h-3.5" /> Add Meal
                     </button>
                   </div>
 
                   {/* Water Target Settings */}
-                  <div className="bg-zinc-950 p-4 border border-zinc-900 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="bg-zinc-50 p-4 border border-zinc-200 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <div className="bg-blue-600/10 p-3 rounded-xl text-blue-400">
                         <Droplet className="w-5 h-5 fill-blue-500" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white">Daily Water Intake Target</h4>
+                        <h4 className="text-xs font-bold text-zinc-900">Daily Water Intake Target</h4>
                         <p className="text-[10px] text-zinc-500 mt-0.5">Hydration targets improve metabolism and strength.</p>
                       </div>
                     </div>
@@ -426,9 +426,9 @@ export default function DietWorkout() {
                         max="10"
                         value={waterTarget}
                         onChange={(e) => setWaterTarget(Number(e.target.value))}
-                        className="w-20 px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white text-center focus:outline-none focus:border-red-500 font-bold"
+                        className="w-20 px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 text-center focus:outline-none focus:border-[#FF5F1F] font-bold"
                       />
-                      <span className="text-xs text-zinc-400">Liters / day</span>
+                      <span className="text-xs text-zinc-550">Liters / day</span>
                     </div>
                   </div>
 
@@ -436,13 +436,13 @@ export default function DietWorkout() {
                   <div className="space-y-4">
                     {meals.length > 0 ? (
                       meals.map((meal, idx) => (
-                        <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-3 bg-zinc-950/70 p-4 border border-zinc-900 rounded-2xl items-center relative pr-12 md:pr-4">
+                        <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-3 bg-zinc-50/70 p-4 border border-zinc-200 rounded-2xl items-center relative pr-12 md:pr-4">
                           <div className="md:col-span-3">
                             <label className="block text-[9px] font-bold text-zinc-500 uppercase mb-1">Meal Time</label>
                             <select
                               value={meal.mealTime}
                               onChange={(e) => handleMealChange(idx, 'mealTime', e.target.value)}
-                              className="w-full px-2 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-zinc-300 focus:outline-none focus:border-red-500"
+                              className="w-full px-2 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-500 focus:outline-none focus:border-[#FF5F1F]"
                             >
                               <option value="Breakfast">Breakfast</option>
                               <option value="Pre-Workout">Pre-Workout</option>
@@ -460,7 +460,7 @@ export default function DietWorkout() {
                               value={meal.items}
                               onChange={(e) => handleMealChange(idx, 'items', e.target.value)}
                               placeholder="e.g. 50g Oats, 1 Scoop Whey, Almonds"
-                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F]"
                             />
                           </div>
 
@@ -471,14 +471,14 @@ export default function DietWorkout() {
                               value={meal.calories}
                               onChange={(e) => handleMealChange(idx, 'calories', e.target.value)}
                               placeholder="450"
-                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                              className="w-full px-3 py-2 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none focus:border-[#FF5F1F]"
                             />
                           </div>
 
                           {/* Remove button */}
                           <button
                             onClick={() => removeMeal(idx)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 md:translate-y-0 md:static p-2 text-zinc-600 hover:text-red-500 cursor-pointer"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 md:translate-y-0 md:static p-2 text-zinc-600 hover:text-[#FF5F1F] cursor-pointer"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -489,10 +489,10 @@ export default function DietWorkout() {
                     )}
                   </div>
 
-                  <div className="pt-4 border-t border-zinc-900 flex justify-end">
+                  <div className="pt-4 border-t border-zinc-200 flex justify-end">
                     <button
                       onClick={handleSaveDiet}
-                      className="px-6 py-2.5 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                      className="px-6 py-2.5 bg-gradient-to-r from-red-650 to-red-500 hover:from-red-500 hover:to-rose-450 text-zinc-900 text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                     >
                       <Save className="w-4 h-4" /> Save Diet Plan
                     </button>
@@ -505,15 +505,15 @@ export default function DietWorkout() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   
                   {/* Photo Timeline Gallery */}
-                  <div className="glass-panel p-6 rounded-3xl border border-zinc-900 lg:col-span-2 space-y-4">
-                    <div className="flex justify-between items-center border-b border-zinc-900 pb-3">
-                      <h3 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
-                        <Camera className="w-4 h-4 text-red-500" />
+                  <div className="glass-panel p-6 rounded-3xl border border-zinc-200 lg:col-span-2 space-y-4">
+                    <div className="flex justify-between items-center border-b border-zinc-200 pb-3">
+                      <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
+                        <Camera className="w-4 h-4 text-[#FF5F1F]" />
                         Workout Progress Gallery
                       </h3>
                       
                       {/* Photo Upload triggers */}
-                      <label className="px-3.5 py-1.5 bg-zinc-950 border border-zinc-850 hover:bg-zinc-900 text-zinc-300 hover:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1">
+                      <label className="px-3.5 py-1.5 bg-zinc-50 border border-zinc-200 hover:bg-zinc-900 text-zinc-500 hover:text-zinc-900 rounded-xl text-[10px] font-bold uppercase tracking-wider cursor-pointer flex items-center gap-1">
                         <Upload className="w-3.5 h-3.5" /> Upload Photo
                         <input
                           type="file"
@@ -527,7 +527,7 @@ export default function DietWorkout() {
                     {progressPhotos.length > 0 ? (
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
                         {progressPhotos.map((photo) => (
-                          <div key={photo.id} className="group relative bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-900 shadow-md">
+                          <div key={photo.id} className="group relative bg-zinc-50 rounded-2xl overflow-hidden border border-zinc-200 shadow-md">
                             <img 
                               src={photo.url} 
                               alt="Gym progression milestone" 
@@ -535,15 +535,15 @@ export default function DietWorkout() {
                             />
                             {/* Overlay date stamp */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 opacity-90">
-                              <span className="text-[10px] font-bold text-white flex items-center gap-1">
-                                <Calendar className="w-3 h-3 text-red-400" />
+                              <span className="text-[10px] font-bold text-zinc-900 flex items-center gap-1">
+                                <Calendar className="w-3 h-3 text-[#FF5F1F]" />
                                 {photo.date}
                               </span>
                             </div>
                             {/* Delete button */}
                             <button
                               onClick={() => deletePhoto(photo.id)}
-                              className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-red-500/20 text-zinc-400 hover:text-red-400 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                              className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-red-500/20 text-zinc-550 hover:text-[#FF5F1F] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                             >
                               <X className="w-3.5 h-3.5" />
                             </button>
@@ -560,14 +560,14 @@ export default function DietWorkout() {
                   </div>
 
                   {/* Water Tracker Panel */}
-                  <div className="glass-panel p-6 rounded-3xl border border-zinc-900 space-y-4">
-                    <h3 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5 border-b border-zinc-900 pb-3">
+                  <div className="glass-panel p-6 rounded-3xl border border-zinc-200 space-y-4">
+                    <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-zinc-200 pb-3">
                       <Droplet className="w-4 h-4 text-blue-500 fill-blue-500/20" />
                       Hydration Intake logs
                     </h3>
 
                     {/* Water intake input logger */}
-                    <form onSubmit={handleAddWaterLog} className="flex gap-2 bg-zinc-950 p-2 border border-zinc-900 rounded-2xl">
+                    <form onSubmit={handleAddWaterLog} className="flex gap-2 bg-zinc-50 p-2 border border-zinc-200 rounded-2xl">
                       <input
                         type="number"
                         step="0.1"
@@ -576,12 +576,12 @@ export default function DietWorkout() {
                         value={newWaterLog}
                         onChange={(e) => setNewWaterLog(e.target.value)}
                         placeholder="Intake (Liters, e.g. 0.5)"
-                        className="flex-1 px-3 py-1.5 bg-zinc-900 border border-zinc-850 rounded-xl text-xs text-white focus:outline-none"
+                        className="flex-1 px-3 py-1.5 bg-zinc-900 border border-zinc-200 rounded-xl text-xs text-zinc-900 focus:outline-none"
                         required
                       />
                       <button
                         type="submit"
-                        className="px-4 bg-gradient-to-r from-blue-650 to-blue-500 text-white text-xs font-bold rounded-xl shadow-md cursor-pointer flex items-center justify-center"
+                        className="px-4 bg-gradient-to-r from-blue-650 to-blue-500 text-zinc-900 text-xs font-bold rounded-xl shadow-md cursor-pointer flex items-center justify-center"
                       >
                         Log
                       </button>
@@ -591,7 +591,7 @@ export default function DietWorkout() {
                     <div className="space-y-3 max-h-[260px] overflow-y-auto pr-1">
                       {waterLogs.length > 0 ? (
                         waterLogs.map((log) => (
-                          <div key={log.id} className="p-3 bg-zinc-950/40 border border-zinc-900 rounded-xl flex items-center justify-between text-[11px]">
+                          <div key={log.id} className="p-3 bg-zinc-50/40 border border-zinc-200 rounded-xl flex items-center justify-between text-[11px]">
                             <div className="flex items-center gap-2">
                               <span className="text-blue-400 font-bold bg-blue-500/5 px-2 py-0.5 border border-blue-500/10 rounded-lg">+{log.amount}L</span>
                               <span className="text-zinc-500 font-medium">{log.time}</span>

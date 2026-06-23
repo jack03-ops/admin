@@ -5,8 +5,7 @@ import {
   CreditCard, 
   UserPlus, 
   CheckCircle2, 
-  MessageSquare,
-  AlertTriangle 
+  MessageSquare 
 } from 'lucide-react';
 
 export default function Notifications({ members, payments, onMarkAsPaid, setPage }) {
@@ -72,16 +71,16 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
   };
 
   return (
-    <div className="p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
+    <div className="p-4 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#111111]">
       <div>
-        <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-          <Bell className="w-6 h-6 text-red-500" />
+        <h2 className="text-xl md:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <Bell className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F]" />
           Alert Feed & Action Center
         </h2>
-        <p className="text-xs text-slate-400 mt-1">Review critical pending balances, client expirations, and triggers.</p>
+        <p className="text-xs text-zinc-400 mt-1">Review critical pending balances, client expirations, and triggers.</p>
       </div>
 
-      <div className="glass-panel rounded-2xl border border-zinc-900 divide-y divide-zinc-900/80 shadow-2xl max-w-4xl">
+      <div className="glass-panel rounded-2xl border border-zinc-200 divide-y divide-zinc-200/60 shadow-2xl max-w-4xl border-solid">
         {alertsList.length > 0 ? (
           alertsList.map((alert) => {
             const Icon = 
@@ -90,23 +89,23 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
               UserPlus;
             
             const colorClass = 
-              alert.severity === 'danger' ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' :
-              alert.severity === 'warning' ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' :
-              'bg-blue-500/10 border-blue-500/30 text-blue-400';
+              alert.severity === 'danger' ? 'bg-rose-500/10 border-rose-500/25 text-rose-600' :
+              alert.severity === 'warning' ? 'bg-orange-500/10 border-orange-500/25 text-orange-600' :
+              'bg-blue-500/10 border-blue-500/25 text-blue-600';
 
             return (
-              <div key={alert.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-zinc-900/10 transition-colors">
+              <div key={alert.id} className="p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-zinc-50 transition-colors">
                 <div className="flex gap-4">
-                  <div className={`p-3 rounded-xl border shrink-0 ${colorClass}`}>
+                  <div className={`p-3 rounded-xl border shrink-0 flex items-center justify-center border-solid ${colorClass}`}>
                     <Icon className="w-5 h-5 animate-pulse" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-1.5">
+                    <h4 className="text-xs font-black uppercase text-zinc-900 tracking-wider flex items-center gap-1.5">
                       {alert.title}
-                      {alert.severity === 'danger' && <span className="bg-rose-500/15 text-rose-400 text-[8px] px-1.5 py-0.5 rounded font-black">CRITICAL</span>}
+                      {alert.severity === 'danger' && <span className="bg-rose-500/15 text-rose-600 text-[8px] px-1.5 py-0.5 rounded font-black">CRITICAL</span>}
                     </h4>
-                    <p className="text-[11px] text-slate-400 mt-1">{alert.message}</p>
-                    <p className="text-[10px] text-slate-600 font-medium mt-1">Contact: {alert.member.phone} • Village: {alert.member.village}</p>
+                    <p className="text-[11px] text-zinc-650 mt-1 leading-relaxed">{alert.message}</p>
+                    <p className="text-[10px] text-zinc-500 font-medium mt-1">Contact: {alert.member.phone} • Village: {alert.member.village}</p>
                   </div>
                 </div>
 
@@ -115,7 +114,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
                   {/* WhatsApp prompt */}
                   <button
                     onClick={() => handleWhatsAppAlert(alert.member)}
-                    className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-white border border-emerald-500/25 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-600 text-emerald-600 hover:text-white border border-emerald-500/25 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1 cursor-pointer border-solid"
                     title="Send alert notice on WhatsApp"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
@@ -128,7 +127,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
                       onClick={() => {
                         setPage('payments');
                       }}
-                      className="px-3 py-1.5 bg-gradient-phoenix hover:opacity-90 text-white rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer"
+                      className="px-3 py-1.5 bg-gradient-phoenix hover:opacity-95 text-white rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer border-none"
                     >
                       Receive Fee
                     </button>
@@ -138,7 +137,7 @@ export default function Notifications({ members, payments, onMarkAsPaid, setPage
             );
           })
         ) : (
-          <div className="p-12 text-center text-slate-500 text-xs">
+          <div className="p-12 text-center text-zinc-500 text-xs">
             <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-3" />
             No system notifications or pending alerts found. All clear!
           </div>

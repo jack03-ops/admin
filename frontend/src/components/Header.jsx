@@ -1,16 +1,16 @@
 import React from 'react';
-import { Bell, User, Search, Dumbbell, QrCode } from 'lucide-react';
+import { Bell, User, Dumbbell, QrCode } from 'lucide-react';
 
 export default function Header({ title, user, setPage }) {
   return (
-    <header className="h-20 border-b border-blue-900/30 bg-[#1E3A8A] px-6 md:px-8 flex items-center justify-between sticky top-0 z-30">
+    <header className="h-20 border-b border-zinc-800 bg-[#0c0c0c] px-6 md:px-8 flex items-center justify-between sticky top-0 z-30">
       {/* Title / Greetings */}
       <div>
         <h2 className="text-base md:text-xl font-black text-white tracking-tight flex items-center gap-2">
-          <Dumbbell className="w-4 h-4 md:w-5 md:h-5 text-blue-100 shrink-0" />
+          <Dumbbell className="w-4 h-4 md:w-5 md:h-5 text-[#FF5F1F] shrink-0" />
           <span className="truncate max-w-[180px] md:max-w-none">{title}</span>
         </h2>
-        <p className="text-[10px] md:text-xs text-blue-200 font-medium">Welcome, {user?.name || 'Admin'}</p>
+        <p className="text-[10px] md:text-xs text-zinc-400 font-medium">Welcome, {user?.name || 'Admin'}</p>
       </div>
 
       {/* Actions */}
@@ -18,17 +18,17 @@ export default function Header({ title, user, setPage }) {
         {/* QR Check-In Scanner Trigger */}
         <button 
           onClick={() => setPage('check-in')}
-          className="relative p-2 text-blue-200 hover:text-white hover:bg-blue-850/50 rounded-xl transition-all cursor-pointer flex items-center justify-center"
+          className="relative p-2 text-zinc-400 hover:text-white hover:bg-zinc-900/50 rounded-xl transition-all cursor-pointer flex items-center justify-center"
           title="QR Check-In Scanner"
           style={{ minWidth: '44px', minHeight: '44px' }}
         >
-          <QrCode className="w-5 h-5 text-[#22C55E]" />
+          <QrCode className="w-5 h-5 text-[#FF5F1F]" />
         </button>
 
         {/* Notifications Indicator */}
         <button 
           onClick={() => setPage('notifications')}
-          className="relative p-2 text-blue-200 hover:text-white hover:bg-blue-850/50 rounded-xl transition-all cursor-pointer flex items-center justify-center"
+          className="relative p-2 text-zinc-400 hover:text-white hover:bg-zinc-900/50 rounded-xl transition-all cursor-pointer flex items-center justify-center"
           style={{ minWidth: '44px', minHeight: '44px' }}
           title="Notification Center"
         >
@@ -38,7 +38,5 @@ export default function Header({ title, user, setPage }) {
         </button>
       </div>
     </header>
-
-
   );
 }

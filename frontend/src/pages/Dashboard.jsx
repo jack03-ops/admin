@@ -14,8 +14,7 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
-  Dumbbell,
-  Flame
+  Dumbbell
 } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import { 
@@ -57,7 +56,6 @@ export default function Dashboard({ members, payments, setPage }) {
     const total = members.length;
     const active = members.filter(m => m.status === 'Active').length;
     
-    // Expiring soon: ending date is within the next 15 days, and member is active
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const fifteenDaysFromNow = new Date();
@@ -69,16 +67,13 @@ export default function Dashboard({ members, payments, setPage }) {
       return endDate >= today && endDate <= fifteenDaysFromNow;
     }).length;
 
-    // Pending payments
     const pendingPayments = members.filter(m => m.paymentStatus === 'Pending').length;
 
-    // Today's Renewals: members whose membership starts today or has been renewed today
     const todaysRenewals = members.filter(m => {
       const todayStr = new Date().toISOString().split('T')[0];
       return m.startDate === todayStr && m.paymentStatus === 'Paid';
     }).length;
 
-    // Total Revenue
     const revenue = payments.reduce((acc, curr) => acc + curr.amount, 0);
 
     return {
@@ -114,22 +109,22 @@ export default function Dashboard({ members, payments, setPage }) {
   };
 
   return (
-    <div className="w-full max-w-full p-8 space-y-8 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-80px)] bg-[#030303]">
+    <div className="w-full max-w-full p-4 md:p-8 space-y-6 md:space-y-8 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-80px)] bg-[#111111]">
       {/* Welcome Banner */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gradient-to-r from-zinc-950 to-zinc-900 p-8 rounded-3xl border border-zinc-900 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[40%] h-full bg-red-600/5 blur-[80px] animate-pulse-glow" />
-        <div className="space-y-2">
-          <h2 className="text-2xl font-black text-white m-0 tracking-tight flex items-center gap-2">
-            <Dumbbell className="w-6 h-6 text-red-500" />
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gradient-to-r from-zinc-950 to-zinc-900 p-6 md:p-8 rounded-2xl md:rounded-3xl border border-zinc-800 shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[40%] h-full bg-orange-600/5 blur-[80px] animate-pulse-glow" />
+        <div className="space-y-1.5 md:space-y-2">
+          <h2 className="text-xl md:text-2xl font-black text-white m-0 tracking-tight flex items-center gap-2">
+            <Dumbbell className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F]" />
             Phoenix Fitness Academy Core
           </h2>
-          <p className="text-xs text-zinc-400 max-w-lg">
+          <p className="text-[11px] md:text-xs text-zinc-400 max-w-lg leading-relaxed">
             Monitor real-time subscription telemetry, outstanding dues alerts, and automate direct WhatsApp reminders.
           </p>
         </div>
         <button 
           onClick={() => setPage('add-member')}
-          className="mt-4 md:mt-0 px-5 py-3 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+          className="mt-4 md:mt-0 px-4 md:px-5 py-2.5 md:py-3 bg-gradient-phoenix hover:opacity-95 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer border-none shrink-0"
         >
           <Plus className="w-4 h-4" />
           Add Member
@@ -137,14 +132,14 @@ export default function Dashboard({ members, payments, setPage }) {
       </div>
 
       {/* Real-time Dashboard Statistics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <StatCard 
           title="Active Members" 
           value={metrics.active} 
           icon={UserCheck} 
           trend="+12%" 
           trendType="up"
-          glowColor="red"
+          glowColor="cyan"
         />
         <StatCard 
           title="Expiring Soon" 
@@ -160,7 +155,7 @@ export default function Dashboard({ members, payments, setPage }) {
           icon={AlertTriangle} 
           trend="Invoices Outstanding" 
           trendType="down"
-          glowColor="default"
+          glowColor="red"
         />
         <StatCard 
           title="Today's Renewals" 
@@ -168,56 +163,56 @@ export default function Dashboard({ members, payments, setPage }) {
           icon={RefreshCw} 
           trend="Active Subscriptions" 
           trendType="up"
-          glowColor="cyan"
+          glowColor="default"
         />
       </div>
 
       {/* Quick Action buttons panel */}
-      <div className="glass-panel p-6 rounded-2xl border border-zinc-900 space-y-4">
-        <h3 className="text-xs font-black text-white uppercase tracking-wider">Quick Actions Console</h3>
-        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="glass-panel p-5 md:p-6 rounded-2xl border border-zinc-200/60 space-y-4">
+        <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider">Quick Actions Console</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           <button
             onClick={() => setPage('add-member')}
-            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
+            className="flex flex-col items-center justify-center p-3 md:p-4 bg-zinc-50 border border-zinc-200/80 rounded-xl hover:border-[#FF5F1F]/40 hover:bg-zinc-100/50 transition-all cursor-pointer group border-solid"
           >
-            <Plus className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-semibold text-white">Add Member</span>
+            <Plus className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F] mb-1.5 md:mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] md:text-xs font-semibold text-zinc-800">Add Member</span>
           </button>
 
           <button
             onClick={() => setPage('payments')}
-            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
+            className="flex flex-col items-center justify-center p-3 md:p-4 bg-zinc-50 border border-zinc-200/80 rounded-xl hover:border-[#FF5F1F]/40 hover:bg-zinc-100/50 transition-all cursor-pointer group border-solid"
           >
-            <IndianRupee className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-semibold text-white">Renew Membership</span>
+            <IndianRupee className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F] mb-1.5 md:mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] md:text-xs font-semibold text-zinc-800">Renew Membership</span>
           </button>
 
           <button
             onClick={handleTriggerReminders}
-            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group relative overflow-hidden"
+            className="flex flex-col items-center justify-center p-3 md:p-4 bg-zinc-50 border border-zinc-200/80 rounded-xl hover:border-[#FF5F1F]/40 hover:bg-zinc-100/50 transition-all cursor-pointer group border-solid"
           >
-            <Send className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-semibold text-white">Send Reminders</span>
+            <Send className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F] mb-1.5 md:mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] md:text-xs font-semibold text-zinc-800">Send Reminders</span>
           </button>
 
           <button
             onClick={() => setPage('trainers')}
-            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
+            className="flex flex-col items-center justify-center p-3 md:p-4 bg-zinc-50 border border-zinc-200/80 rounded-xl hover:border-[#FF5F1F]/40 hover:bg-zinc-100/50 transition-all cursor-pointer group border-solid"
           >
-            <Dumbbell className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-semibold text-white">Manage Trainers</span>
+            <Dumbbell className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F] mb-1.5 md:mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] md:text-xs font-semibold text-zinc-800">Manage Trainers</span>
           </button>
 
           <button
             onClick={() => setPage('reports')}
-            className="flex flex-col items-center justify-center p-4 bg-zinc-950/80 border border-zinc-900 rounded-xl hover:border-red-500/40 hover:bg-zinc-900/50 transition-all cursor-pointer group"
+            className="flex flex-col items-center justify-center p-3 md:p-4 bg-zinc-50 border border-zinc-200/80 rounded-xl hover:border-[#FF5F1F]/40 hover:bg-zinc-100/50 transition-all cursor-pointer group border-solid col-span-2 md:col-span-1"
           >
-            <BarChart3 className="w-6 h-6 text-red-500 mb-2 group-hover:scale-110 transition-transform" />
-            <span className="text-xs font-semibold text-white">View Reports</span>
+            <BarChart3 className="w-5 h-5 md:w-6 md:h-6 text-[#FF5F1F] mb-1.5 md:mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-[11px] md:text-xs font-semibold text-zinc-800">View Reports</span>
           </button>
         </div>
         {triggerStatus && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-xs font-bold animate-pulse text-center">
+          <div className="p-3 bg-orange-500/10 border border-orange-500/20 text-[#FF5F1F] rounded-xl text-xs font-bold animate-pulse text-center">
             {triggerStatus}
           </div>
         )}
@@ -226,68 +221,68 @@ export default function Dashboard({ members, payments, setPage }) {
       {/* Reminder Dispatch Monitor */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Reminder Stats widgets */}
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 flex flex-col justify-between space-y-6">
+        <div className="glass-panel p-5 md:p-6 rounded-2xl border border-zinc-200 flex flex-col justify-between space-y-5 md:space-y-6">
           <div>
-            <h4 className="text-xs font-black text-white uppercase tracking-wider mb-1.5">Reminder Logs Monitor</h4>
-            <p className="text-[10px] text-zinc-400">Total automated expiration warnings stats</p>
+            <h4 className="text-xs font-black text-zinc-900 uppercase tracking-wider mb-1">Reminder Logs Monitor</h4>
+            <p className="text-[10px] text-zinc-500">Total automated expiration warnings stats</p>
           </div>
           
-          <div className="grid grid-cols-3 gap-3">
-            <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl text-center">
-              <CheckCircle2 className="w-5 h-5 text-emerald-500 mx-auto mb-1.5" />
-              <span className="text-[9px] font-bold text-zinc-500 uppercase">Sent</span>
-              <h5 className="text-base font-extrabold text-white mt-0.5">{reminderStats.sent}</h5>
+          <div className="grid grid-cols-3 gap-2.5">
+            <div className="p-2.5 bg-zinc-50 border border-zinc-200/60 rounded-xl text-center">
+              <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-emerald-600 mx-auto mb-1" />
+              <span className="text-[9px] font-bold text-zinc-500 uppercase block">Sent</span>
+              <h5 className="text-sm md:text-base font-extrabold text-zinc-850 mt-0.5">{reminderStats.sent}</h5>
             </div>
-            <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl text-center">
-              <Clock className="w-5 h-5 text-amber-500 mx-auto mb-1.5 animate-pulse" />
-              <span className="text-[9px] font-bold text-zinc-500 uppercase">Pending</span>
-              <h5 className="text-base font-extrabold text-white mt-0.5">{reminderStats.pending}</h5>
+            <div className="p-2.5 bg-zinc-50 border border-zinc-200/60 rounded-xl text-center">
+              <Clock className="w-4 h-4 md:w-5 md:h-5 text-amber-500 mx-auto mb-1 animate-pulse" />
+              <span className="text-[9px] font-bold text-zinc-500 uppercase block">Pending</span>
+              <h5 className="text-sm md:text-base font-extrabold text-zinc-850 mt-0.5">{reminderStats.pending}</h5>
             </div>
-            <div className="p-3 bg-zinc-950 border border-zinc-900 rounded-xl text-center">
-              <XCircle className="w-5 h-5 text-rose-500 mx-auto mb-1.5" />
-              <span className="text-[9px] font-bold text-zinc-500 uppercase">Failed</span>
-              <h5 className="text-base font-extrabold text-white mt-0.5">{reminderStats.failed}</h5>
+            <div className="p-2.5 bg-zinc-50 border border-zinc-200/60 rounded-xl text-center">
+              <XCircle className="w-4 h-4 md:w-5 md:h-5 text-rose-500 mx-auto mb-1" />
+              <span className="text-[9px] font-bold text-zinc-500 uppercase block">Failed</span>
+              <h5 className="text-sm md:text-base font-extrabold text-zinc-850 mt-0.5">{reminderStats.failed}</h5>
             </div>
           </div>
 
-          <div className="p-4 bg-zinc-950/80 border border-zinc-900 rounded-2xl space-y-3">
+          <div className="p-3.5 bg-zinc-50 border border-zinc-200 rounded-2xl space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-[10px] font-black text-white uppercase tracking-wider">WhatsApp Integration</span>
+              <span className="text-[10px] font-black text-zinc-900 uppercase tracking-wider">WhatsApp Integration</span>
               <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase ${
                 whatsappConfig.hasToken 
-                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                  : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                  ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' 
+                  : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
               }`}>
                 {whatsappConfig.hasToken ? 'Connected' : 'Offline / Mock'}
               </span>
             </div>
 
-            <div className="text-[10px] text-zinc-400 space-y-1.5 leading-normal">
+            <div className="text-[10px] text-zinc-650 space-y-1.5 leading-normal">
               <div className="flex justify-between">
                 <span>Delivery Mode:</span>
-                <span className={`font-bold ${whatsappConfig.testMode ? 'text-amber-400' : 'text-emerald-400'}`}>
+                <span className={`font-bold ${whatsappConfig.testMode ? 'text-amber-600' : 'text-emerald-600'}`}>
                   {whatsappConfig.testMode ? '⚠️ TEST MODE' : '🚀 LIVE MODE'}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>Active Target:</span>
-                <code className="text-white font-semibold">
+                <code className="text-zinc-900 font-semibold bg-zinc-200/60 px-1 rounded">
                   {whatsappConfig.testMode ? whatsappConfig.testRecipient : 'Gym Member\'s Phone'}
                 </code>
               </div>
               <div className="flex justify-between">
                 <span>Sender Phone ID:</span>
-                <code className="text-zinc-300">{whatsappConfig.senderPhoneId}</code>
+                <code className="text-zinc-800 font-medium">{whatsappConfig.senderPhoneId}</code>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between text-right">
                 <span>Template Alert:</span>
-                <span className="text-zinc-300 truncate max-w-[150px]">{whatsappConfig.templateName}</span>
+                <span className="text-zinc-800 font-medium truncate max-w-[130px]">{whatsappConfig.templateName}</span>
               </div>
             </div>
             
-            <div className="text-[9px] text-zinc-500 border-t border-zinc-900/60 pt-2 leading-relaxed">
+            <div className="text-[9px] text-zinc-500 border-t border-zinc-200 pt-2 leading-relaxed">
               {whatsappConfig.testMode ? (
-                <span>All automated notifications are forwarded to your test number to prevent accidental client spam. To go live, set <code className="text-zinc-300 font-bold">WHATSAPP_TEST_MODE=false</code>.</span>
+                <span>All automated notifications are forwarded to your test number to prevent accidental client spam. To go live, set <code className="text-zinc-800 font-bold">WHATSAPP_TEST_MODE=false</code>.</span>
               ) : (
                 <span>System is LIVE! Alerts will go directly to members' registered WhatsApp/phone numbers.</span>
               )}
@@ -296,32 +291,32 @@ export default function Dashboard({ members, payments, setPage }) {
         </div>
 
         {/* Recent Reminder Logs Table */}
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 lg:col-span-2">
-          <h4 className="text-xs font-black text-white uppercase tracking-wider mb-4 border-b border-zinc-900 pb-3 flex items-center gap-2">
-            <BellRing className="w-4 h-4 text-red-500" />
+        <div className="glass-panel p-5 md:p-6 rounded-2xl border border-zinc-200 lg:col-span-2 flex flex-col">
+          <h4 className="text-xs font-black text-zinc-900 uppercase tracking-wider mb-4 border-b border-zinc-200 pb-3 flex items-center gap-2 border-solid">
+            <BellRing className="w-4 h-4 text-[#FF5F1F]" />
             Recent WhatsApp Dispatches Logs
           </h4>
-          <div className="overflow-y-auto max-h-[180px] space-y-3 pr-1">
+          <div className="overflow-y-auto max-h-[220px] space-y-3 pr-1 flex-1">
             {reminders.length > 0 ? (
               reminders.map((log) => (
-                <div key={log.id} className="p-3 bg-zinc-950/60 border border-zinc-900 rounded-xl flex items-center justify-between gap-4 text-[11px]">
+                <div key={log.id} className="p-3 bg-zinc-50 border border-zinc-200/70 rounded-xl flex items-center justify-between gap-4 text-[11px]">
                   <div className="min-w-0">
-                    <p className="font-bold text-white flex items-center gap-1.5">
+                    <p className="font-bold text-zinc-850 flex items-center gap-1.5">
                       {log.clientName}
                       <span className="text-[9px] text-zinc-500 font-semibold">{log.phone}</span>
                     </p>
-                    <p className="text-[10px] text-zinc-400 mt-1 truncate max-w-[320px]">{log.message}</p>
+                    <p className="text-[10px] text-zinc-500 mt-1 truncate max-w-[280px] md:max-w-[320px]">{log.message}</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase bg-emerald-500/10 text-emerald-600 border border-emerald-500/25">
                       {log.status}
                     </span>
-                    <p className="text-[9px] text-zinc-500 font-semibold mt-1">{log.date}</p>
+                    <p className="text-[9px] text-zinc-550 mt-1">{log.date}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-xs text-zinc-500 text-center py-8">No expiration alerts logged yet.</p>
+              <p className="text-xs text-zinc-400 text-center py-12">No expiration alerts logged yet.</p>
             )}
           </div>
         </div>
@@ -329,15 +324,15 @@ export default function Dashboard({ members, payments, setPage }) {
 
       {/* Analytics Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 lg:col-span-2">
-          <h4 className="text-xs font-black text-white uppercase tracking-wider mb-4">Membership Registrations Growth</h4>
+        <div className="glass-panel p-5 md:p-6 rounded-2xl border border-zinc-200 lg:col-span-2">
+          <h4 className="text-xs font-black text-zinc-900 uppercase tracking-wider mb-4">Membership Registrations Growth</h4>
           <MembershipGrowthChart />
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-zinc-900 flex flex-col justify-between">
+        <div className="glass-panel p-5 md:p-6 rounded-2xl border border-zinc-200 flex flex-col justify-between">
           <div>
-            <h4 className="text-xs font-black text-white uppercase tracking-wider mb-2">Member Distribution</h4>
-            <p className="text-[10px] text-zinc-400 mb-6">Ratio of active vs inactive members</p>
+            <h4 className="text-xs font-black text-zinc-900 uppercase tracking-wider mb-2">Member Distribution</h4>
+            <p className="text-[10px] text-zinc-500 mb-6">Ratio of active vs inactive members</p>
           </div>
           <MemberDistributionChart activeCount={metrics.active} inactiveCount={members.length - metrics.active} />
         </div>

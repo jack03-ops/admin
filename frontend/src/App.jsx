@@ -230,7 +230,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex bg-[#ffffff] min-h-screen w-full max-w-full text-slate-800 font-sans overflow-x-hidden">
+    <div className="flex bg-[#111111] min-h-screen w-full max-w-full text-white font-sans overflow-x-hidden">
       {/* Toast Notification Container */}
       {toast && (
         <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-zinc-900/95 border border-emerald-500/30 text-slate-100 px-5 py-4 rounded-2xl shadow-[0_0_25px_rgba(16,185,129,0.15)] backdrop-blur-md transition-all duration-300">

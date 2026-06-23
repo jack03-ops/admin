@@ -72,54 +72,54 @@ export default function CheckIn({ setPage }) {
       ).slice(0, 5);
 
   return (
-    <div className="p-6 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#060814] text-slate-100">
+    <div className="p-4 md:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)] bg-[#111111] text-zinc-900">
       <div>
-        <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-          <QrCode className="w-6 h-6 text-red-500" />
+        <h2 className="text-2xl font-black text-zinc-900 tracking-tight flex items-center gap-2">
+          <QrCode className="w-6 h-6 text-[#FF5F1F]" />
           QR Member Check-In
         </h2>
-        <p className="text-xs text-slate-400 mt-1">Scan member QR codes or check in using their Client ID.</p>
+        <p className="text-xs text-zinc-550 mt-1">Scan member QR codes or check in using their Client ID.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Scanner Card */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="glass-panel p-5 rounded-3xl border border-zinc-900 overflow-hidden relative min-h-[300px] flex flex-col justify-between">
+          <div className="glass-panel p-5 rounded-3xl border border-zinc-200 overflow-hidden relative min-h-[300px] flex flex-col justify-between">
             {isScanning ? (
-              <div className="relative flex-1 bg-zinc-950 rounded-2xl overflow-hidden flex flex-col items-center justify-center border border-zinc-900 py-12">
+              <div className="relative flex-1 bg-zinc-50 rounded-2xl overflow-hidden flex flex-col items-center justify-center border border-zinc-200 py-12">
                 {/* Neon Scanner Frame */}
-                <div className="relative w-64 h-64 border-2 border-red-500/20 rounded-3xl flex items-center justify-center overflow-hidden">
+                <div className="relative w-64 h-64 border-2 border-[#FF5F1F]/20 rounded-3xl flex items-center justify-center overflow-hidden">
                   {/* Glowing Corners */}
-                  <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-red-500" />
-                  <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-red-500" />
-                  <div className="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-red-500" />
-                  <div className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-red-500" />
+                  <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-[#FF5F1F]" />
+                  <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-[#FF5F1F]" />
+                  <div className="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-[#FF5F1F]" />
+                  <div className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-[#FF5F1F]" />
                   
                   {/* Animating Scan Line */}
                   <div className="absolute left-0 right-0 h-0.5 bg-red-500 shadow-[0_0_15px_#ef4444] animate-bounce w-full" style={{ animationDuration: '3s' }} />
                   
-                  <Camera className="w-12 h-12 text-zinc-700 animate-pulse" />
+                  <Camera className="w-12 h-12 text-zinc-500 animate-pulse" />
                 </div>
-                <p className="text-xs text-zinc-400 mt-4 font-semibold animate-pulse">Position Member QR Code inside corners</p>
+                <p className="text-xs text-zinc-550 mt-4 font-semibold animate-pulse">Position Member QR Code inside corners</p>
                 
                 <button 
                   onClick={() => setIsScanning(false)}
-                  className="mt-4 px-4 py-1.5 bg-zinc-900 border border-zinc-800 rounded-xl text-[10px] font-bold uppercase tracking-wider text-zinc-400 hover:text-white cursor-pointer"
+                  className="mt-4 px-4 py-1.5 bg-zinc-900 border border-zinc-200 rounded-xl text-[10px] font-bold uppercase tracking-wider text-zinc-550 hover:text-zinc-900 cursor-pointer"
                 >
                   Switch to Manual Mode
                 </button>
               </div>
             ) : (
-              <div className="flex-1 bg-zinc-950 rounded-2xl border border-zinc-900 p-6 flex flex-col items-center justify-center text-center space-y-4">
+              <div className="flex-1 bg-zinc-50 rounded-2xl border border-zinc-200 p-6 flex flex-col items-center justify-center text-center space-y-4">
                 <QrCode className="w-12 h-12 text-zinc-600" />
-                <h3 className="text-sm font-bold text-white">Manual ID Entry Mode</h3>
-                <p className="text-xs text-zinc-400 max-w-xs leading-normal">
+                <h3 className="text-sm font-bold text-zinc-900">Manual ID Entry Mode</h3>
+                <p className="text-xs text-zinc-550 max-w-xs leading-normal">
                   Type the gym member's Client ID (e.g. PXM-1001) or search by name to record check-in.
                 </p>
                 <button 
                   onClick={() => setIsScanning(true)}
-                  className="px-4 py-1.5 bg-red-500/10 border border-red-500/20 rounded-xl text-[10px] font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 cursor-pointer"
+                  className="px-4 py-1.5 bg-orange-500/10 border border-[#FF5F1F]/20 rounded-xl text-[10px] font-bold uppercase tracking-wider text-[#FF5F1F] hover:bg-red-500/20 cursor-pointer"
                 >
                   Start Camera Scanner
                 </button>
@@ -127,19 +127,19 @@ export default function CheckIn({ setPage }) {
             )}
             
             {/* Quick manual entry override bar always available below scanner */}
-            <div className="mt-4 pt-4 border-t border-zinc-900 flex gap-2">
+            <div className="mt-4 pt-4 border-t border-zinc-200 flex gap-2">
               <input
                 type="text"
                 value={clientId}
                 onChange={(e) => setClientId(e.target.value)}
                 placeholder="Enter Client ID (PXM-XXXX)"
-                className="flex-1 px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white placeholder:text-zinc-650 focus:outline-none focus:border-red-500 uppercase font-bold"
+                className="flex-1 px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl text-xs text-zinc-900 placeholder:text-zinc-650 focus:outline-none focus:border-[#FF5F1F] uppercase font-bold"
                 onKeyDown={(e) => e.key === 'Enter' && handleCheckIn(clientId)}
               />
               <button
                 onClick={() => handleCheckIn(clientId)}
                 disabled={loading || !clientId.trim()}
-                className="px-5 bg-gradient-phoenix hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50"
+                className="px-5 bg-[#FF5F1F] hover:bg-[#e04f14] hover:opacity-90 text-zinc-900 text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer disabled:opacity-50"
               >
                 {loading ? '...' : 'Check In'}
               </button>
@@ -147,8 +147,8 @@ export default function CheckIn({ setPage }) {
           </div>
 
           {/* Quick Search Override Dropdown */}
-          <div className="glass-panel p-5 rounded-3xl border border-zinc-900 space-y-3 relative">
-            <h3 className="text-xs font-black text-white uppercase tracking-wider">Search & Check In Member</h3>
+          <div className="glass-panel p-5 rounded-3xl border border-zinc-200 space-y-3 relative">
+            <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider">Search & Check In Member</h3>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
               <input
@@ -156,11 +156,11 @@ export default function CheckIn({ setPage }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Type name or Client ID..."
-                className="w-full pl-9 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-500"
+                className="w-full pl-9 pr-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs text-zinc-900 placeholder:text-zinc-600 focus:outline-none focus:border-[#FF5F1F]"
               />
             </div>
             {filteredMembers.length > 0 && (
-              <div className="absolute left-5 right-5 mt-1 bg-zinc-950 border border-zinc-900 rounded-2xl shadow-2xl z-50 divide-y divide-zinc-900 overflow-hidden">
+              <div className="absolute left-5 right-5 mt-1 bg-zinc-50 border border-zinc-200 rounded-2xl shadow-2xl z-50 divide-y divide-zinc-900 overflow-hidden">
                 {filteredMembers.map(m => (
                   <button
                     key={m.id}
@@ -171,10 +171,10 @@ export default function CheckIn({ setPage }) {
                     className="w-full text-left px-4 py-3 hover:bg-zinc-900/50 flex items-center justify-between text-xs cursor-pointer group"
                   >
                     <div>
-                      <span className="font-bold text-white group-hover:text-red-400 transition-colors">{m.fullName}</span>
+                      <span className="font-bold text-zinc-900 group-hover:text-[#FF5F1F] transition-colors">{m.fullName}</span>
                       <span className="text-[10px] text-zinc-500 ml-2 font-semibold">({m.id})</span>
                     </div>
-                    <span className="text-[9px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-bold uppercase">{m.plan}</span>
+                    <span className="text-[9px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-200 text-zinc-550 font-bold uppercase">{m.plan}</span>
                   </button>
                 ))}
               </div>
@@ -214,12 +214,12 @@ export default function CheckIn({ setPage }) {
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h4 className="font-black text-white text-sm tracking-tight">{checkInResult.member.fullName}</h4>
-                  <p className="text-[10px] text-zinc-400 font-semibold mt-0.5">ID: {checkInResult.member.clientId}</p>
+                  <h4 className="font-black text-zinc-900 text-sm tracking-tight">{checkInResult.member.fullName}</h4>
+                  <p className="text-[10px] text-zinc-550 font-semibold mt-0.5">ID: {checkInResult.member.clientId}</p>
                   
                   <div className="mt-2.5 space-y-1">
-                    <p className="text-[10px] text-zinc-300 font-medium">Plan: <span className="font-bold text-white uppercase">{checkInResult.member.plan}</span></p>
-                    <p className="text-[10px] text-zinc-300 font-medium">Checked In: <span className="font-bold text-white">{new Date(checkInResult.data.checkInTime).toLocaleTimeString()}</span></p>
+                    <p className="text-[10px] text-zinc-500 font-medium">Plan: <span className="font-bold text-zinc-900 uppercase">{checkInResult.member.plan}</span></p>
+                    <p className="text-[10px] text-zinc-500 font-medium">Checked In: <span className="font-bold text-zinc-900">{new Date(checkInResult.data.checkInTime).toLocaleTimeString()}</span></p>
                   </div>
                   
                   {checkInResult.member.isExpired && (
@@ -228,7 +228,7 @@ export default function CheckIn({ setPage }) {
                     </div>
                   )}
                   {checkInResult.alreadyCheckedIn && (
-                    <div className="mt-2 text-[10px] text-zinc-400 font-semibold italic">
+                    <div className="mt-2 text-[10px] text-zinc-550 font-semibold italic">
                       Note: Checked in duplicate bypassed.
                     </div>
                   )}
@@ -238,18 +238,18 @@ export default function CheckIn({ setPage }) {
           )}
 
           {/* Today's Attendance Logs */}
-          <div className="glass-panel p-5 rounded-3xl border border-zinc-900 flex flex-col justify-between">
-            <h3 className="text-xs font-black text-white uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-zinc-900 pb-3">
-              <History className="w-4 h-4 text-red-500" />
+          <div className="glass-panel p-5 rounded-3xl border border-zinc-200 flex flex-col justify-between">
+            <h3 className="text-xs font-black text-zinc-900 uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-zinc-200 pb-3">
+              <History className="w-4 h-4 text-[#FF5F1F]" />
               Today's Check-ins
             </h3>
             
             <div className="overflow-y-auto max-h-[300px] space-y-3 pr-1">
               {attendanceLogs.length > 0 ? (
                 attendanceLogs.map((log) => (
-                  <div key={log._id || log.id} className="p-3 bg-zinc-950/60 border border-zinc-900 rounded-xl flex items-center justify-between gap-4 text-[11px]">
+                  <div key={log._id || log.id} className="p-3 bg-zinc-50/60 border border-zinc-200 rounded-xl flex items-center justify-between gap-4 text-[11px]">
                     <div className="min-w-0">
-                      <p className="font-bold text-white flex items-center gap-1.5">
+                      <p className="font-bold text-zinc-900 flex items-center gap-1.5">
                         {log.clientName}
                         <span className="text-[9px] text-zinc-500 font-semibold">({log.clientId})</span>
                       </p>
@@ -258,7 +258,7 @@ export default function CheckIn({ setPage }) {
                         {new Date(log.checkInTime).toLocaleTimeString()}
                       </p>
                     </div>
-                    <span className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase bg-zinc-900 border border-zinc-800 text-zinc-400">
+                    <span className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase bg-zinc-900 border border-zinc-200 text-zinc-550">
                       {log.method}
                     </span>
                   </div>
