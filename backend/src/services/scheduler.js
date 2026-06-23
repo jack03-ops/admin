@@ -4,11 +4,11 @@ import { sendSMS } from './smsService.js';
 import { sendWhatsAppMessage } from './whatsappService.js';
 
 // Retry helper for sending WhatsApp messages
-const sendWhatsAppWithRetry = async (phone, message, maxRetries = 3) => {
+const sendWhatsAppWithRetry = async (phone, message, templateData = null, maxRetries = 3) => {
   let attempts = 0;
   while (attempts < maxRetries) {
     try {
-      const result = await sendWhatsAppMessage(phone, message);
+      const result = await sendWhatsAppMessage(phone, message, templateData);
       return result;
     } catch (error) {
       attempts++;
@@ -50,17 +50,22 @@ export const runAutomatedReminders = async () => {
         const endOfToday = new Date(today);
         endOfToday.setHours(23,59,59,999);
 
-        // Construct distinct reminder messages per interval
-        let reminderText = '';
+        let templateParams = [];
         if (days === 5) {
           reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
+          templateParams = [member.fullName, '5'];
         } else if (days === 3) {
           reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
+          templateParams = [member.fullName, '3'];
         } else {
           reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
+          templateParams = [member.fullName, '1'];
         }
 
-        const targetPhone = '+91 80155 52425'; // Force strictly this test number
+        // Determine destination phone dynamically based on configuration
+        const isTestMode = process.env.WHATSAPP_TEST_MODE !== 'false';
+        const testRecipient = process.env.WHATSAPP_TEST_RECIPIENT || '+919487817301';
+        const targetPhone = isTestMode ? testRecipient : (member.whatsapp || member.phone);
 
         // 1. WhatsApp Dispatch with retry and duplicate prevention
         try {
@@ -73,7 +78,7 @@ export const runAutomatedReminders = async () => {
           if (!alreadySentWA) {
             let status = 'Sent';
             try {
-              await sendWhatsAppWithRetry(targetPhone, reminderText);
+              await sendWhatsAppWithRetry(targetPhone, reminderText, { parameters: templateParams });
             } catch (err) {
               status = 'Failed';
             }

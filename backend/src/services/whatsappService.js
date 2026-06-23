@@ -2,9 +2,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const sendWhatsAppMessage = async (to, body) => {
+export const sendWhatsAppMessage = async (to, body, templateData = null) => {
   const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
   const token = process.env.WHATSAPP_ACCESS_TOKEN;
+  const templateName = process.env.WHATSAPP_TEMPLATE_NAME;
 
   const isMock = !phoneId || phoneId.includes('mock') || !token || token.includes('mock');
 
@@ -18,18 +19,48 @@ export const sendWhatsAppMessage = async (to, body) => {
   try {
     const url = `https://graph.facebook.com/v18.0/${phoneId}/messages`;
     
-    // We send a template message or dynamic text. WhatsApp Cloud API requires text object for custom messages
-    const cleanTo = to.replace(/\s+/g, '');
-    const payload = {
-      messaging_product: "whatsapp",
-      recipient_type: "individual",
-      to: cleanTo.startsWith('+') ? cleanTo : `+91${cleanTo}`,
-      type: "text",
-      text: {
-        preview_url: false,
-        body: body
-      }
-    };
+    // Standardize recipient: remove spaces, +, and - signs
+    const cleanTo = to.replace(/[\s\+\-]+/g, '');
+    const formattedTo = (cleanTo.startsWith('91') || cleanTo.length > 10) ? cleanTo : `91${cleanTo}`;
+
+    let payload;
+
+    // Use Template API if templateName is configured and parameters are passed
+    if (templateName && templateData?.parameters) {
+      payload = {
+        messaging_product: "whatsapp",
+        recipient_type: "individual",
+        to: formattedTo,
+        type: "template",
+        template: {
+          name: templateName,
+          language: {
+            code: templateData.languageCode || "en"
+          },
+          components: [
+            {
+              type: "body",
+              parameters: templateData.parameters.map(param => ({
+                type: "text",
+                text: String(param)
+              }))
+            }
+          ]
+        }
+      };
+    } else {
+      // Default fallback: Custom Text message payload
+      payload = {
+        messaging_product: "whatsapp",
+        recipient_type: "individual",
+        to: formattedTo,
+        type: "text",
+        text: {
+          preview_url: false,
+          body: body
+        }
+      };
+    }
 
     const response = await fetch(url, {
       method: 'POST',

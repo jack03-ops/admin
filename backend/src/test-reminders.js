@@ -31,8 +31,8 @@ const runLiveTest = async () => {
     { clientId: 'PXM-TEST-5D' },
     {
       fullName: 'Aravind Swamy (5 Days Expiring Test)',
-      phone: '+91 80155 52425',
-      whatsapp: '+91 80155 52425',
+      phone: '+91 94878 17301',
+      whatsapp: '+91 94878 17301',
       village: 'Rampur',
       gender: 'Male',
       age: 28,
@@ -55,8 +55,8 @@ const runLiveTest = async () => {
     { clientId: 'PXM-TEST-3D' },
     {
       fullName: 'Prabhu Deva (3 Days Expiring Test)',
-      phone: '+91 80155 52425',
-      whatsapp: '+91 80155 52425',
+      phone: '+91 94878 17301',
+      whatsapp: '+91 94878 17301',
       village: 'Chandpur',
       gender: 'Male',
       age: 34,

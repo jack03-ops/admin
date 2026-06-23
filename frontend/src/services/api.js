@@ -376,6 +376,27 @@ export const getReports = async (cycle = 'monthly') => {
   return data;
 };
 
+export const getNotificationConfig = async () => {
+  if (isBackendOnline === null) await checkBackendHealth();
+
+  if (!isBackendOnline) {
+    return {
+      testMode: true,
+      testRecipient: "+91 94878 17301",
+      senderPhoneId: "Mock (Offline)",
+      hasToken: false,
+      templateName: "Mock (Fallback to custom text)"
+    };
+  }
+
+  const res = await fetch(`${API_BASE}/notifications/config`, {
+    headers: getHeaders()
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to fetch WhatsApp config');
+  return data.data;
+};
+
 export const getReminders = async () => {
   if (isBackendOnline === null) await checkBackendHealth();
 

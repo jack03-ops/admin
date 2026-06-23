@@ -27,18 +27,29 @@ import * as api from '../services/api';
 export default function Dashboard({ members, payments, setPage }) {
   const [reminders, setReminders] = useState([]);
   const [triggerStatus, setTriggerStatus] = useState('');
+  const [whatsappConfig, setWhatsappConfig] = useState({
+    testMode: true,
+    testRecipient: '+91 94878 17301',
+    senderPhoneId: 'Not Loaded',
+    hasToken: false,
+    templateName: ''
+  });
 
-  // Load reminders from API
+  // Load reminders and WhatsApp config from API
   useEffect(() => {
-    const loadReminders = async () => {
+    const loadData = async () => {
       try {
-        const list = await api.getReminders();
+        const [list, config] = await Promise.all([
+          api.getReminders(),
+          api.getNotificationConfig()
+        ]);
         setReminders(list);
+        setWhatsappConfig(config);
       } catch (err) {
-        console.error('[Dashboard] Error loading reminders:', err.message);
+        console.error('[Dashboard] Error loading data:', err.message);
       }
     };
-    loadReminders();
+    loadData();
   }, []);
 
   // Compute summary metrics dynamically
@@ -239,11 +250,48 @@ export default function Dashboard({ members, payments, setPage }) {
             </div>
           </div>
 
-          <div className="p-3 bg-red-500/5 border border-red-500/10 rounded-xl">
-            <span className="text-[10px] font-bold text-red-400 block mb-1">Target Phone Testing Line</span>
-            <p className="text-[10px] text-zinc-400 leading-normal">
-              Active test WhatsApp endpoint set to: <code className="text-white font-bold">+91 80155 52425</code>
-            </p>
+          <div className="p-4 bg-zinc-950/80 border border-zinc-900 rounded-2xl space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-[10px] font-black text-white uppercase tracking-wider">WhatsApp Integration</span>
+              <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase ${
+                whatsappConfig.hasToken 
+                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                  : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+              }`}>
+                {whatsappConfig.hasToken ? 'Connected' : 'Offline / Mock'}
+              </span>
+            </div>
+
+            <div className="text-[10px] text-zinc-400 space-y-1.5 leading-normal">
+              <div className="flex justify-between">
+                <span>Delivery Mode:</span>
+                <span className={`font-bold ${whatsappConfig.testMode ? 'text-amber-400' : 'text-emerald-400'}`}>
+                  {whatsappConfig.testMode ? '⚠️ TEST MODE' : '🚀 LIVE MODE'}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Active Target:</span>
+                <code className="text-white font-semibold">
+                  {whatsappConfig.testMode ? whatsappConfig.testRecipient : 'Gym Member\'s Phone'}
+                </code>
+              </div>
+              <div className="flex justify-between">
+                <span>Sender Phone ID:</span>
+                <code className="text-zinc-300">{whatsappConfig.senderPhoneId}</code>
+              </div>
+              <div className="flex justify-between">
+                <span>Template Alert:</span>
+                <span className="text-zinc-300 truncate max-w-[150px]">{whatsappConfig.templateName}</span>
+              </div>
+            </div>
+            
+            <div className="text-[9px] text-zinc-500 border-t border-zinc-900/60 pt-2 leading-relaxed">
+              {whatsappConfig.testMode ? (
+                <span>All automated notifications are forwarded to your test number to prevent accidental client spam. To go live, set <code className="text-zinc-300 font-bold">WHATSAPP_TEST_MODE=false</code>.</span>
+              ) : (
+                <span>System is LIVE! Alerts will go directly to members' registered WhatsApp/phone numbers.</span>
+              )}
+            </div>
           </div>
         </div>
 

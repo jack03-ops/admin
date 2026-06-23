@@ -41,11 +41,11 @@ export const sendInstantNotification = async (req, res, next) => {
 };
 
 // Helper for WhatsApp retry in controller
-const sendWhatsAppWithRetry = async (phone, message, maxRetries = 3) => {
+const sendWhatsAppWithRetry = async (phone, message, templateData = null, maxRetries = 3) => {
   let attempts = 0;
   while (attempts < maxRetries) {
     try {
-      return await sendWhatsAppMessage(phone, message);
+      return await sendWhatsAppMessage(phone, message, templateData);
     } catch (error) {
       attempts++;
       if (attempts >= maxRetries) throw error;
@@ -84,17 +84,22 @@ export const triggerAutoReminders = async (req, res, next) => {
         const endOfToday = new Date(today);
         endOfToday.setHours(23,59,59,999);
 
-        // Construct distinct reminder messages per interval
-        let reminderText = '';
+        let templateParams = [];
         if (days === 5) {
           reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 5 day(s). Please renew your membership to continue uninterrupted access. Don't break your workout streak!`;
+          templateParams = [member.fullName, '5'];
         } else if (days === 3) {
           reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 3 day(s). Please renew your membership to continue uninterrupted access. Early renewals keep your fitness routine on track!`;
+          templateParams = [member.fullName, '3'];
         } else {
           reminderText = `Hello ${member.fullName}, your Phoenix Fitness Academy membership expires in 1 day(s). Please renew your membership to continue uninterrupted access. Secure your slot to avoid lockout!`;
+          templateParams = [member.fullName, '1'];
         }
 
-        const targetPhone = '+91 80155 52425'; // Force strictly this test number
+        // Determine destination phone dynamically based on configuration
+        const isTestMode = process.env.WHATSAPP_TEST_MODE !== 'false';
+        const testRecipient = process.env.WHATSAPP_TEST_RECIPIENT || '+919487817301';
+        const targetPhone = isTestMode ? testRecipient : (member.whatsapp || member.phone);
 
         // Dispatch WhatsApp if not sent today
         try {
@@ -107,7 +112,7 @@ export const triggerAutoReminders = async (req, res, next) => {
           if (!alreadySentWA) {
             let status = 'Sent';
             try {
-              await sendWhatsAppWithRetry(targetPhone, reminderText);
+              await sendWhatsAppWithRetry(targetPhone, reminderText, { parameters: templateParams });
             } catch (err) {
               status = 'Failed';
             }
@@ -178,6 +183,32 @@ export const getNotificationLogs = async (req, res, next) => {
   try {
     const logs = await Notification.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, count: logs.length, data: logs });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Retrieve backend environment configuration status for WhatsApp
+// @route   GET /api/notifications/config
+// @access  Private
+export const getNotificationConfig = async (req, res, next) => {
+  try {
+    const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID || '';
+    const token = process.env.WHATSAPP_ACCESS_TOKEN || '';
+    const templateName = process.env.WHATSAPP_TEMPLATE_NAME || '';
+    const testMode = process.env.WHATSAPP_TEST_MODE !== 'false';
+    const testRecipient = process.env.WHATSAPP_TEST_RECIPIENT || '+91 94878 17301';
+
+    res.status(200).json({
+      success: true,
+      data: {
+        testMode,
+        testRecipient,
+        senderPhoneId: phoneId ? `${phoneId.substring(0, 4)}...${phoneId.substring(phoneId.length - 4)}` : 'Not Configured',
+        hasToken: !!token,
+        templateName: templateName || 'Not Configured (Fallback to custom text)'
+      }
+    });
   } catch (error) {
     next(error);
   }
